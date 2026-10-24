@@ -1,0 +1,155 @@
+{
+  "nav": {
+    "home": "Hem",
+    "settings": "Inställningar"
+  },
+  "common": {
+    "add": "Lägg till",
+    "cancel": "Avbryt",
+    "save": "Spara",
+    "delete": "Ta bort"
+  },
+  "lang": {
+    "en": "English",
+    "da": "Dansk",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "nb": "Norsk"
+  },
+  "settings": {
+    "language": "Språk",
+    "dailyReminder": "Daglig påminnelse (timme)",
+    "privacy": "Integritet",
+    "support": "Support"
+  },
+  "backup": {
+    "export": "Exportera backup / dela med hushållet",
+    "passphrase": "Välj ett lösenord för backup-filen",
+    "wrongApp": "Denna backup tillhör en annan app",
+    "wipe": "Radera all data",
+    "wipeConfirm": "Detta raderar permanent allt som appen har sparat på den här enheten. Exporterade säkerhetskopior påverkas inte. Fortsätt?",
+    "wiped": "All data raderad"
+  },
+  "plan": {
+    "free": "Gratis",
+    "pro": "Pro",
+    "upgrade": "Uppgradera"
+  },
+  "paywall": {
+    "title": "Lås upp allt",
+    "benefits": [
+      "Obegränsat antal",
+      "Dela med hushållet",
+      "PDF-export",
+      "Widgets på hemskärmen"
+    ],
+    "plan": {
+      "annual": "Årligen",
+      "lifetime": "Livstid"
+    },
+    "trial": "7 dagar gratis, sedan årligen",
+    "ctaTrial": "Starta gratis prov",
+    "ctaBuy": "Köp en gång",
+    "legal": "Avsluta när som helst i ditt butikskonto.",
+    "restore": "Återställ köp",
+    "terms": "Villkor",
+    "reasons": {
+      "limit": "Du har nått gratisgränsen.",
+      "onboarding": "",
+      "settings": ""
+    }
+  },
+  "onboarding": {
+    "steps": [
+      {
+        "title": "Allt på ett ställe",
+        "body": "Håll koll på det viktiga, med påminnelser innan något förfaller."
+      },
+      {
+        "title": "Din data stannar hos dig",
+        "body": "Inget konto. Allt sparas på din telefon och du kan exportera en backup när som helst."
+      },
+      {
+        "title": "Dela med hushållet",
+        "body": "Exportera en gång, importera på en annan telefon. Båda kan redigera."
+      }
+    ],
+    "next": "Nästa",
+    "skip": "Hoppa över",
+    "start": "Kom igång"
+  },
+  "home": {
+    "title": "Migrano",
+    "attackNow": "Anfall nu",
+    "endAttack": "Anfallet är över",
+    "openSince": "Anfall pågår sedan {{time}}",
+    "monthStats": "Denna månad: {{attackDays}} anfallsdagar · {{medDays}} medicindagar",
+    "recent": "Senaste anfall",
+    "ongoing": "pågår"
+  },
+  "diary": {
+    "groups": {
+      "trigger": "Triggers",
+      "symptom": "Symtom",
+      "relief": "Vad som hjälpte",
+      "location": "Plats"
+    },
+    "tags": {
+      "trigger": {
+        "stress": "Stress",
+        "sleep_lack": "För lite sömn",
+        "sleep_excess": "För mycket sömn",
+        "skipped_meal": "Hoppat över måltid",
+        "dehydration": "Vätskebrist",
+        "alcohol": "Alkohol",
+        "caffeine": "Koffein",
+        "chocolate": "Choklad",
+        "cheese": "Ost",
+        "menstruation": "Menstruation",
+        "weather": "Väderomslag",
+        "bright_light": "Starkt ljus",
+        "noise": "Buller",
+        "smells": "Lukter",
+        "screen_time": "Skärmtid",
+        "exertion": "Fysisk ansträngning",
+        "neck_tension": "Spänd nacke",
+        "travel": "Resa"
+      },
+      "symptom": {
+        "aura_visual": "Aura (syn)",
+        "aura_sensory": "Aura (känsel/tal)",
+        "throbbing": "Pulserande",
+        "one_sided": "Ensidig",
+        "nausea": "Illamående",
+        "vomiting": "Kräkning",
+        "photophobia": "Ljuskänslig",
+        "phonophobia": "Ljudkänslig",
+        "osmophobia": "Luktkänslig",
+        "neck_pain": "Nacksmärta",
+        "concentration": "Svårt att koncentrera sig",
+        "fatigue": "Trötthet",
+        "worse_movement": "Värre vid rörelse"
+      },
+      "relief": {
+        "sleep": "Sömn",
+        "dark_room": "Mörkt rum",
+        "cold": "Kyla",
+        "heat": "Värme",
+        "water": "Vatten",
+        "food": "Mat",
+        "caffeine": "Koffein",
+        "fresh_air": "Frisk luft",
+        "rest": "Vila"
+      },
+      "location": {
+        "left": "Vänster",
+        "right": "Höger",
+        "both": "Båda sidor",
+        "forehead": "Panna",
+        "behind_eye": "Bakom ögat",
+        "neck": "Nacke",
+        "top": "Hjässa"
+      }
+    }
+  }
+}

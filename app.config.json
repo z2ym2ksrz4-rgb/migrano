@@ -1,0 +1,15 @@
+{
+  "appId": "com.ilumie.migrano",
+  "appName": "Migrano",
+  "appSlug": "migrano",
+  "brandColor": "#4B4A7A",
+  "supportEmail": "support@migrano.app",
+  "privacyUrl": "https://migrano.app/privacy",
+  "termsUrl": "https://migrano.app/terms",
+  "revenueCat": {
+    "ios": "REPLACE_WITH_RC_IOS_PUBLIC_KEY",
+    "android": "REPLACE_WITH_RC_ANDROID_PUBLIC_KEY",
+    "entitlement": "pro"
+  },
+  "dailyReminderHour": 9
+}

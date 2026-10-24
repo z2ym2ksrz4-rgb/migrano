@@ -1,0 +1,19 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { DomainRoutes } from "@/domain";
+import { SettingsScreen } from "./SettingsScreen";
+import { TestMenu } from "./TestMenu";
+import { Onboarding } from "./onboarding/Onboarding";
+import { Paywall } from "./paywall/Paywall";
+import { isRelease } from "@/core/release";
+import { useSettings } from "@/core/settings";
+import { usePurchases } from "@/core/purchases";
+export default function App() {
+    const { t } = useTranslation();
+    const [tab, setTab] = useState("home");
+    const onboardingDone = useSettings((s) => s.onboardingDone);
+    const initPurchases = usePurchases((s) => s.init);
+    useEffect(() => { void initPurchases(); }, [initPurchases]);
+    return (_jsxs("div", { className: "app", children: [_jsx("main", { children: !onboardingDone ? _jsx(Onboarding, {}) : tab === "home" ? _jsx(DomainRoutes, {}) : _jsx(SettingsScreen, {}) }), onboardingDone && (_jsxs("nav", { className: "tabbar", children: [_jsx("button", { className: tab === "home" ? "active" : "", onClick: () => setTab("home"), children: t("nav.home") }), _jsx("button", { className: tab === "settings" ? "active" : "", onClick: () => setTab("settings"), children: t("nav.settings") })] })), _jsx(Paywall, {}), !isRelease && _jsx(TestMenu, {})] }));
+}

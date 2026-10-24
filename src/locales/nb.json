@@ -1,0 +1,155 @@
+{
+  "nav": {
+    "home": "Hjem",
+    "settings": "Innstillinger"
+  },
+  "common": {
+    "add": "Legg til",
+    "cancel": "Avbryt",
+    "save": "Lagre",
+    "delete": "Slett"
+  },
+  "lang": {
+    "en": "English",
+    "da": "Dansk",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "nb": "Norsk"
+  },
+  "settings": {
+    "language": "Språk",
+    "dailyReminder": "Daglig påminnelse (time)",
+    "privacy": "Personvern",
+    "support": "Support"
+  },
+  "backup": {
+    "export": "Eksporter backup / del med husstanden",
+    "passphrase": "Velg et passord for backup-filen",
+    "wrongApp": "Denne backupen tilhører en annen app",
+    "wipe": "Slett alle data",
+    "wipeConfirm": "Dette sletter permanent alt appen har lagret på denne enheten. Eksporterte sikkerhetskopier påvirkes ikke. Fortsette?",
+    "wiped": "Alle data er slettet"
+  },
+  "plan": {
+    "free": "Gratis",
+    "pro": "Pro",
+    "upgrade": "Oppgrader"
+  },
+  "paywall": {
+    "title": "Lås opp alt",
+    "benefits": [
+      "Ubegrenset antall",
+      "Del med husstanden",
+      "PDF-eksport",
+      "Widgets på hjemskjermen"
+    ],
+    "plan": {
+      "annual": "Årlig",
+      "lifetime": "Livstid"
+    },
+    "trial": "7 dager gratis, deretter årlig",
+    "ctaTrial": "Start gratis prøve",
+    "ctaBuy": "Kjøp én gang",
+    "legal": "Avslutt når som helst i butikkontoen din.",
+    "restore": "Gjenopprett kjøp",
+    "terms": "Vilkår",
+    "reasons": {
+      "limit": "Du har nådd gratisgrensen.",
+      "onboarding": "",
+      "settings": ""
+    }
+  },
+  "onboarding": {
+    "steps": [
+      {
+        "title": "Alt på ett sted",
+        "body": "Hold oversikt over det viktige, med påminnelser før noe forfaller."
+      },
+      {
+        "title": "Dataene dine blir hos deg",
+        "body": "Ingen konto. Alt lagres på telefonen din, og du kan eksportere en backup når som helst."
+      },
+      {
+        "title": "Del med husstanden",
+        "body": "Eksporter én gang, importer på en annen telefon. Begge kan redigere."
+      }
+    ],
+    "next": "Neste",
+    "skip": "Hopp over",
+    "start": "Kom i gang"
+  },
+  "home": {
+    "title": "Migrano",
+    "attackNow": "Anfall nå",
+    "endAttack": "Anfallet er over",
+    "openSince": "Anfall pågår siden {{time}}",
+    "monthStats": "Denne måneden: {{attackDays}} anfallsdager · {{medDays}} medisindager",
+    "recent": "Siste anfall",
+    "ongoing": "pågår"
+  },
+  "diary": {
+    "groups": {
+      "trigger": "Triggere",
+      "symptom": "Symptomer",
+      "relief": "Hva som hjalp",
+      "location": "Plassering"
+    },
+    "tags": {
+      "trigger": {
+        "stress": "Stress",
+        "sleep_lack": "For lite søvn",
+        "sleep_excess": "For mye søvn",
+        "skipped_meal": "Hoppet over måltid",
+        "dehydration": "Væskemangel",
+        "alcohol": "Alkohol",
+        "caffeine": "Koffein",
+        "chocolate": "Sjokolade",
+        "cheese": "Ost",
+        "menstruation": "Menstruasjon",
+        "weather": "Værskifte",
+        "bright_light": "Sterkt lys",
+        "noise": "Støy",
+        "smells": "Lukter",
+        "screen_time": "Skjermtid",
+        "exertion": "Fysisk anstrengelse",
+        "neck_tension": "Nakkespenninger",
+        "travel": "Reise"
+      },
+      "symptom": {
+        "aura_visual": "Aura (syn)",
+        "aura_sensory": "Aura (følelse/tale)",
+        "throbbing": "Pulserende",
+        "one_sided": "Ensidig",
+        "nausea": "Kvalme",
+        "vomiting": "Oppkast",
+        "photophobia": "Lysfølsom",
+        "phonophobia": "Lydfølsom",
+        "osmophobia": "Luktfølsom",
+        "neck_pain": "Nakkesmerter",
+        "concentration": "Vanskelig å konsentrere seg",
+        "fatigue": "Tretthet",
+        "worse_movement": "Verre ved bevegelse"
+      },
+      "relief": {
+        "sleep": "Søvn",
+        "dark_room": "Mørkt rom",
+        "cold": "Kulde",
+        "heat": "Varme",
+        "water": "Vann",
+        "food": "Mat",
+        "caffeine": "Koffein",
+        "fresh_air": "Frisk luft",
+        "rest": "Hvile"
+      },
+      "location": {
+        "left": "Venstre",
+        "right": "Høyre",
+        "both": "Begge sider",
+        "forehead": "Panne",
+        "behind_eye": "Bak øyet",
+        "neck": "Nakke",
+        "top": "Isse"
+      }
+    }
+  }
+}

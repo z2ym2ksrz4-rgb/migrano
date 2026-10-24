@@ -1,0 +1,30 @@
+// Phase-2 smoke test: onboarding → paywall (mock) → attack now → end attack → seeded tags visible, no JS errors.
+// Run: RELEASE=0 NODE_ENV=development npx vite build --mode development && npx vite preview --port 4173 & node smoke.mjs
+import { chromium } from "playwright";
+const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
+const p = await b.newPage({ viewport: { width: 390, height: 844 } });
+const errors = [];
+p.on("pageerror", (e) => errors.push(e.message));
+p.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
+await p.goto("http://localhost:4173/", { waitUntil: "networkidle" });
+await p.waitForSelector("h1", { timeout: 15000 });
+const onboardingTitle = await p.textContent("h1");
+for (let i = 0; i < 3; i++) await p.click(".onboarding .cta");
+await p.waitForSelector(".sheet h2", { timeout: 5000 });
+const paywallTitle = await p.textContent(".sheet h2");
+await p.click(".sheet .cta");
+await p.waitForTimeout(500);
+await p.waitForSelector("button.primary", { timeout: 5000 });
+const homeTitle = await p.textContent("h1");
+const attackBtn = await p.textContent("button.primary");
+await p.click("button.primary");
+await p.waitForSelector(".card button", { timeout: 5000 });
+const ongoingShown = (await p.$$(".list li")).length === 1;
+await p.click(".card button");
+await p.waitForTimeout(300);
+const closedAgain = (await p.$("button.primary")) !== null;
+const chips = await p.$$eval(".chip", (els) => els.map((e) => e.textContent));
+await p.screenshot({ path: "/tmp/claude-0/-home-claude/57bab718-bf6c-5cbe-9048-f1d9340fc97c/scratchpad/migrano-home.png" });
+console.log(JSON.stringify({ onboardingTitle, paywallTitle, homeTitle, attackBtn, ongoingShown, closedAgain, chipCount: chips.length, firstChips: chips.slice(0, 4), errors }, null, 1));
+await b.close();
+process.exit(errors.length || chips.length !== 18 || !ongoingShown || !closedAgain ? 1 : 0);

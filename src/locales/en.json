@@ -1,0 +1,155 @@
+{
+  "nav": {
+    "home": "Home",
+    "settings": "Settings"
+  },
+  "common": {
+    "add": "Add",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete"
+  },
+  "lang": {
+    "en": "English",
+    "da": "Dansk",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "nb": "Norsk"
+  },
+  "settings": {
+    "language": "Language",
+    "dailyReminder": "Daily reminder (hour)",
+    "privacy": "Privacy",
+    "support": "Support"
+  },
+  "backup": {
+    "export": "Export backup / share with household",
+    "passphrase": "Choose a passphrase for the backup file",
+    "wrongApp": "This backup belongs to another app",
+    "wipe": "Delete all data",
+    "wipeConfirm": "This permanently deletes everything stored in the app on this device. Exported backup files are not affected. Continue?",
+    "wiped": "All data deleted"
+  },
+  "plan": {
+    "free": "Free plan",
+    "pro": "Pro",
+    "upgrade": "Upgrade"
+  },
+  "paywall": {
+    "title": "Unlock everything",
+    "benefits": [
+      "Unlimited entries",
+      "Share with your household",
+      "PDF export",
+      "Home screen widgets"
+    ],
+    "plan": {
+      "annual": "Yearly",
+      "lifetime": "Lifetime"
+    },
+    "trial": "7 days free, then yearly",
+    "ctaTrial": "Start free trial",
+    "ctaBuy": "Buy once",
+    "legal": "Cancel anytime in your store account.",
+    "restore": "Restore purchases",
+    "terms": "Terms",
+    "reasons": {
+      "limit": "You've reached the free limit.",
+      "onboarding": "",
+      "settings": ""
+    }
+  },
+  "onboarding": {
+    "steps": [
+      {
+        "title": "Everything in one place",
+        "body": "Keep track of what matters, with reminders before anything is due."
+      },
+      {
+        "title": "Your data stays with you",
+        "body": "No account. Everything is stored on your phone, and you can export a backup any time."
+      },
+      {
+        "title": "Share with your household",
+        "body": "Export once, import on another phone. Both of you can edit."
+      }
+    ],
+    "next": "Next",
+    "skip": "Skip",
+    "start": "Get started"
+  },
+  "home": {
+    "title": "Migrano",
+    "attackNow": "Attack now",
+    "endAttack": "Attack is over",
+    "openSince": "Attack ongoing since {{time}}",
+    "monthStats": "This month: {{attackDays}} attack days · {{medDays}} medication days",
+    "recent": "Recent attacks",
+    "ongoing": "ongoing"
+  },
+  "diary": {
+    "groups": {
+      "trigger": "Triggers",
+      "symptom": "Symptoms",
+      "relief": "What helped",
+      "location": "Location"
+    },
+    "tags": {
+      "trigger": {
+        "stress": "Stress",
+        "sleep_lack": "Too little sleep",
+        "sleep_excess": "Too much sleep",
+        "skipped_meal": "Skipped meal",
+        "dehydration": "Dehydration",
+        "alcohol": "Alcohol",
+        "caffeine": "Caffeine",
+        "chocolate": "Chocolate",
+        "cheese": "Cheese",
+        "menstruation": "Menstruation",
+        "weather": "Weather change",
+        "bright_light": "Bright light",
+        "noise": "Noise",
+        "smells": "Smells",
+        "screen_time": "Screen time",
+        "exertion": "Physical exertion",
+        "neck_tension": "Neck tension",
+        "travel": "Travel"
+      },
+      "symptom": {
+        "aura_visual": "Aura (visual)",
+        "aura_sensory": "Aura (sensory/speech)",
+        "throbbing": "Throbbing",
+        "one_sided": "One-sided",
+        "nausea": "Nausea",
+        "vomiting": "Vomiting",
+        "photophobia": "Light sensitivity",
+        "phonophobia": "Sound sensitivity",
+        "osmophobia": "Smell sensitivity",
+        "neck_pain": "Neck pain",
+        "concentration": "Hard to concentrate",
+        "fatigue": "Fatigue",
+        "worse_movement": "Worse with movement"
+      },
+      "relief": {
+        "sleep": "Sleep",
+        "dark_room": "Dark room",
+        "cold": "Cold",
+        "heat": "Heat",
+        "water": "Water",
+        "food": "Food",
+        "caffeine": "Caffeine",
+        "fresh_air": "Fresh air",
+        "rest": "Rest"
+      },
+      "location": {
+        "left": "Left",
+        "right": "Right",
+        "both": "Both sides",
+        "forehead": "Forehead",
+        "behind_eye": "Behind the eye",
+        "neck": "Neck",
+        "top": "Top of head"
+      }
+    }
+  }
+}

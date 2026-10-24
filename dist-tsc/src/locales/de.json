@@ -1,0 +1,155 @@
+{
+    "nav": {
+        "home": "Start",
+        "settings": "Einstellungen"
+    },
+    "common": {
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "delete": "Löschen"
+    },
+    "lang": {
+        "en": "English",
+        "da": "Dansk",
+        "de": "Deutsch",
+        "sv": "Svenska",
+        "nb": "Norsk"
+    },
+    "settings": {
+        "language": "Sprache",
+        "dailyReminder": "Tägliche Erinnerung (Stunde)",
+        "privacy": "Datenschutz",
+        "support": "Support"
+    },
+    "backup": {
+        "export": "Backup exportieren / mit Haushalt teilen",
+        "passphrase": "Passphrase für die Backup-Datei wählen",
+        "wrongApp": "Dieses Backup gehört zu einer anderen App",
+        "wipe": "Alle Daten löschen",
+        "wipeConfirm": "Dadurch wird alles, was die App auf diesem Gerät gespeichert hat, dauerhaft gelöscht. Exportierte Backup-Dateien sind nicht betroffen. Fortfahren?",
+        "wiped": "Alle Daten gelöscht"
+    },
+    "plan": {
+        "free": "Kostenlos",
+        "pro": "Pro",
+        "upgrade": "Upgrade"
+    },
+    "paywall": {
+        "title": "Alles freischalten",
+        "benefits": [
+            "Unbegrenzte Einträge",
+            "Mit dem Haushalt teilen",
+            "PDF-Export",
+            "Widgets für den Startbildschirm"
+        ],
+        "plan": {
+            "annual": "Jährlich",
+            "lifetime": "Lebenslang"
+        },
+        "trial": "7 Tage kostenlos, dann jährlich",
+        "ctaTrial": "Kostenlos testen",
+        "ctaBuy": "Einmal kaufen",
+        "legal": "Jederzeit im Store-Konto kündbar.",
+        "restore": "Käufe wiederherstellen",
+        "terms": "AGB",
+        "reasons": {
+            "limit": "Du hast das kostenlose Limit erreicht.",
+            "onboarding": "",
+            "settings": ""
+        }
+    },
+    "onboarding": {
+        "steps": [
+            {
+                "title": "Alles an einem Ort",
+                "body": "Behalte den Überblick, mit Erinnerungen bevor etwas fällig ist."
+            },
+            {
+                "title": "Deine Daten bleiben bei dir",
+                "body": "Kein Konto. Alles wird auf deinem Handy gespeichert, Backup jederzeit exportierbar."
+            },
+            {
+                "title": "Mit dem Haushalt teilen",
+                "body": "Einmal exportieren, auf einem anderen Handy importieren. Beide können bearbeiten."
+            }
+        ],
+        "next": "Weiter",
+        "skip": "Überspringen",
+        "start": "Los geht's"
+    },
+    "home": {
+        "title": "Migrano",
+        "attackNow": "Anfall jetzt",
+        "endAttack": "Anfall ist vorbei",
+        "openSince": "Anfall läuft seit {{time}}",
+        "monthStats": "Dieser Monat: {{attackDays}} Anfallstage · {{medDays}} Medikamententage",
+        "recent": "Letzte Anfälle",
+        "ongoing": "läuft"
+    },
+    "diary": {
+        "groups": {
+            "trigger": "Auslöser",
+            "symptom": "Symptome",
+            "relief": "Was geholfen hat",
+            "location": "Ort"
+        },
+        "tags": {
+            "trigger": {
+                "stress": "Stress",
+                "sleep_lack": "Zu wenig Schlaf",
+                "sleep_excess": "Zu viel Schlaf",
+                "skipped_meal": "Mahlzeit ausgelassen",
+                "dehydration": "Flüssigkeitsmangel",
+                "alcohol": "Alkohol",
+                "caffeine": "Koffein",
+                "chocolate": "Schokolade",
+                "cheese": "Käse",
+                "menstruation": "Menstruation",
+                "weather": "Wetterwechsel",
+                "bright_light": "Helles Licht",
+                "noise": "Lärm",
+                "smells": "Gerüche",
+                "screen_time": "Bildschirmzeit",
+                "exertion": "Körperliche Anstrengung",
+                "neck_tension": "Nackenverspannung",
+                "travel": "Reise"
+            },
+            "symptom": {
+                "aura_visual": "Aura (Sehen)",
+                "aura_sensory": "Aura (Gefühl/Sprache)",
+                "throbbing": "Pochend",
+                "one_sided": "Einseitig",
+                "nausea": "Übelkeit",
+                "vomiting": "Erbrechen",
+                "photophobia": "Lichtempfindlich",
+                "phonophobia": "Lärmempfindlich",
+                "osmophobia": "Geruchsempfindlich",
+                "neck_pain": "Nackenschmerzen",
+                "concentration": "Konzentrationsprobleme",
+                "fatigue": "Erschöpfung",
+                "worse_movement": "Schlimmer bei Bewegung"
+            },
+            "relief": {
+                "sleep": "Schlaf",
+                "dark_room": "Dunkler Raum",
+                "cold": "Kälte",
+                "heat": "Wärme",
+                "water": "Wasser",
+                "food": "Essen",
+                "caffeine": "Koffein",
+                "fresh_air": "Frische Luft",
+                "rest": "Ruhe"
+            },
+            "location": {
+                "left": "Links",
+                "right": "Rechts",
+                "both": "Beide Seiten",
+                "forehead": "Stirn",
+                "behind_eye": "Hinter dem Auge",
+                "neck": "Nacken",
+                "top": "Scheitel"
+            }
+        }
+    }
+}

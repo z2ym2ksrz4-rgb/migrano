@@ -1,0 +1,155 @@
+{
+    "nav": {
+        "home": "Hjem",
+        "settings": "Indstillinger"
+    },
+    "common": {
+        "add": "Tilføj",
+        "cancel": "Annullér",
+        "save": "Gem",
+        "delete": "Slet"
+    },
+    "lang": {
+        "en": "English",
+        "da": "Dansk",
+        "de": "Deutsch",
+        "sv": "Svenska",
+        "nb": "Norsk"
+    },
+    "settings": {
+        "language": "Sprog",
+        "dailyReminder": "Daglig påmindelse (time)",
+        "privacy": "Privatliv",
+        "support": "Support"
+    },
+    "backup": {
+        "export": "Eksportér backup / del med husstanden",
+        "passphrase": "Vælg en adgangskode til backup-filen",
+        "wrongApp": "Denne backup hører til en anden app",
+        "wipe": "Slet alle data",
+        "wipeConfirm": "Dette sletter permanent alt, appen har gemt på denne enhed. Eksporterede backup-filer påvirkes ikke. Fortsæt?",
+        "wiped": "Alle data er slettet"
+    },
+    "plan": {
+        "free": "Gratis",
+        "pro": "Pro",
+        "upgrade": "Opgrader"
+    },
+    "paywall": {
+        "title": "Lås alt op",
+        "benefits": [
+            "Ubegrænset antal",
+            "Del med husstanden",
+            "PDF-eksport",
+            "Widgets på hjemmeskærmen"
+        ],
+        "plan": {
+            "annual": "Årligt",
+            "lifetime": "Livstid"
+        },
+        "trial": "7 dage gratis, derefter årligt",
+        "ctaTrial": "Start gratis prøve",
+        "ctaBuy": "Køb én gang",
+        "legal": "Opsig når som helst i din butikskonto.",
+        "restore": "Gendan køb",
+        "terms": "Vilkår",
+        "reasons": {
+            "limit": "Du har nået grænsen for gratis.",
+            "onboarding": "",
+            "settings": ""
+        }
+    },
+    "onboarding": {
+        "steps": [
+            {
+                "title": "Alt samlet ét sted",
+                "body": "Hold styr på det vigtige, med påmindelser før noget forfalder."
+            },
+            {
+                "title": "Dine data bliver hos dig",
+                "body": "Ingen konto. Alt gemmes på din telefon, og du kan eksportere en backup når som helst."
+            },
+            {
+                "title": "Del med husstanden",
+                "body": "Eksportér én gang, importér på en anden telefon. I kan begge redigere."
+            }
+        ],
+        "next": "Næste",
+        "skip": "Spring over",
+        "start": "Kom i gang"
+    },
+    "home": {
+        "title": "Migrano",
+        "attackNow": "Anfald nu",
+        "endAttack": "Anfaldet er slut",
+        "openSince": "Anfald i gang siden {{time}}",
+        "monthStats": "Denne måned: {{attackDays}} anfaldsdage · {{medDays}} medicindage",
+        "recent": "Seneste anfald",
+        "ongoing": "i gang"
+    },
+    "diary": {
+        "groups": {
+            "trigger": "Triggere",
+            "symptom": "Symptomer",
+            "relief": "Hvad hjalp",
+            "location": "Placering"
+        },
+        "tags": {
+            "trigger": {
+                "stress": "Stress",
+                "sleep_lack": "For lidt søvn",
+                "sleep_excess": "For meget søvn",
+                "skipped_meal": "Sprunget måltid over",
+                "dehydration": "Væskemangel",
+                "alcohol": "Alkohol",
+                "caffeine": "Koffein",
+                "chocolate": "Chokolade",
+                "cheese": "Ost",
+                "menstruation": "Menstruation",
+                "weather": "Vejrskift",
+                "bright_light": "Stærkt lys",
+                "noise": "Støj",
+                "smells": "Lugte",
+                "screen_time": "Skærmtid",
+                "exertion": "Fysisk anstrengelse",
+                "neck_tension": "Spændinger i nakken",
+                "travel": "Rejse"
+            },
+            "symptom": {
+                "aura_visual": "Aura (syn)",
+                "aura_sensory": "Aura (følelse/tale)",
+                "throbbing": "Pulserende",
+                "one_sided": "Ensidig",
+                "nausea": "Kvalme",
+                "vomiting": "Opkastning",
+                "photophobia": "Lysfølsom",
+                "phonophobia": "Lydfølsom",
+                "osmophobia": "Lugtfølsom",
+                "neck_pain": "Nakkesmerter",
+                "concentration": "Svært at koncentrere sig",
+                "fatigue": "Træthed",
+                "worse_movement": "Forværres ved bevægelse"
+            },
+            "relief": {
+                "sleep": "Søvn",
+                "dark_room": "Mørkt rum",
+                "cold": "Kulde",
+                "heat": "Varme",
+                "water": "Vand",
+                "food": "Mad",
+                "caffeine": "Koffein",
+                "fresh_air": "Frisk luft",
+                "rest": "Hvile"
+            },
+            "location": {
+                "left": "Venstre",
+                "right": "Højre",
+                "both": "Begge sider",
+                "forehead": "Pande",
+                "behind_eye": "Bag øjet",
+                "neck": "Nakke",
+                "top": "Isse"
+            }
+        }
+    }
+}
