@@ -81,7 +81,7 @@ workflows:
         RELEASE: "1"
         PACKAGE_NAME: com.ilumie.migrano  # <- change per app
       node: 22
-      java: 17
+      java: 21   # Capacitor 7 Android requires JDK 21
     triggering:
       events: [tag]
       branch_patterns: [{ pattern: "main" }]
