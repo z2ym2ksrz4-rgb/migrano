@@ -8,7 +8,7 @@
   "termsUrl": "https://migrano.app/terms",
   "revenueCat": {
     "ios": "appl_pSqHbcJXFMPvcDgjmzVahUHuNCk",
-    "android": "REPLACE_WITH_RC_ANDROID_PUBLIC_KEY",
+    "android": "goog_naseuIQnujvznjQFHpTgJpgQMmH",
     "entitlement": "pro"
   },
   "dailyReminderHour": 20
