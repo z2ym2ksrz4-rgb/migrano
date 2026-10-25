@@ -11,10 +11,14 @@
 6. **RevenueCat** ✅ Play app `app7cf09adcf2`, public key `goog_naseuIQnujvznjQFHpTgJpgQMmH` in `app.config.json`; products `migrano_pro_yearly:p1y` + `migrano_pro_lifetime` attached to entitlement `pro` and offering `default`. ⏳ Steffen: upload the service-account JSON under RevenueCat → Apps → Migrano (Play Store) → Service Account Credentials (and give the service account "View financial data" + "Manage orders" in Play Console → Users and permissions), otherwise purchases cannot be validated.
 7. **Testers** ✅ "Ilumie testers" attached to Internal testing (track 4701151434731933137). ⏳ Steffen: add reviewer/licence testers under Setup → Licence testing so Pro can be bought without charge.
 
+## Status 25 Oct, late evening
+- Internal testing: live, version code 11. Tester link: https://play.google.com/apps/internaltest/4701151434731933137 (testers must be on the "Ilumie testers" list and opt in via the link).
+- Licence testing: "Ilumie testers" list attached (account-wide) → Pro purchases are free for them.
+- Service account already has account-level "View financial data" + "Manage orders" (covers Migrano) – only the JSON upload in RevenueCat is left.
+- Production: countries = all (178) saved; release draft "1.0.0" (bundle 11, release notes in 5 languages) saved. Publishing overview shows 14 pending changes; blocked by one issue: Play's SSL check of https://migrano.app/privacy failed earlier (GitHub Pages cert was pending). Cert issued + Enforce HTTPS on 25 Oct 22:50; privacy URL re-saved. Google re-validates on its own schedule – once the warning clears, Steffen clicks "Indsend 14 ændringer til gennemgang" (sends production + listing + countries to Google review; roll-out of production can still be timed to the Apple release).
+
 ## Remaining (Steffen)
 - RevenueCat → Apps → Migrano (Play Store) → Service Account Credentials: upload the new JSON key; Play Console → Users and permissions → the service account needs "View financial data" + "Manage orders".
-- Setup → Licence testing: add steffenmt@icloud.com / steffenat@gmail.com so Pro can be bought without charge during internal testing.
-- Internal testing link appears under Testing → Internal testing → Testers once Google has processed the release.
 
 ## (Historic) What blocked the first Android build (both are Steffen-only – the safety layer stops Claude from handling the private key / the service-account secret)
 - Keystore `migrano_upload` is **not** in Codemagic yet (only flytteklar/Abonnia/Furkeep). Upload the `.jks` with the password from `migrano-upload.pass`, alias `migrano`.
