@@ -49,7 +49,8 @@
         "saveDay": "Save the day",
         "savedDay": "Today is saved",
         "periodToday": "Period today",
-        "periodShort": "period"
+        "periodShort": "period",
+        "periodHint": "Tap to mark today"
     },
     "episode": {
         "title": "Attack",
@@ -86,7 +87,9 @@
         "cmpThis": "This attack",
         "cmpAvg": "Average of {{n}} attacks",
         "cmpNeedMore": "Log a couple more attacks and this will show how this one compares to your average.",
-        "cmpLocked": "Pro shows how this attack compares to your average."
+        "cmpLocked": "Pro shows how this attack compares to your average.",
+        "liveHint": "Ending the attack opens a few short questions – answer what you can.",
+        "howBadNow": "How bad is it right now?"
     },
     "calendar": {
         "noAttacks": "No attack this day."
@@ -142,7 +145,10 @@
         "mohShareBtn": "Share text for your doctor",
         "mohShare": "Medication days ({{app}}): {{months}}. Limit chosen: {{n}} days/month.",
         "mohHint": "Stays calm as long as you are under {{n}} days a month.",
-        "patPressure": "{{pct}}% of your attacks started on a day with falling air pressure (≥{{hpa}} hPa) – against {{all}}% of all days."
+        "patPressure": "{{pct}}% of your attacks started on a day with falling air pressure (≥{{hpa}} hPa) – against {{all}}% of all days.",
+        "learnTitle": "What it looks like",
+        "learnNote": "Observations from your own log, in plain words. They describe – they do not explain.",
+        "learnEmpty": "Once you have logged a handful of attacks and daily check-ins, this will sum up what stands out in plain words."
     },
     "report": {
         "title": "Headache diary report",
@@ -165,7 +171,9 @@
         "footer": "Created with {{app}} — a self-observation diary, not a medical device",
         "chartTitle": "Per month",
         "notesTitle": "Notes for the doctor",
-        "notesPh": "Questions, changes in medication, anything else…"
+        "notesPh": "Questions, changes in medication, anything else…",
+        "pressureCol": "hPa (Δ)",
+        "pressureNote": "hPa = daily mean air pressure for your place, Δ = change from the day before."
     },
     "notif": {
         "checkinTitle": "How was today?",
@@ -314,7 +322,13 @@
             "aspirin": "Aspirin"
         },
         "medsOther": "Other medication…",
-        "medsHint": "You can change this any time under Medication. Migrano never gives dosing advice."
+        "medsHint": "You can change this any time under Medication. Migrano never gives dosing advice.",
+        "widgetTitle": "One tap from the home screen",
+        "widgetBody": "The Attack now widget starts an attack without opening the app – useful when the pain is at its worst.",
+        "widgetLater": "You can add it later: Settings → Widget → Add.",
+        "extrasTitle": "Extras",
+        "extrasBody": "Optional. All three are part of Pro – they switch on the moment you start the free trial.",
+        "extrasNote": "You can change all of this in Settings at any time."
     },
     "lang": {
         "en": "English",
@@ -435,7 +449,13 @@
         "noData": "Fetching air pressure…",
         "falling": "Falling {{d}} hPa since yesterday",
         "rising": "Rising {{d}} hPa since yesterday",
-        "stable": "Steady since yesterday"
+        "stable": "Steady since yesterday",
+        "whatIsIt": "What does it mean?",
+        "infoTitle": "About air pressure",
+        "infoWhat": "Air pressure (hPa) is the weight of the atmosphere. Around 1013 hPa is average; rising pressure usually means settled weather, falling pressure means a front is coming.",
+        "infoWhy": "Many people with migraine report attacks when the pressure drops quickly (a fall of 5 hPa or more within a day), but studies disagree and the effect differs from person to person. The absolute value matters less than the change.",
+        "infoApp": "Migrano stores the daily mean for your place and compares the days your attacks started with all other days. The pattern card and the doctor's report show that comparison – nothing more.",
+        "infoDisclaimer": "This is a description of your own log, not a medical statement. Talk to your doctor about what it means for you."
     },
     "health": {
         "title": "Apple Health",
@@ -444,5 +464,17 @@
         "offToast": "Apple Health export turned off (existing entries stay in Health)",
         "denied": "Apple Health access was not granted. You can change it in the Health app under Sharing.",
         "synced": "{{n}} attacks written to Apple Health"
+    },
+    "learn": {
+        "weekday": "{{pct}}% of your attacks started on a {{day}}.",
+        "time": "Your attacks most often start in the {{part}} ({{pct}}%).",
+        "fieldLower": "The day before an attack your {{field}} averaged {{before}}, against {{calm}} before calm days.",
+        "fieldHigher": "The day before an attack your {{field}} averaged {{before}}, against {{calm}} before calm days.",
+        "period": "{{pct}}% of your attacks started within a day of your period.",
+        "pressureYes": "{{pct}}% of your attacks started on a day the air pressure fell at least {{hpa}} hPa – only {{all}}% of all days had such a drop.",
+        "pressureNo": "Falling air pressure does not stand out: {{pct}}% of your attacks started on a falling-pressure day, about the same as all days ({{all}}%).",
+        "trigger": "\"{{tag}}\" is the trigger you log most often – on {{pct}}% of attacks.",
+        "symptom": "\"{{tag}}\" comes with {{pct}}% of your attacks.",
+        "medDays": "You reached {{n}} medication days this month – your limit is {{limit}}. Worth mentioning to your doctor."
     }
 }

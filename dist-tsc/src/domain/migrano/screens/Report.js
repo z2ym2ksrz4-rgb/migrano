@@ -2,7 +2,8 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Sheet, localDay } from "@/core/ui";
-import { monthRange, monthlySeries, medDaysByMonth } from "@/core/diary";
+import { monthRange, monthlySeries, medDaysByMonth, patterns, tagFrequency, weatherDays } from "@/core/diary";
+import { learningSentences } from "../learning";
 import { useSettings } from "@/core/settings";
 import { maybeAskForReview } from "@/core/review";
 export function ReportSheet({ open, onClose }) {
@@ -32,7 +33,21 @@ export function ReportSheet({ open, onClose }) {
             const series = await monthlySeries(months);
             const med = await medDaysByMonth(months);
             const monthly = series.map((m, i) => ({ month: m.month, attackDays: m.attackDays, medDays: med[i]?.medDays ?? 0 }));
-            const doc = await buildReport(fromIso, toIso, t, i18n.language, { name: settings.userName, notes, monthly });
+            const pat = await patterns();
+            const freq = await tagFrequency(fromIso, toIso);
+            const learning = learningSentences(pat, freq, t, i18n.language, med[med.length - 1]?.medDays ?? 0, settings.medThreshold);
+            const wd = await weatherDays(fromIso.slice(0, 10), toIso.slice(0, 10));
+            const byDate = new Map(wd.map((w) => [w.date, w.pressureMean]));
+            const pressure = new Map();
+            for (const w of wd) {
+                if (w.pressureMean == null)
+                    continue;
+                const d = new Date(w.date + "T12:00:00");
+                d.setDate(d.getDate() - 1);
+                const prev = byDate.get(d.toISOString().slice(0, 10));
+                pressure.set(w.date, { p: Math.round(w.pressureMean), delta: prev != null ? Math.round(w.pressureMean - prev) : null });
+            }
+            const doc = await buildReport(fromIso, toIso, t, i18n.language, { name: settings.userName, notes, monthly, learning, pressure: settings.weatherEnabled ? pressure : undefined });
             await sharePdf(doc, `migrano-${fromIso.slice(0, 10)}-${toIso.slice(0, 10)}.pdf`, t("report.title"));
             await settings.set("successEvents", settings.successEvents + 1);
             void maybeAskForReview();

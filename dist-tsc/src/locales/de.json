@@ -49,7 +49,8 @@
         "saveDay": "Tag speichern",
         "savedDay": "Heute ist gespeichert",
         "periodToday": "Periode heute",
-        "periodShort": "Periode"
+        "periodShort": "Periode",
+        "periodHint": "Tippen, um heute zu markieren"
     },
     "episode": {
         "title": "Anfall",
@@ -86,7 +87,9 @@
         "cmpThis": "Dieser Anfall",
         "cmpAvg": "Durchschnitt aus {{n}} Anfällen",
         "cmpNeedMore": "Erfassen Sie noch ein paar Anfälle – dann sehen Sie hier den Vergleich mit Ihrem Durchschnitt.",
-        "cmpLocked": "Pro zeigt, wie dieser Anfall im Vergleich zu Ihrem Durchschnitt liegt."
+        "cmpLocked": "Pro zeigt, wie dieser Anfall im Vergleich zu Ihrem Durchschnitt liegt.",
+        "liveHint": "Beim Beenden kommen ein paar kurze Fragen – beantworte, was du kannst.",
+        "howBadNow": "Wie stark ist es gerade?"
     },
     "calendar": {
         "noAttacks": "Kein Anfall an diesem Tag."
@@ -142,7 +145,10 @@
         "mohShareBtn": "Text für die Ärztin teilen",
         "mohShare": "Medikamententage ({{app}}): {{months}}. Gewählte Grenze: {{n}} Tage/Monat.",
         "mohHint": "Bleibt ruhig, solange Sie unter {{n}} Tagen im Monat liegen.",
-        "patPressure": "{{pct}}% deiner Attacken begannen an einem Tag mit fallendem Luftdruck (≥{{hpa}} hPa) – gegenüber {{all}}% aller Tage."
+        "patPressure": "{{pct}}% deiner Attacken begannen an einem Tag mit fallendem Luftdruck (≥{{hpa}} hPa) – gegenüber {{all}}% aller Tage.",
+        "learnTitle": "So sieht es aus",
+        "learnNote": "Beobachtungen aus deinem eigenen Tagebuch in einfachen Worten. Sie beschreiben – sie erklären nicht.",
+        "learnEmpty": "Sobald du eine Handvoll Attacken und tägliche Check-ins eingetragen hast, fassen wir hier zusammen, was auffällt."
     },
     "report": {
         "title": "Kopfschmerztagebuch – Bericht",
@@ -165,7 +171,9 @@
         "footer": "Erstellt mit {{app}} – ein Tagebuch zur Selbstbeobachtung, kein Medizinprodukt",
         "chartTitle": "Pro Monat",
         "notesTitle": "Notizen für die Ärztin",
-        "notesPh": "Fragen, Änderungen der Medikation, Sonstiges…"
+        "notesPh": "Fragen, Änderungen der Medikation, Sonstiges…",
+        "pressureCol": "hPa (Δ)",
+        "pressureNote": "hPa = Tagesmittel des Luftdrucks an deinem Ort, Δ = Änderung zum Vortag."
     },
     "notif": {
         "checkinTitle": "Wie war heute?",
@@ -314,7 +322,13 @@
             "aspirin": "ASS"
         },
         "medsOther": "Anderes Medikament…",
-        "medsHint": "Jederzeit unter Medikamente änderbar. Migrano gibt nie Dosierungsempfehlungen."
+        "medsHint": "Jederzeit unter Medikamente änderbar. Migrano gibt nie Dosierungsempfehlungen.",
+        "widgetTitle": "Ein Tipp vom Homescreen",
+        "widgetBody": "Das Widget „Attacke jetzt“ startet eine Attacke, ohne die App zu öffnen – hilfreich, wenn der Schmerz am stärksten ist.",
+        "widgetLater": "Du kannst es später hinzufügen: Einstellungen → Widget → Hinzufügen.",
+        "extrasTitle": "Extras",
+        "extrasBody": "Optional. Alle drei gehören zu Pro – sie werden aktiv, sobald du die kostenlose Testphase startest.",
+        "extrasNote": "Alles lässt sich jederzeit in den Einstellungen ändern."
     },
     "lang": {
         "en": "English",
@@ -435,7 +449,13 @@
         "noData": "Luftdruck wird geladen…",
         "falling": "{{d}} hPa gefallen seit gestern",
         "rising": "{{d}} hPa gestiegen seit gestern",
-        "stable": "Stabil seit gestern"
+        "stable": "Stabil seit gestern",
+        "whatIsIt": "Was bedeutet das?",
+        "infoTitle": "Über Luftdruck",
+        "infoWhat": "Luftdruck (hPa) ist das Gewicht der Atmosphäre. Rund 1013 hPa ist Durchschnitt; steigender Druck bedeutet meist ruhiges Wetter, fallender Druck eine nahende Front.",
+        "infoWhy": "Viele Menschen mit Migräne berichten von Attacken, wenn der Druck schnell fällt (5 hPa oder mehr innerhalb eines Tages), aber Studien sind uneins, und es ist von Person zu Person verschieden. Die Änderung zählt mehr als der absolute Wert.",
+        "infoApp": "Migrano speichert den Tagesmittelwert für deinen Ort und vergleicht die Tage, an denen deine Attacken begannen, mit allen anderen Tagen. Die Musterkarte und der Arztbericht zeigen diesen Vergleich – nicht mehr.",
+        "infoDisclaimer": "Das ist eine Beschreibung deines eigenen Tagebuchs, keine medizinische Aussage. Sprich mit deiner Ärztin oder deinem Arzt darüber, was es für dich bedeutet."
     },
     "health": {
         "title": "Apple Health",
@@ -444,5 +464,17 @@
         "offToast": "Export zu Apple Health ausgeschaltet (vorhandene Einträge bleiben in Health)",
         "denied": "Zugriff auf Apple Health wurde nicht erteilt. Du kannst es in der Health-App unter Teilen ändern.",
         "synced": "{{n}} Attacken in Apple Health geschrieben"
+    },
+    "learn": {
+        "weekday": "{{pct}}% deiner Attacken begannen an einem {{day}}.",
+        "time": "Deine Attacken beginnen am häufigsten am {{part}} ({{pct}}%).",
+        "fieldLower": "Am Tag vor einer Attacke lag dein Wert für {{field}} im Schnitt bei {{before}}, vor ruhigen Tagen bei {{calm}}.",
+        "fieldHigher": "Am Tag vor einer Attacke lag dein Wert für {{field}} im Schnitt bei {{before}}, vor ruhigen Tagen bei {{calm}}.",
+        "period": "{{pct}}% deiner Attacken begannen innerhalb eines Tages um deine Periode.",
+        "pressureYes": "{{pct}}% deiner Attacken begannen an einem Tag, an dem der Luftdruck um mindestens {{hpa}} hPa fiel – nur {{all}}% aller Tage hatten so einen Abfall.",
+        "pressureNo": "Fallender Luftdruck fällt nicht auf: {{pct}}% deiner Attacken begannen an einem Tag mit Druckabfall, etwa wie alle Tage ({{all}}%).",
+        "trigger": "„{{tag}}“ ist der Auslöser, den du am häufigsten einträgst – bei {{pct}}% der Attacken.",
+        "symptom": "„{{tag}}“ begleitet {{pct}}% deiner Attacken.",
+        "medDays": "Du hast diesen Monat {{n}} Medikamententage erreicht – deine Grenze ist {{limit}}. Erwähne es bei deinem Arzt."
     }
 }

@@ -8,6 +8,7 @@ import { useProGate } from "@/core/purchases";
 import { useSettings } from "@/core/settings";
 import { useUi } from "../store";
 import { ReportSheet } from "./Report";
+import { learningSentences } from "../learning";
 
 /** Descriptive statistics only: counts, averages and shares. No scoring, no classification, no advice. */
 export function Insights() {
@@ -15,6 +16,7 @@ export function Insights() {
   const lang = i18n.language;
   const gate = useProGate();
   const version = useUi((s) => s.version);
+  const openInfo = useUi((s) => s.openInfo);
   const threshold = useSettings((s) => s.medThreshold);
   const [series, setSeries] = useState<{ month: string; episodes: number; attackDays: number }[]>([]);
   const [sum, setSum] = useState<Awaited<ReturnType<typeof episodeSummary>> | null>(null);
@@ -97,6 +99,11 @@ export function Insights() {
         </div>
       )}
 
+      <h2>{t("insights.learnTitle")}</h2>
+      {(() => { const lines = learningSentences(pat, freq, t, lang, moh[moh.length - 1]?.medDays ?? 0, threshold); return lines.length
+        ? <div className="card col learn">{lines.map((l, i) => <p key={i}>{l}</p>)}<span className="muted small">{t("insights.learnNote")}</span></div>
+        : <p className="muted small">{t("insights.learnEmpty")}</p>; })()}
+
       <h2>{t("insights.patterns")}</h2>
       {pat && (pat.weekday || pat.timeOfDay || pat.fields.length || pat.period || pat.pressure) ? (
         <div className="stack">
@@ -108,7 +115,7 @@ export function Insights() {
               <span className="muted small">{t("insights.patFieldBasis", { n: f.n })}</span>
             </div>
           ))}
-          {pat.pressure && <div className="card col"><strong>{t("insights.patPressure", { pct: Math.round((pat.pressure.attacksOnDrop / pat.pressure.attacks) * 100), all: Math.round(pat.pressure.dropShareAll * 100), hpa: pat.pressure.threshold })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.pressure.attacks })}</span></div>}
+          {pat.pressure && <div className="card col"><strong>{t("insights.patPressure", { pct: Math.round((pat.pressure.attacksOnDrop / pat.pressure.attacks) * 100), all: Math.round(pat.pressure.dropShareAll * 100), hpa: pat.pressure.threshold })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.pressure.attacks })} · <button type="button" className="linklike small" onClick={() => openInfo("pressure")}>{t("weather.whatIsIt")}</button></span></div>}
           {pat.period && <div className="card col"><strong>{t("insights.patPeriod", { pct: Math.round(pat.period.share * 100) })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.attacks })}</span></div>}
           <p className="muted small">{t("insights.patNote")}</p>
         </div>

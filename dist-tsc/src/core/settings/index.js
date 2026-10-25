@@ -22,6 +22,7 @@ const defaults = {
     weatherLon: null,
     weatherFetchedAt: null,
     healthExport: false,
+    onboardingWishes: null,
 };
 export const useSettings = create((setState, get) => ({
     ...defaults,

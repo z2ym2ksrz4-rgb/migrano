@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "@/core/settings";
 import { ensurePermission } from "@/core/notifications";
@@ -6,6 +6,9 @@ import { usePaywall } from "@/core/purchases";
 import { addMedication, listMedications } from "@/core/diary";
 import i18n, { SUPPORTED, type Lang } from "@/core/i18n";
 import { haptics } from "@/core/ui";
+import { Capacitor } from "@capacitor/core";
+import { searchPlaces, type Place } from "@/core/diary";
+import { WidgetPreview } from "@/domain/migrano/components/WidgetPreview";
 
 /**
  * Onboarding: (0) language + first name, (1-3) three short intro screens, (4) two setup questions
@@ -21,9 +24,17 @@ export function Onboarding() {
   const [attacks, setAttacks] = useState<string | null>(null);
   const [meds, setMeds] = useState<Set<string>>(new Set());
   const [otherMed, setOtherMed] = useState("");
+  const [wantCycle, setWantCycle] = useState(false);
+  const [wantHealth, setWantHealth] = useState(false);
+  const [placeQ, setPlaceQ] = useState("");
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [place, setPlace] = useState<Place | null>(null);
+  const [placeBusy, setPlaceBusy] = useState(false);
+  const ios = Capacitor.getPlatform() === "ios";
   const intro = t("onboarding.steps", { returnObjects: true }) as { title: string; body: string }[];
   const medOptions = ["triptan", "ibuprofen", "paracetamol", "aspirin"] as const;
-  const total = intro.length + 2; // name, intro…, setup
+  const total = intro.length + 4; // name, intro…, widget, setup, extras
+  const SETUP = total - 2, EXTRAS = total - 1, WIDGET = intro.length + 1;
 
   const finish = async () => {
     const n = name.trim();
@@ -34,6 +45,9 @@ export function Onboarding() {
     if (otherMed.trim() && !existing.includes(otherMed.trim().toLowerCase())) await addMedication(otherMed.trim(), "acute");
     // Threshold follows the guidance: 10 days for triptans/combinations, 15 for simple analgesics only.
     await settings.set("medThreshold", meds.has("triptan") || meds.size === 0 ? 10 : 15);
+    if (place) { await settings.set("weatherPlace", [place.name, place.admin, place.country].filter(Boolean).join(", ")); await settings.set("weatherLat", place.lat); await settings.set("weatherLon", place.lon); }
+    const wishes = { cycle: wantCycle, weather: !!place, health: wantHealth && ios };
+    await settings.set("onboardingWishes", wishes.cycle || wishes.weather || wishes.health ? JSON.stringify(wishes) : null);
     await ensurePermission();
     await settings.set("onboardingDone", true);
     showPaywall("onboarding");
@@ -61,7 +75,62 @@ export function Onboarding() {
     );
   }
 
-  if (step === total - 1) {
+  if (step === WIDGET) {
+    const steps = t("widget.stepsIos", { returnObjects: true }) as string[];
+    return (
+      <section className="screen onboarding">
+        <div className="dots">{Array.from({ length: total }, (_, i) => <span key={i} className={i === step ? "on" : ""} />)}</div>
+        <h1>{t("onboarding.widgetTitle")}</h1>
+        <p>{t("onboarding.widgetBody")}</p>
+        <WidgetPreview />
+        <ol className="steps">{steps.map((x, i) => <li key={i}>{x}</li>)}</ol>
+        <p className="muted small">{t("onboarding.widgetLater")}</p>
+        <div className="row">
+          <button className="ghost" onClick={() => setStep(SETUP)}>{t("onboarding.skip")}</button>
+          <button className="cta" onClick={next}>{t("onboarding.next")}</button>
+        </div>
+      </section>
+    );
+  }
+
+  if (step === EXTRAS) {
+    const search = async (e: FormEvent) => { e.preventDefault(); if (placeQ.trim().length < 2) return; setPlaceBusy(true); try { setPlaces(await searchPlaces(placeQ, settings.language)); } catch { setPlaces([]); } finally { setPlaceBusy(false); } };
+    return (
+      <section className="screen onboarding">
+        <div className="dots">{Array.from({ length: total }, (_, i) => <span key={i} className={i === step ? "on" : ""} />)}</div>
+        <h1>{t("onboarding.extrasTitle")}</h1>
+        <p className="muted">{t("onboarding.extrasBody")}</p>
+        <label className="check"><input type="checkbox" checked={wantCycle} onChange={(e) => setWantCycle(e.target.checked)} /> {t("settings.cycleTracking")} <span className="pill pro">PRO</span></label>
+        <small className="muted" style={{ display: "block", marginTop: -4, marginBottom: 10 }}>{t("settings.cycleHint")}</small>
+        <div className="field"><span>{t("weather.title")} <span className="pill pro">PRO</span></span>
+          {place ? (
+            <div className="card"><div><strong>{place.name}</strong><div className="muted small">{[place.admin, place.country].filter(Boolean).join(", ")}</div></div><button type="button" className="ghost" onClick={() => { setPlace(null); setPlaces([]); }}>{t("weather.changePlace")}</button></div>
+          ) : (
+            <>
+              <form className="row tight" onSubmit={search}>
+                <input style={{ flex: 1 }} value={placeQ} onChange={(e) => setPlaceQ(e.target.value)} placeholder={t("weather.placePh")} />
+                <button type="submit" className="ghost" disabled={placeBusy}>{t("common.search")}</button>
+              </form>
+              {places.length > 0 && <ul className="list" style={{ marginTop: 8 }}>{places.map((p, i) => <li key={i} className="tap" onClick={() => { setPlace(p); setPlaces([]); haptics.tap(); }}><div><strong>{p.name}</strong><small>{[p.admin, p.country].filter(Boolean).join(", ")}</small></div><span className="muted">›</span></li>)}</ul>}
+            </>
+          )}
+          <small className="muted">{t("weather.hint")}</small>
+        </div>
+        {ios && (
+          <>
+            <label className="check"><input type="checkbox" checked={wantHealth} onChange={(e) => setWantHealth(e.target.checked)} /> {t("health.title")} <span className="pill pro">PRO</span></label>
+            <small className="muted" style={{ display: "block", marginTop: -4 }}>{t("health.hint")}</small>
+          </>
+        )}
+        <p className="muted small" style={{ marginTop: 12 }}>{t("onboarding.extrasNote")}</p>
+        <div className="row" style={{ marginTop: 10 }}>
+          <button className="cta" onClick={() => void finish()}>{t("onboarding.start")}</button>
+        </div>
+      </section>
+    );
+  }
+
+  if (step === SETUP) {
     return (
       <section className="screen onboarding">
         <div className="dots">{Array.from({ length: total }, (_, i) => <span key={i} className={i === step ? "on" : ""} />)}</div>
@@ -79,7 +148,7 @@ export function Onboarding() {
           <small className="muted">{t("onboarding.medsHint")}</small>
         </div>
         <div className="row" style={{ marginTop: 10 }}>
-          <button className="cta" onClick={() => void finish()}>{t("onboarding.start")}</button>
+          <button className="cta" onClick={next}>{t("onboarding.next")}</button>
         </div>
       </section>
     );
@@ -92,7 +161,7 @@ export function Onboarding() {
       <h1>{s.title}</h1>
       <p>{s.body}</p>
       <div className="row">
-        <button className="ghost" onClick={() => setStep(total - 1)}>{t("onboarding.skip")}</button>
+        <button className="ghost" onClick={() => setStep(SETUP)}>{t("onboarding.skip")}</button>
         <button className="cta" onClick={next}>{t("onboarding.next")}</button>
       </div>
     </section>

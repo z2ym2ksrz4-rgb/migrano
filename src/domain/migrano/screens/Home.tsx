@@ -12,6 +12,7 @@ import { PainStar } from "../components/PainStar";
 import { publishWidget } from "../widget";
 import { maybeRefreshWeather } from "../weather";
 import { syncHealth } from "../health";
+import { applyOnboardingWishes } from "../wishes";
 import { pressureToday } from "@/core/diary";
 
 export function Home() {
@@ -52,8 +53,9 @@ export function Home() {
     else { setStatus(o ? "attack" : null); setExtra({}); }
     void publishWidget({ open: !!o, daysSince: ds, attackDays: st.attackDays, medDays: st.medDays, t });
     void syncHealth();
+    if (isPro) await applyOnboardingWishes();
     if (weatherEnabled) { await maybeRefreshWeather(); setPressure(await pressureToday()); } else setPressure(null);
-  }, [day, t, weatherEnabled]);
+  }, [day, t, weatherEnabled, isPro]);
   useEffect(() => { void load(); }, [load, version]);
 
   const onAttackNow = async () => { const e = await startEpisode(); haptics.thud(); bump(); openSheet(e.id, "quick"); };
@@ -80,7 +82,7 @@ export function Home() {
 
       <div className="hero-btn-wrap">
         {open ? (
-          <button className="hero-btn live" onClick={() => openSheet(open.id, "full")} aria-label={t("home.openSince", { time: fmtTime(open.startedAt, lang) })}>
+          <button className="hero-btn live" onClick={() => openSheet(open.id, "live")} aria-label={t("home.openSince", { time: fmtTime(open.startedAt, lang) })}>
             <PainStar size={56} />
           </button>
         ) : (
@@ -117,11 +119,21 @@ export function Home() {
         <div className="card pressure">
           <div><strong>{pressure ? t("weather.pressureNow", { p: pressure.pressure }) : t("weather.noData")}</strong>
             <div className="muted small">{pressure?.delta != null ? t(pressure.delta <= -5 ? "weather.falling" : pressure.delta >= 5 ? "weather.rising" : "weather.stable", { d: Math.abs(pressure.delta) }) : weatherPlace ?? ""}</div></div>
+          <button type="button" className="linklike small" style={{ marginRight: 8 }} onClick={() => openInfo("pressure")}>ⓘ</button>
           <span className={`pill ${pressure?.delta != null && pressure.delta <= -5 ? "warnpill" : ""}`}>{pressure?.delta != null ? `${pressure.delta > 0 ? "↑" : pressure.delta < 0 ? "↓" : "→"} ${Math.abs(pressure.delta)} hPa` : "–"}</span>
         </div>
       )}
 
       <h2>{t("home.checkinTitle")}</h2>
+      {cycleTracking && (
+        <div className="period-row">
+          <button type="button" className={`chip ${extra.period ? "on" : ""}`} onClick={async () => {
+            const n = { ...extra, period: !extra.period }; setExtra(n); haptics.tap();
+            if (today) { await setCheckin(day, today.status, n, today.note); bump(); }
+          }}>{extra.period ? "✓ " : ""}{t("home.periodToday")}</button>
+          <span className="muted small">{t("home.periodHint")}</span>
+        </div>
+      )}
       {saved ? (
         <div className="card">
           <div><strong>{t("home.savedDay")}</strong><div className="muted small">{summary()}</div></div>
@@ -144,9 +156,6 @@ export function Home() {
               </div>
             </div>
           ))}
-          {cycleTracking && (
-            <button type="button" className={`chip ${extra.period ? "on" : ""}`} style={{ alignSelf: "flex-start" }} onClick={() => setExtra({ ...extra, period: !extra.period })}>{t("home.periodToday")}</button>
-          )}
           <button className="cta" style={{ marginTop: 6 }} disabled={!status} onClick={saveDay}>{t("home.saveDay")}</button>
         </div>
       )}

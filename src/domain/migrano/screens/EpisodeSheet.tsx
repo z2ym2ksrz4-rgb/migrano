@@ -87,6 +87,24 @@ export function EpisodeSheet() {
     );
   }
 
+  // ---- live: the attack is running — one screen: how bad now, end it, or edit everything ---------------------
+  if (mode === "live") {
+    const cur = ep.intensity == null ? null : ep.intensity <= 3 ? "mild" : ep.intensity <= 6 ? "moderate" : "severe";
+    return (
+      <Sheet open onClose={close} title={t("home.openSince", { time: fmtTime(ep.startedAt, i18n.language) })}>
+        <button className="cta" style={{ marginTop: 4 }} onClick={onEnd}>{t("home.endAttack")}</button>
+        <p className="muted small" style={{ marginTop: 10 }}>{t("episode.liveHint")}</p>
+        <h3 style={{ marginTop: 14 }}>{t("episode.howBadNow")}</h3>
+        <div className="bigchoice">
+          {[{ v: 3, k: "mild" }, { v: 6, k: "moderate" }, { v: 9, k: "severe" }].map((o) => (
+            <button key={o.k} type="button" className={`big ${o.k} ${cur === o.k ? "on" : ""}`} onClick={() => { void patch({ intensity: o.v }); haptics.tap(); }}>{t(`episode.level.${o.k}`)}</button>
+          ))}
+        </div>
+        <button type="button" className="linklike" style={{ marginTop: 16 }} onClick={() => setMode("full")}>{t("episode.editAll")}</button>
+      </Sheet>
+    );
+  }
+
   // ---- journey: 4 short steps -------------------------------------------------------------------------------
   if (mode === "journey") {
     const cur = steps[step];

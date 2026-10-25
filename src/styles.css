@@ -85,7 +85,7 @@ label.check { display:flex; align-items:center; gap:10px; margin:10px 0; }
 /* ---------- home ---------- */
 .hero { margin:4px 0 10px; }
 .hero-btn-wrap { display:flex; flex-direction:column; align-items:center; gap:12px; padding:14px 0 18px; }
-.hero-btn { width:148px; height:148px; border-radius:50%; padding:0; display:flex; align-items:center; justify-content:center; color:#FFF4EC;
+.hero-btn { -webkit-appearance:none; appearance:none; flex:0 0 148px; width:148px; min-width:148px; max-width:148px; height:148px; min-height:148px; max-height:148px; aspect-ratio:1 / 1; box-sizing:border-box; border-radius:50%; padding:0; margin:0; display:flex; align-items:center; justify-content:center; color:#FFF4EC;
   background:radial-gradient(circle at 30% 25%, #FF8C6B 0%, #E8573F 55%, #C93A32 100%);
   box-shadow:0 10px 30px rgba(232,87,63,.35), 0 2px 6px rgba(27,26,46,.12), inset 0 -4px 10px rgba(0,0,0,.12); transition:transform .12s ease, box-shadow .12s ease; }
 .hero-btn:active { transform:scale(.96); box-shadow:0 4px 14px rgba(232,87,63,.3); }
@@ -197,3 +197,10 @@ label.check { display:flex; align-items:center; gap:10px; margin:10px 0; }
 /* air pressure card (Home) */
 .card.pressure { align-items: center; }
 .pill.warnpill { background: var(--accent); color: #fff; }
+
+/* round 2 */
+.card > button.ghost { white-space:nowrap; flex:0 0 auto; }
+.period-row { display:flex; gap:8px; align-items:center; margin:-4px 0 10px; }
+.learn p { margin:6px 0; line-height:1.5; }
+.linklike.small { font-size:.85rem; }
+.bigchoice .big.on { background:var(--brand); color:var(--brand-ink); border-color:var(--brand); }

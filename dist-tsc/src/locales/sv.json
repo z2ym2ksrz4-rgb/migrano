@@ -49,7 +49,8 @@
         "saveDay": "Spara dagen",
         "savedDay": "Idag är sparad",
         "periodToday": "Mens idag",
-        "periodShort": "mens"
+        "periodShort": "mens",
+        "periodHint": "Tryck för att markera idag"
     },
     "episode": {
         "title": "Anfall",
@@ -86,7 +87,9 @@
         "cmpThis": "Detta anfall",
         "cmpAvg": "Genomsnitt av {{n}} anfall",
         "cmpNeedMore": "Logga ett par anfall till så visar vi hur detta ligger mot ditt genomsnitt.",
-        "cmpLocked": "Pro visar hur detta anfall ligger mot ditt genomsnitt."
+        "cmpLocked": "Pro visar hur detta anfall ligger mot ditt genomsnitt.",
+        "liveHint": "När du avslutar anfallet kommer några korta frågor – svara på det du kan.",
+        "howBadNow": "Hur illa är det just nu?"
     },
     "calendar": {
         "noAttacks": "Inget anfall denna dag."
@@ -142,7 +145,10 @@
         "mohShareBtn": "Dela text till läkaren",
         "mohShare": "Medicindagar ({{app}}): {{months}}. Vald gräns: {{n}} dagar/mån.",
         "mohHint": "Förblir lugn så länge du ligger under {{n}} dagar i månaden.",
-        "patPressure": "{{pct}}% av dina anfall började en dag med fallande lufttryck (≥{{hpa}} hPa) – mot {{all}}% av alla dagar."
+        "patPressure": "{{pct}}% av dina anfall började en dag med fallande lufttryck (≥{{hpa}} hPa) – mot {{all}}% av alla dagar.",
+        "learnTitle": "Så ser det ut",
+        "learnNote": "Observationer från din egen dagbok med vanliga ord. De beskriver – de förklarar inte.",
+        "learnEmpty": "När du har loggat en handfull anfall och dagliga incheckningar sammanfattar vi här vad som sticker ut."
     },
     "report": {
         "title": "Huvudvärksdagbok – rapport",
@@ -165,7 +171,9 @@
         "footer": "Skapad med {{app}} – en dagbok för självobservation, inte en medicinteknisk produkt",
         "chartTitle": "Per månad",
         "notesTitle": "Anteckningar till läkaren",
-        "notesPh": "Frågor, ändringar i medicin, annat…"
+        "notesPh": "Frågor, ändringar i medicin, annat…",
+        "pressureCol": "hPa (Δ)",
+        "pressureNote": "hPa = dygnsmedel för lufttryck på din ort, Δ = förändring från dagen innan."
     },
     "notif": {
         "checkinTitle": "Hur var idag?",
@@ -314,7 +322,13 @@
             "aspirin": "Acetylsalicylsyra"
         },
         "medsOther": "Annan medicin…",
-        "medsHint": "Kan alltid ändras under Medicin. Migrano ger aldrig doseringsråd."
+        "medsHint": "Kan alltid ändras under Medicin. Migrano ger aldrig doseringsråd.",
+        "widgetTitle": "Ett tryck från hemskärmen",
+        "widgetBody": "Widgeten Anfall nu startar ett anfall utan att öppna appen – praktiskt när smärtan är som värst.",
+        "widgetLater": "Du kan lägga till den senare: Inställningar → Widget → Lägg till.",
+        "extrasTitle": "Extra",
+        "extrasBody": "Valfritt. Alla tre ingår i Pro – de slås på i samma stund som du startar den kostnadsfria provperioden.",
+        "extrasNote": "Allt kan ändras i Inställningar när som helst."
     },
     "lang": {
         "en": "English",
@@ -435,7 +449,13 @@
         "noData": "Hämtar lufttryck…",
         "falling": "Fallit {{d}} hPa sedan igår",
         "rising": "Stigit {{d}} hPa sedan igår",
-        "stable": "Stabilt sedan igår"
+        "stable": "Stabilt sedan igår",
+        "whatIsIt": "Vad betyder det?",
+        "infoTitle": "Om lufttryck",
+        "infoWhat": "Lufttryck (hPa) är atmosfärens vikt. Runt 1013 hPa är genomsnitt; stigande tryck betyder oftast lugnt väder, fallande tryck att en front är på väg.",
+        "infoWhy": "Många med migrän upplever anfall när trycket faller snabbt (ett fall på 5 hPa eller mer inom ett dygn), men studierna är oense och det skiljer sig från person till person. Förändringen betyder mer än själva värdet.",
+        "infoApp": "Migrano sparar dygnsmedel för din ort och jämför dagarna dina anfall började med alla andra dagar. Mönsterkortet och läkarrapporten visar den jämförelsen – inget mer.",
+        "infoDisclaimer": "Det är en beskrivning av din egen dagbok, inte ett medicinskt uttalande. Prata med din läkare om vad det betyder för dig."
     },
     "health": {
         "title": "Apple Hälsa",
@@ -444,5 +464,17 @@
         "offToast": "Export till Apple Hälsa avstängd (befintliga poster finns kvar i Hälsa)",
         "denied": "Åtkomst till Apple Hälsa gavs inte. Du kan ändra det i appen Hälsa under Delning.",
         "synced": "{{n}} anfall skrivna till Apple Hälsa"
+    },
+    "learn": {
+        "weekday": "{{pct}}% av dina anfall började på en {{day}}.",
+        "time": "Dina anfall börjar oftast på {{part}} ({{pct}}%).",
+        "fieldLower": "Dagen före ett anfall låg din {{field}} i snitt på {{before}} mot {{calm}} före lugna dagar.",
+        "fieldHigher": "Dagen före ett anfall låg din {{field}} i snitt på {{before}} mot {{calm}} före lugna dagar.",
+        "period": "{{pct}}% av dina anfall började inom en dag från din mens.",
+        "pressureYes": "{{pct}}% av dina anfall började en dag då lufttrycket föll minst {{hpa}} hPa – bara {{all}}% av alla dagar hade ett sådant fall.",
+        "pressureNo": "Fallande lufttryck sticker inte ut: {{pct}}% av dina anfall började en dag med tryckfall, ungefär som alla dagar ({{all}}%).",
+        "trigger": "\"{{tag}}\" är den trigger du oftast loggar – vid {{pct}}% av anfallen.",
+        "symptom": "\"{{tag}}\" följer med {{pct}}% av dina anfall.",
+        "medDays": "Du nådde {{n}} medicindagar den här månaden – din gräns är {{limit}}. Värt att nämna för din läkare."
     }
 }

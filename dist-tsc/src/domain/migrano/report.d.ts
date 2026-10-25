@@ -12,5 +12,10 @@ export declare function buildReport(fromIso: string, toIso: string, t: TFunction
         attackDays: number;
         medDays: number;
     }[];
+    learning?: string[];
+    pressure?: Map<string, {
+        p: number;
+        delta: number | null;
+    }>;
 }): Promise<jsPDF>;
 export declare function sharePdf(doc: jsPDF, filename: string, title: string): Promise<void>;

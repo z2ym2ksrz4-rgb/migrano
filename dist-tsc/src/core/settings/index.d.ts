@@ -19,6 +19,7 @@ export type Settings = {
     weatherLon: number | null;
     weatherFetchedAt: string | null;
     healthExport: boolean;
+    onboardingWishes: string | null;
 };
 type Store = Settings & {
     load: () => Promise<void>;

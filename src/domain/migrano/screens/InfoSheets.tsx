@@ -3,7 +3,7 @@ import { Capacitor } from "@capacitor/core";
 import { Sheet } from "@/core/ui";
 import { useSettings } from "@/core/settings";
 import { useUi } from "../store";
-import { PainStar } from "../components/PainStar";
+import { WidgetPreview } from "../components/WidgetPreview";
 
 /** Explainers opened from several places: what medication days are, and how to add the widget. */
 export function InfoSheets() {
@@ -27,11 +27,16 @@ export function InfoSheets() {
         <button className="cta" onClick={close}>{t("common.done")}</button>
       </Sheet>
 
+      <Sheet open={which === "pressure"} onClose={close} title={t("weather.infoTitle")}>
+        <p>{t("weather.infoWhat")}</p>
+        <p>{t("weather.infoWhy")}</p>
+        <p>{t("weather.infoApp")}</p>
+        <p className="disclaimer">{t("weather.infoDisclaimer")}</p>
+        <button className="cta" onClick={close}>{t("common.done")}</button>
+      </Sheet>
+
       <Sheet open={which === "widget"} onClose={close} title={t("widget.title")}>
-        <div className="widget-preview">
-          <div className="wp-tile"><PainStar size={40} color="#FFF4EC" core="#D63E3E" /><span>{t("widget.attackNow")}</span></div>
-          <div className="wp-text"><strong>{t("widget.previewLine1")}</strong><span className="muted small">{t("widget.previewLine2")}</span></div>
-        </div>
+        <WidgetPreview />
         <p className="muted">{t("widget.intro")}</p>
         <ol className="steps">
           {(t(ios ? "widget.stepsIos" : "widget.stepsAndroid", { returnObjects: true }) as string[]).map((s, i) => <li key={i}>{s}</li>)}

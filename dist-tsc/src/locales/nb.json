@@ -49,7 +49,8 @@
         "saveDay": "Lagre dagen",
         "savedDay": "I dag er lagret",
         "periodToday": "Mensen i dag",
-        "periodShort": "mensen"
+        "periodShort": "mensen",
+        "periodHint": "Trykk for å markere i dag"
     },
     "episode": {
         "title": "Anfall",
@@ -86,7 +87,9 @@
         "cmpThis": "Dette anfallet",
         "cmpAvg": "Gjennomsnitt av {{n}} anfall",
         "cmpNeedMore": "Logg et par anfall til, så viser vi her hvordan dette ligger mot gjennomsnittet ditt.",
-        "cmpLocked": "Pro viser hvordan dette anfallet ligger mot gjennomsnittet ditt."
+        "cmpLocked": "Pro viser hvordan dette anfallet ligger mot gjennomsnittet ditt.",
+        "liveHint": "Når du avslutter anfallet, kommer noen korte spørsmål – svar på det du kan.",
+        "howBadNow": "Hvor ille er det akkurat nå?"
     },
     "calendar": {
         "noAttacks": "Ingen anfall denne dagen."
@@ -142,7 +145,10 @@
         "mohShareBtn": "Del tekst til legen",
         "mohShare": "Medisindager ({{app}}): {{months}}. Valgt grense: {{n}} dager/mnd.",
         "mohHint": "Forblir rolig så lenge du er under {{n}} dager i måneden.",
-        "patPressure": "{{pct}}% av anfallene dine begynte på en dag med fallende lufttrykk (≥{{hpa}} hPa) – mot {{all}}% av alle dager."
+        "patPressure": "{{pct}}% av anfallene dine begynte på en dag med fallende lufttrykk (≥{{hpa}} hPa) – mot {{all}}% av alle dager.",
+        "learnTitle": "Slik ser det ut",
+        "learnNote": "Observasjoner fra din egen dagbok med vanlige ord. De beskriver – de forklarer ikke.",
+        "learnEmpty": "Når du har logget en håndfull anfall og daglige innsjekkinger, oppsummerer vi her hva som skiller seg ut."
     },
     "report": {
         "title": "Hodepinedagbok – rapport",
@@ -165,7 +171,9 @@
         "footer": "Laget med {{app}} – en dagbok for selvobservasjon, ikke medisinsk utstyr",
         "chartTitle": "Per måned",
         "notesTitle": "Notater til legen",
-        "notesPh": "Spørsmål, endringer i medisin, annet…"
+        "notesPh": "Spørsmål, endringer i medisin, annet…",
+        "pressureCol": "hPa (Δ)",
+        "pressureNote": "hPa = døgnmiddel for lufttrykk på stedet ditt, Δ = endring fra dagen før."
     },
     "notif": {
         "checkinTitle": "Hvordan var i dag?",
@@ -314,7 +322,13 @@
             "aspirin": "Acetylsalisylsyre"
         },
         "medsOther": "Annen medisin…",
-        "medsHint": "Kan alltid endres under Medisin. Migrano gir aldri doseringsråd."
+        "medsHint": "Kan alltid endres under Medisin. Migrano gir aldri doseringsråd.",
+        "widgetTitle": "Ett trykk fra hjemskjermen",
+        "widgetBody": "Anfall nå-widgeten starter et anfall uten å åpne appen – praktisk når smerten er verst.",
+        "widgetLater": "Du kan legge den til senere: Innstillinger → Widget → Legg til.",
+        "extrasTitle": "Ekstra",
+        "extrasBody": "Valgfritt. Alle tre er en del av Pro – de slås på i det øyeblikket du starter den gratis prøveperioden.",
+        "extrasNote": "Alt kan endres i Innstillinger når som helst."
     },
     "lang": {
         "en": "English",
@@ -435,7 +449,13 @@
         "noData": "Henter lufttrykk…",
         "falling": "Falt {{d}} hPa siden i går",
         "rising": "Steget {{d}} hPa siden i går",
-        "stable": "Stabilt siden i går"
+        "stable": "Stabilt siden i går",
+        "whatIsIt": "Hva betyr det?",
+        "infoTitle": "Om lufttrykk",
+        "infoWhat": "Lufttrykk (hPa) er atmosfærens vekt. Rundt 1013 hPa er gjennomsnitt; stigende trykk betyr som regel rolig vær, fallende trykk at en front er på vei.",
+        "infoWhy": "Mange med migrene opplever anfall når trykket faller raskt (et fall på 5 hPa eller mer i løpet av et døgn), men studiene er uenige, og det varierer fra person til person. Endringen betyr mer enn selve tallet.",
+        "infoApp": "Migrano lagrer døgnmiddel for stedet ditt og sammenligner dagene anfallene dine begynte med alle andre dager. Mønsterkortet og legerapporten viser den sammenligningen – ikke mer.",
+        "infoDisclaimer": "Dette er en beskrivelse av din egen dagbok, ikke en medisinsk uttalelse. Snakk med legen din om hva det betyr for deg."
     },
     "health": {
         "title": "Apple Helse",
@@ -444,5 +464,17 @@
         "offToast": "Eksport til Apple Helse slått av (eksisterende oppføringer blir i Helse)",
         "denied": "Tilgang til Apple Helse ble ikke gitt. Du kan endre det i Helse-appen under Deling.",
         "synced": "{{n}} anfall skrevet til Apple Helse"
+    },
+    "learn": {
+        "weekday": "{{pct}}% av anfallene dine begynte på en {{day}}.",
+        "time": "Anfallene dine begynner oftest om {{part}} ({{pct}}%).",
+        "fieldLower": "Dagen før et anfall lå din {{field}} i snitt på {{before}} mot {{calm}} før rolige dager.",
+        "fieldHigher": "Dagen før et anfall lå din {{field}} i snitt på {{before}} mot {{calm}} før rolige dager.",
+        "period": "{{pct}}% av anfallene dine begynte innen en dag fra menstruasjonen.",
+        "pressureYes": "{{pct}}% av anfallene dine begynte på en dag der lufttrykket falt minst {{hpa}} hPa – bare {{all}}% av alle dager hadde et slikt fall.",
+        "pressureNo": "Fallende lufttrykk skiller seg ikke ut: {{pct}}% av anfallene dine begynte på en dag med trykkfall, omtrent som alle dager ({{all}}%).",
+        "trigger": "\"{{tag}}\" er triggeren du oftest logger – ved {{pct}}% av anfallene.",
+        "symptom": "\"{{tag}}\" følger med {{pct}}% av anfallene dine.",
+        "medDays": "Du nådde {{n}} medisindager denne måneden – grensen din er {{limit}}. Verdt å nevne for legen."
     }
 }

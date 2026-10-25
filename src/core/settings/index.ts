@@ -23,6 +23,7 @@ export type Settings = {
   weatherLon: number | null;
   weatherFetchedAt: string | null;
   healthExport: boolean;       // Pro, iOS: mirror closed attacks to Apple Health as headache samples
+  onboardingWishes: string | null; // JSON {cycle,weather,health} chosen in onboarding, applied once the user is Pro
 };
 
 const defaults: Settings = {
@@ -46,6 +47,7 @@ const defaults: Settings = {
   weatherLon: null,
   weatherFetchedAt: null,
   healthExport: false,
+  onboardingWishes: null,
 };
 
 type Store = Settings & {

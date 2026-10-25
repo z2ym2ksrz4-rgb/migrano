@@ -17,7 +17,7 @@ type AT = { lastAutoTable: { finalY: number } };
  * The doctor's report: what a neurologist asks for at a glance (frequency, duration, intensity, medication days),
  * then one row per attack with triggers/symptoms/medication, then trigger and symptom shares. Plain facts only.
  */
-export async function buildReport(fromIso: string, toIso: string, t: TFunction, lang: string, opts: { name?: string | null; notes?: string | null; monthly?: { month: string; attackDays: number; medDays: number }[] } = {}): Promise<jsPDF> {
+export async function buildReport(fromIso: string, toIso: string, t: TFunction, lang: string, opts: { name?: string | null; notes?: string | null; monthly?: { month: string; attackDays: number; medDays: number }[]; learning?: string[]; pressure?: Map<string, { p: number; delta: number | null }> } = {}): Promise<jsPDF> {
   const eps = (await listEpisodes(fromIso, toIso)).reverse();
   const sum = await episodeSummary(fromIso, toIso);
   const freq = await tagFrequency(fromIso, toIso);
@@ -66,6 +66,13 @@ export async function buildReport(fromIso: string, toIso: string, t: TFunction, 
     y += 9;
   }
 
+  if (opts.learning?.length) {
+    doc.setTextColor(...BRAND); doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text(t("insights.learnTitle"), M, y + 4); y += 8;
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9.5); doc.setTextColor(...INK);
+    for (const l of opts.learning) { const lines = doc.splitTextToSize("• " + l, W - 2 * M) as string[]; doc.text(lines, M, y + 2); y += lines.length * 4.6 + 1.5; }
+    doc.setFontSize(7.5); doc.setTextColor(...MUTED); const n = doc.splitTextToSize(t("insights.learnNote"), W - 2 * M) as string[]; doc.text(n, M, y + 3); y += n.length * 3.8 + 8;
+  }
+
   if (opts.notes?.trim()) {
     doc.setTextColor(...BRAND); doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text(t("report.notesTitle"), M, y + 4); y += 8;
     doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(...INK);
@@ -84,6 +91,7 @@ export async function buildReport(fromIso: string, toIso: string, t: TFunction, 
   };
 
   const rows: string[][] = [];
+  const hasP = !!opts.pressure && eps.some((e) => opts.pressure!.has(e.startedAt.slice(0, 10)));
   for (const e of eps) {
     const ids = await episodeTagIds(e.id);
     const byGroup = (g: string) => ids.map((id) => tags.get(id)).filter((x) => x && x.groupKey === g).map((x) => label(x!.id)).join(", ");
@@ -93,10 +101,12 @@ export async function buildReport(fromIso: string, toIso: string, t: TFunction, 
       e.endedAt ? fmt1(hours(e.startedAt, e.endedAt)) : "–",
       e.intensity != null ? String(e.intensity) : "–",
       byGroup("symptom"), byGroup("trigger"), meds, e.note ?? "",
+      ...(hasP ? [(() => { const w = opts.pressure!.get(e.startedAt.slice(0, 10)); return w ? `${w.p}${w.delta != null ? ` (${w.delta > 0 ? "+" : ""}${w.delta})` : ""}` : "–"; })()] : []),
     ]);
   }
-  section(t("report.attacks"), [t("episode.start"), t("report.hours"), t("report.intensityShort"), t("diary.groups.symptom"), t("diary.groups.trigger"), t("meds.title"), t("episode.note")],
-    rows, t("home.empty"), { 0: { cellWidth: 26 }, 1: { cellWidth: 12 }, 2: { cellWidth: 12 } });
+  section(t("report.attacks"), [t("episode.start"), t("report.hours"), t("report.intensityShort"), t("diary.groups.symptom"), t("diary.groups.trigger"), t("meds.title"), t("episode.note"), ...(hasP ? [t("report.pressureCol")] : [])],
+    rows, t("home.empty"), { 0: { cellWidth: 26 }, 1: { cellWidth: 12 }, 2: { cellWidth: 12 }, ...(hasP ? { 7: { cellWidth: 18 } } : {}) });
+  if (hasP) { doc.setFontSize(7.5); doc.setTextColor(...MUTED); doc.text(t("report.pressureNote"), M, y - 4); y += 2; }
 
   const share = (g: string) => freq.filter((f) => f.groupKey === g).slice(0, 10).map((f) => [f.labelKey ? t(f.labelKey) : f.label ?? "", `${f.n} (${f.total ? Math.round((f.n / f.total) * 100) : 0}%)`]);
   section(`${t("diary.groups.trigger")} · ${t("insights.shareOfAttacks")}`, [t("diary.groups.trigger"), t("report.count")], share("trigger"), "–");

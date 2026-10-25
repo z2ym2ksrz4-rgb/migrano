@@ -82,6 +82,11 @@ export function EpisodeSheet() {
         const pick = async (v) => { await patch({ intensity: v }); haptics.thud(); close(); };
         return (_jsxs(Sheet, { open: true, onClose: close, title: t("episode.ongoing"), children: [_jsx("p", { className: "muted", children: t("episode.quickIntro") }), _jsx("h3", { style: { marginTop: 14 }, children: t("episode.howBad") }), _jsx("div", { className: "bigchoice", children: [{ v: 3, k: "mild" }, { v: 6, k: "moderate" }, { v: 9, k: "severe" }].map((o) => (_jsx("button", { type: "button", className: `big ${o.k}`, onClick: () => pick(o.v), children: t(`episode.level.${o.k}`) }, o.k))) }), _jsx("button", { type: "button", className: "linklike", style: { marginTop: 16 }, onClick: close, children: t("episode.laterLink") })] }));
     }
+    // ---- live: the attack is running — one screen: how bad now, end it, or edit everything ---------------------
+    if (mode === "live") {
+        const cur = ep.intensity == null ? null : ep.intensity <= 3 ? "mild" : ep.intensity <= 6 ? "moderate" : "severe";
+        return (_jsxs(Sheet, { open: true, onClose: close, title: t("home.openSince", { time: fmtTime(ep.startedAt, i18n.language) }), children: [_jsx("button", { className: "cta", style: { marginTop: 4 }, onClick: onEnd, children: t("home.endAttack") }), _jsx("p", { className: "muted small", style: { marginTop: 10 }, children: t("episode.liveHint") }), _jsx("h3", { style: { marginTop: 14 }, children: t("episode.howBadNow") }), _jsx("div", { className: "bigchoice", children: [{ v: 3, k: "mild" }, { v: 6, k: "moderate" }, { v: 9, k: "severe" }].map((o) => (_jsx("button", { type: "button", className: `big ${o.k} ${cur === o.k ? "on" : ""}`, onClick: () => { void patch({ intensity: o.v }); haptics.tap(); }, children: t(`episode.level.${o.k}`) }, o.k))) }), _jsx("button", { type: "button", className: "linklike", style: { marginTop: 16 }, onClick: () => setMode("full"), children: t("episode.editAll") })] }));
+    }
     // ---- journey: 4 short steps -------------------------------------------------------------------------------
     if (mode === "journey") {
         const cur = steps[step];
