@@ -1,0 +1,16 @@
+import { chromium } from "playwright";
+const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
+const p = await b.newPage({ viewport: { width: 393, height: 852 }, deviceScaleFactor: 3 });
+await p.goto("http://localhost:4173/", { waitUntil: "networkidle" });
+await p.waitForSelector("h1"); await p.addStyleTag({ content: ".testmenu{display:none!important}" });
+await p.selectOption(".onboarding select", "en");
+await p.fill(".onboarding input[autocomplete=given-name]", "Anna");
+await p.click(".onboarding .cta");
+for (let i = 0; i < 4; i++) await p.click(".onboarding .cta");
+await p.click(".onboarding .chips button:nth-child(2)");
+await p.click(".onboarding .cta");
+await p.click(".onboarding .cta");
+await p.waitForSelector(".sheet h2", { timeout: 8000 });
+await p.waitForTimeout(600);
+await p.screenshot({ path: "/home/claude/migrano/store/review/paywall-en.png" });
+await b.close();
