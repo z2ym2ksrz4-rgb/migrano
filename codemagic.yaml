@@ -118,7 +118,8 @@ workflows:
     publishing:
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-        track: alpha   # closed testing: triggers Google's pre-launch report on every build
+        track: internal   # first releases of a new app must go to internal testing; switch to alpha (closed testing, pre-launch report) once the app is out of draft
+        submit_as_draft: true   # required while the Play app is in draft ("Only releases with status draft may be created on draft app"); Steffen rolls out in the console
 
   stats:
     # Portfolio download report (all apps in scripts/stats-apps.json). Run on a schedule from the app-template
