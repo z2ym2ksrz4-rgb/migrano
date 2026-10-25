@@ -54,13 +54,28 @@ workflows:
         auth: integration
         submit_to_testflight: false   # upload only; internal group gets builds automatically
 
+  asc-sync:
+    name: App Store metadata sync (text, screenshots, IAP)
+    max_build_duration: 20
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Codemagic Flytteklar   # exposes APP_STORE_CONNECT_ISSUER_ID / KEY_IDENTIFIER / PRIVATE_KEY
+    environment:
+      vars:
+        ASC_APP_ID: "6826778850"            # <- change per app
+        ASC_SYNC_ARGS: "--all"
+      node: 22
+    scripts:
+      - name: Sync App Store Connect from store/listing + store/screenshots
+        script: node scripts/asc-sync.mjs $ASC_SYNC_ARGS
+
   android-release:
     name: Android release (Play internal)
     max_build_duration: 60
     instance_type: mac_mini_m2   # linux_x2 not available on current Codemagic plan
     environment:
       groups: [google_play]
-      android_signing: [<slug>_upload]   # keystore uploaded under Code signing identities -> Android keystores
+      android_signing: [migrano_upload]   # keystore uploaded under Code signing identities -> Android keystores
       vars:
         RELEASE: "1"
         PACKAGE_NAME: com.ilumie.migrano  # <- change per app
