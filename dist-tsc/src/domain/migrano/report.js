@@ -142,7 +142,7 @@ export async function buildReport(fromIso, toIso, t, lang, opts = {}) {
             ...(hasP ? [(() => { const w = opts.pressure.get(e.startedAt.slice(0, 10)); return w ? `${w.p}${w.delta != null ? ` (${w.delta > 0 ? "+" : ""}${w.delta})` : ""}` : "–"; })()] : []),
         ]);
     }
-    section(t("report.attacks"), [t("episode.start"), t("report.hours"), t("report.intensityShort"), t("diary.groups.symptom"), t("diary.groups.trigger"), t("meds.title"), t("episode.note"), ...(hasP ? [t("report.pressureCol")] : [])], rows, t("home.empty"), { 0: { cellWidth: 26 }, 1: { cellWidth: 12 }, 2: { cellWidth: 12 }, ...(hasP ? { 7: { cellWidth: 18 } } : {}) });
+    section(t("report.attacks"), [t("episode.start"), t("report.hours"), t("report.intensityShort"), t("diary.groups.symptom"), t("diary.groups.trigger"), t("meds.title"), t("episode.note"), ...(hasP ? [t("report.pressureCol")] : [])], rows, t("home.empty"), hasP ? { 0: { cellWidth: 26 }, 1: { cellWidth: 12 }, 2: { cellWidth: 12 }, 7: { cellWidth: 18 } } : { 0: { cellWidth: 26 }, 1: { cellWidth: 12 }, 2: { cellWidth: 12 } });
     if (hasP) {
         doc.setFontSize(7.5);
         doc.setTextColor(...MUTED);
