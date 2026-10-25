@@ -1,7 +1,7 @@
 {
   "name": "migrano",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Ilumie app template: React + TypeScript + Vite + Capacitor (iOS/Android), local-first, no backend.",
   "type": "module",
   "scripts": {
