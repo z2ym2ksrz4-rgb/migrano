@@ -2,14 +2,19 @@
 
 `android-release` in codemagic.yaml generates the Android project, signs with the upload keystore and publishes the AAB to Play *closed testing – alpha*.
 
-## Status 25 Oct 2026
+## Status 25 Oct 2026 (evening: store listing saved with AI-asset declaration = none, dashboard "Konfigurer din app" 11/11, internal testers list attached)
 1. **Play Console app** ✅ `com.ilumie.migrano`, app id 4976152596173144171 (org account 6185427128716539938). Store listing in en/da/de/sv/no (icon, feature graphic, 6 phone screenshots – EN graphics shared), store settings (Medical, support@migrano.app, https://migrano.app) and all 10 declarations done (privacy URL, no ads, app access = Play Billing instructions, content rating PEGI 3 w/ digital purchases, 18+, data safety = purchase history + device id via RevenueCat, no ad id, not government, no financial features, health = condition management).
 2. **Upload keystore** ⏳ Steffen: `migrano-upload.jks` (alias `migrano`, password in `migrano-upload.pass`) → Codemagic → Personal account settings → Code signing identities → Android keystores, reference name **`migrano_upload`** (matches `android_signing` in codemagic.yaml). Keep both files with the other keystores.
 3. **Service account** ✅ shared `codemagic-play@ilumie-play.iam.gserviceaccount.com` (Google Cloud project `ilumie-play`, invited in Play Console). ⏳ Steffen: in Codemagic → migrano app → Environment variables, add `GCLOUD_SERVICE_ACCOUNT_CREDENTIALS` (the JSON, secret) in group **`google_play`** – copy from the furkeep app's variables.
 4. **First AAB** ⏳ run `android-release` (branch main) once 2+3 are done. First upload to a new app goes to Internal testing; the workflow targets track `alpha`, so if Play rejects the first publish, upload the AAB artifact manually to Internal testing once, then re-run.
 5. **Products** ⏳ after the first AAB: Play Console → Monetize → subscription `migrano_pro_yearly` / base plan `p1y` (149 DKK/year, all regions) + offer `trial7` (7-day free trial, new customers); one-time product `migrano_pro_lifetime` (349 DKK). Requires the merchant account (already set up for Furkeep/Abonnia).
 6. **RevenueCat** ✅ Play app `app7cf09adcf2`, public key `goog_naseuIQnujvznjQFHpTgJpgQMmH` in `app.config.json`; products `migrano_pro_yearly:p1y` + `migrano_pro_lifetime` attached to entitlement `pro` and offering `default`. ⏳ Steffen: upload the service-account JSON under RevenueCat → Apps → Migrano (Play Store) → Service Account Credentials (and give the service account "View financial data" + "Manage orders" in Play Console → Users and permissions), otherwise purchases cannot be validated.
-7. **Testers** ⏳ add the "Ilumie testers" list to internal/alpha testing; add reviewer/licence testers under Setup → Licence testing so Pro can be bought without charge.
+7. **Testers** ✅ "Ilumie testers" attached to Internal testing (track 4701151434731933137). ⏳ Steffen: add reviewer/licence testers under Setup → Licence testing so Pro can be bought without charge.
+
+## What blocks the first Android build (both are Steffen-only – the safety layer stops Claude from handling the private key / the service-account secret)
+- Keystore `migrano_upload` is **not** in Codemagic yet (only flytteklar/Abonnia/Furkeep). Upload the `.jks` with the password from `migrano-upload.pass`, alias `migrano`.
+- Group `google_play` is **not** on the migrano app yet. Codemagic → migrano → Environment variables → variable `GCLOUD_SERVICE_ACCOUNT_CREDENTIALS`, group `google_play`, Secure ✓ (paste the JSON from the furkeep app).
+Then Claude runs `android-release`, checks the AAB lands in Internal testing, creates the Monetize products (149/349, trial7) and updates this file.
 
 ## Assets
 `store/screenshots/<lang>/store-android-N.png` (1080×2400), `store/android/feature-graphic-<lang>.png` (1024×500), `store/android/icon-512.png`. Text limits checked with `node scripts/play-listing-check.mjs .`. Public copies for the Play asset-library upload trick live at `https://ilumie.com/play-assets/migrano/`.
