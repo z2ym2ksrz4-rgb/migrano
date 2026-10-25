@@ -1,9 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2732 2732">
-  <rect width="2732" height="2732" fill="#F4F3F9"/>
-  <g transform="translate(1366 1366)">
-    <path d="M-280 120 A280 280 0 0 1 280 120" fill="none" stroke="#4B4A7A" stroke-width="54" stroke-linecap="round" opacity="0.3"/>
-    <path d="M-200 120 A200 200 0 0 1 200 120" fill="none" stroke="#4B4A7A" stroke-width="54" stroke-linecap="round" opacity="0.6"/>
-    <path d="M-120 120 A120 120 0 0 1 120 120" fill="none" stroke="#4B4A7A" stroke-width="54" stroke-linecap="round"/>
-    <circle cx="0" cy="120" r="46" fill="#4B4A7A"/>
-  </g>
+<rect width="2732" height="2732" fill="#FFF4EC"/>
+<g transform="translate(1366 1366) scale(0.5) translate(-512 -512)">
+<path d="M430 200 C 290 200, 200 310, 200 450 C 200 530, 232 590, 270 640 L 270 770 C 270 800, 292 822, 322 822 L 560 822 L 560 710 L 620 710 C 650 710, 666 686, 660 660 L 640 600 C 700 570, 740 510, 740 430 C 740 300, 600 200, 430 200 Z" fill="#2B1B3A" transform="translate(-50 0)"/>
+<g transform="translate(646 410)" fill="#FF6B4A"><path d="M0 -190 L 40 -60 L 170 -95 L 70 0 L 170 95 L 40 60 L 0 190 L -40 60 L -170 95 L -70 0 L -170 -95 L -40 -60 Z"/></g>
+<circle cx="646" cy="410" r="52" fill="#FFF4EC"/>
+</g>
 </svg>

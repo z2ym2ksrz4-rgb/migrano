@@ -29,7 +29,7 @@ const html = ({ w, h, radius, title, sub, img, last }) => `<!doctype html><html>
 </style></head><body>
   <div class="copy"><h1>${title}</h1><p>${last ? sub : ""}</p></div>
   <div class="device"><img src="${img}"></div>
-  <svg class="mark" viewBox="0 0 1024 1024"><g fill="none" stroke="#F4F3F9" stroke-width="54" stroke-linecap="round"><path d="M232 700 A280 280 0 0 1 792 700" opacity=".35"/><path d="M312 700 A200 200 0 0 1 712 700" opacity=".65"/><path d="M392 700 A120 120 0 0 1 632 700"/></g><circle cx="512" cy="700" r="46" fill="#F4F3F9"/></svg>
+  <svg class="mark" viewBox="0 0 64 64"><path d="M27 12 C18 12,12 19,12 28 C12 33,14 37,17 40 L17 48 C17 50,18 51,20 51 L35 51 L35 44 L39 44 C41 44,42 42,41 41 L40 37 C44 35,46 31,46 26 C46 18,37 12,27 12 Z" fill="#FFF4EC"/><path transform="translate(41 26) scale(0.075)" d="M0 -190 L 40 -60 L 170 -95 L 70 0 L 170 95 L 40 60 L 0 190 L -40 60 L -170 95 L -70 0 L -170 -95 L -40 -60 Z" fill="#FF7A59"/><circle cx="41" cy="26" r="3.5" fill="#FFF4EC"/></svg>
 </body></html>`;
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM ?? "/opt/pw-browsers/chromium" });

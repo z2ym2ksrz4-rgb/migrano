@@ -34,7 +34,7 @@ workflows:
           RELEASE=1 npm run build
           [ -d ios ] || npx cap add ios
           bash scripts/ios-postadd.sh
-          npx @capacitor/assets generate --ios --iconBackgroundColor '#4A6B57' --iconBackgroundColorDark '#3E5C4B' --splashBackgroundColor '#F6F1E7' --splashBackgroundColorDark '#2F3F36'
+          npx @capacitor/assets generate --ios --iconBackgroundColor '#E8573F' --iconBackgroundColorDark '#D63E3E' --splashBackgroundColor '#FFF4EC' --splashBackgroundColorDark '#2B1B3A'
           npx cap sync ios
       - name: Set version & build number
         script: |
@@ -78,7 +78,7 @@ workflows:
           RELEASE=1 npm run build
           [ -d android ] || npx cap add android
           bash scripts/android-postadd.sh
-          npx @capacitor/assets generate --android --iconBackgroundColor '#4A6B57' --iconBackgroundColorDark '#3E5C4B' --splashBackgroundColor '#F6F1E7' --splashBackgroundColorDark '#2F3F36'
+          npx @capacitor/assets generate --android --iconBackgroundColor '#E8573F' --iconBackgroundColorDark '#D63E3E' --splashBackgroundColor '#FFF4EC' --splashBackgroundColorDark '#2B1B3A'
           npx cap sync android
       - name: Keystore
         script: |
