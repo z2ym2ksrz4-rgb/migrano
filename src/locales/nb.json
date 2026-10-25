@@ -76,7 +76,8 @@
       "trigger": "Hva tror du utløste det?",
       "symptom": "Hva la du merke til?",
       "meds": "Tok du noe?",
-      "note": "Noe å huske?"
+      "note": "Noe å huske?",
+      "relief": "Hva hjalp?"
     },
     "more": "{{n}} flere…",
     "skip": "Hopp over",

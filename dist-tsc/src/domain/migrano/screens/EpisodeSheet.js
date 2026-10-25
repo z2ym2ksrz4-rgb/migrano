@@ -1,4 +1,4 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { listEpisodes, updateEpisode, endEpisode, deleteEpisode, listTags, episodeTagIds, setEpisodeTags, tagUsage, episodeComparison, listMedications, listIntakes, logIntake, deleteIntake, diaryConfig, } from "@/core/diary";
@@ -53,7 +53,7 @@ export function EpisodeSheet() {
     }, [id]);
     useEffect(() => { void load(); setConfirmDelete(false); setStep(0); setExpanded({}); setCmp(null); }, [load]);
     const groups = diaryConfig().tagGroups;
-    const journeyGroups = useMemo(() => groups.filter((g) => g.kind === "trigger" || g.kind === "symptom"), [groups]);
+    const journeyGroups = useMemo(() => groups.filter((g) => g.kind === "trigger" || g.kind === "symptom" || g.kind === "relief"), [groups]);
     const steps = useMemo(() => [...journeyGroups.map((g) => `tags:${g.key}`), "meds", "note", "done"], [journeyGroups]);
     if (!id || !ep)
         return null;
@@ -85,7 +85,7 @@ export function EpisodeSheet() {
     // ---- live: the attack is running — one screen: how bad now, end it, or edit everything ---------------------
     if (mode === "live") {
         const cur = ep.intensity == null ? null : ep.intensity <= 3 ? "mild" : ep.intensity <= 6 ? "moderate" : "severe";
-        return (_jsxs(Sheet, { open: true, onClose: close, title: t("home.openSince", { time: fmtTime(ep.startedAt, i18n.language) }), children: [_jsx("button", { className: "cta", style: { marginTop: 4 }, onClick: onEnd, children: t("home.endAttack") }), _jsx("p", { className: "muted small", style: { marginTop: 10 }, children: t("episode.liveHint") }), _jsx("h3", { style: { marginTop: 14 }, children: t("episode.howBadNow") }), _jsx("div", { className: "bigchoice", children: [{ v: 3, k: "mild" }, { v: 6, k: "moderate" }, { v: 9, k: "severe" }].map((o) => (_jsx("button", { type: "button", className: `big ${o.k} ${cur === o.k ? "on" : ""}`, onClick: () => { void patch({ intensity: o.v }); haptics.tap(); }, children: t(`episode.level.${o.k}`) }, o.k))) }), _jsx("button", { type: "button", className: "linklike", style: { marginTop: 16 }, onClick: () => setMode("full"), children: t("episode.editAll") })] }));
+        return (_jsxs(Sheet, { open: true, onClose: close, title: t("home.openSince", { time: fmtTime(ep.startedAt, i18n.language) }), children: [_jsx("button", { className: "cta", style: { marginTop: 4 }, onClick: onEnd, children: t("home.endAttack") }), _jsx("p", { className: "muted small", style: { marginTop: 10 }, children: t("episode.liveHint") }), cur == null ? (_jsxs(_Fragment, { children: [_jsx("h3", { style: { marginTop: 14 }, children: t("episode.howBad") }), _jsx("div", { className: "bigchoice", children: [{ v: 3, k: "mild" }, { v: 6, k: "moderate" }, { v: 9, k: "severe" }].map((o) => (_jsx("button", { type: "button", className: `big ${o.k}`, onClick: () => { void patch({ intensity: o.v }); haptics.tap(); }, children: t(`episode.level.${o.k}`) }, o.k))) })] })) : (_jsxs("p", { className: "muted", style: { marginTop: 14 }, children: [t("episode.intensity"), ": ", _jsx("strong", { children: t(`episode.level.${cur}`) }), " \u00B7 ", ep.intensity, "/10"] })), _jsx("button", { type: "button", className: "linklike", style: { marginTop: 16 }, onClick: () => setMode("full"), children: t("episode.editAll") })] }));
     }
     // ---- journey: 4 short steps -------------------------------------------------------------------------------
     if (mode === "journey") {

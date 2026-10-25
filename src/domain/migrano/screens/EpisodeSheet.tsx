@@ -53,7 +53,7 @@ export function EpisodeSheet() {
   useEffect(() => { void load(); setConfirmDelete(false); setStep(0); setExpanded({}); setCmp(null); }, [load]);
 
   const groups = diaryConfig().tagGroups;
-  const journeyGroups = useMemo(() => groups.filter((g) => g.kind === "trigger" || g.kind === "symptom"), [groups]);
+  const journeyGroups = useMemo(() => groups.filter((g) => g.kind === "trigger" || g.kind === "symptom" || g.kind === "relief"), [groups]);
   const steps = useMemo(() => [...journeyGroups.map((g) => `tags:${g.key}`), "meds", "note", "done"], [journeyGroups]);
 
   if (!id || !ep) return null;
@@ -94,12 +94,18 @@ export function EpisodeSheet() {
       <Sheet open onClose={close} title={t("home.openSince", { time: fmtTime(ep.startedAt, i18n.language) })}>
         <button className="cta" style={{ marginTop: 4 }} onClick={onEnd}>{t("home.endAttack")}</button>
         <p className="muted small" style={{ marginTop: 10 }}>{t("episode.liveHint")}</p>
-        <h3 style={{ marginTop: 14 }}>{t("episode.howBadNow")}</h3>
-        <div className="bigchoice">
-          {[{ v: 3, k: "mild" }, { v: 6, k: "moderate" }, { v: 9, k: "severe" }].map((o) => (
-            <button key={o.k} type="button" className={`big ${o.k} ${cur === o.k ? "on" : ""}`} onClick={() => { void patch({ intensity: o.v }); haptics.tap(); }}>{t(`episode.level.${o.k}`)}</button>
-          ))}
-        </div>
+        {cur == null ? (
+          <>
+            <h3 style={{ marginTop: 14 }}>{t("episode.howBad")}</h3>
+            <div className="bigchoice">
+              {[{ v: 3, k: "mild" }, { v: 6, k: "moderate" }, { v: 9, k: "severe" }].map((o) => (
+                <button key={o.k} type="button" className={`big ${o.k}`} onClick={() => { void patch({ intensity: o.v }); haptics.tap(); }}>{t(`episode.level.${o.k}`)}</button>
+              ))}
+            </div>
+          </>
+        ) : (
+          <p className="muted" style={{ marginTop: 14 }}>{t("episode.intensity")}: <strong>{t(`episode.level.${cur}`)}</strong> · {ep.intensity}/10</p>
+        )}
         <button type="button" className="linklike" style={{ marginTop: 16 }} onClick={() => setMode("full")}>{t("episode.editAll")}</button>
       </Sheet>
     );

@@ -76,7 +76,8 @@
             "trigger": "What do you think triggered it?",
             "symptom": "What did you notice?",
             "meds": "Did you take anything?",
-            "note": "Anything to remember?"
+            "note": "Anything to remember?",
+            "relief": "What helped?"
         },
         "more": "{{n}} more…",
         "skip": "Skip",

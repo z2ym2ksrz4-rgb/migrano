@@ -36,7 +36,8 @@ await p.waitForSelector(".sheet .bigchoice", { timeout: 5000 });
 out.quickTitle = await p.textContent(".sheet h2");
 await p.click(".sheet .bigchoice .big.moderate"); await p.waitForTimeout(300);
 out.quickClosed = (await p.$(".sheet")) === null;
-await p.click(".hero-btn.live"); await p.waitForSelector(".sheet .bigchoice");
+await p.click(".hero-btn.live"); await p.waitForSelector(".sheet .cta");
+out.liveNoRepeat = (await p.$(".sheet .bigchoice")) === null;        // intensity already chosen → not asked again
 out.liveTitle = await p.textContent(".sheet h2");
 await p.click(".sheet .linklike"); await p.waitForSelector(".sheet input[type=range]");   // "Ret alle detaljer" → full
 const chips = await p.$$(".sheet .chip:not(.other)");
@@ -48,7 +49,7 @@ await p.click(".sheet .cta");                                     // end attack 
 await p.waitForSelector(".sheet .bigchips", { timeout: 5000 });
 out.journeyQ = await p.textContent(".sheet h3");
 out.journeyTopChips = (await p.$$(".sheet .bigchips .chip")).length; // ≤ 7 (6 + more)
-const steps = 5;
+const steps = 6;
 for (let i = 0; i < steps; i++) { await p.click(".sheet .row.between .row.tight button:last-child"); await p.waitForTimeout(250); }
 out.journeyClosed = (await p.$(".sheet")) === null;
 out.recentCount = (await p.$$(".list li.tap")).length;            // expect 1
@@ -113,5 +114,5 @@ await shot("settings-da");
 out.errors = errors;
 console.log(JSON.stringify(out, null, 1));
 await b.close();
-const ok = errors.length === 0 && out.quickClosed && out.chipsOn === 3 && out.journeyClosed && out.recentCount === 1 && out.bars === 12 && out.freqRows > 0 && out.heatCells > 0 && out.moh === 3 && out.widgetGuideSteps === 3 && out.widgetStep === 3 && out.learnLines > 0 && out.periodChip && out.patPressure && out.placeSheet && /\.pdf$/.test(out.pdfName ?? "");
+const ok = errors.length === 0 && out.quickClosed && out.chipsOn === 3 && out.journeyClosed && out.recentCount === 1 && out.bars === 12 && out.freqRows > 0 && out.heatCells > 0 && out.moh === 3 && out.widgetGuideSteps === 3 && out.widgetStep === 3 && out.learnLines > 0 && out.liveNoRepeat && out.periodChip && out.patPressure && out.placeSheet && /\.pdf$/.test(out.pdfName ?? "");
 process.exit(ok ? 0 : 1);

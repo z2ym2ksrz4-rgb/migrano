@@ -76,7 +76,8 @@
             "trigger": "Was hat es Ihrer Meinung nach ausgelöst?",
             "symptom": "Was haben Sie bemerkt?",
             "meds": "Haben Sie etwas genommen?",
-            "note": "Etwas zum Merken?"
+            "note": "Etwas zum Merken?",
+            "relief": "Was hat geholfen?"
         },
         "more": "{{n}} weitere…",
         "skip": "Überspringen",
