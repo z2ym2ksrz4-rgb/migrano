@@ -15,7 +15,10 @@
     "cap:android": "npm run cap:sync && npx cap open android",
     "android:apk": "npm run cap:sync && cd android && ./gradlew assembleDebug",
     "new-app": "node scripts/new-app.mjs",
-    "postinstall": "node -e \"const fs=require('fs');fs.mkdirSync('public/assets',{recursive:true});fs.copyFileSync('node_modules/sql.js/dist/sql-wasm.wasm','public/assets/sql-wasm.wasm')\""
+    "postinstall": "node -e \"const fs=require('fs');fs.mkdirSync('public/assets',{recursive:true});fs.copyFileSync('node_modules/sql.js/dist/sql-wasm.wasm','public/assets/sql-wasm.wasm')\"",
+    "screenshots": "node scripts/screenshots.mjs",
+    "screenshots:store": "node scripts/store-frames.mjs",
+    "smoke": "node smoke.mjs"
   },
   "dependencies": {
     "@capacitor-community/in-app-review": "^7.0.0",
