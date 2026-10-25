@@ -1,60 +1,197 @@
 {
   "nav": {
     "home": "Hem",
+    "calendar": "Kalender",
+    "insights": "Insikter",
     "settings": "Inställningar"
   },
   "common": {
     "add": "Lägg till",
     "cancel": "Avbryt",
     "save": "Spara",
-    "delete": "Ta bort"
+    "delete": "Radera",
+    "done": "Klar",
+    "other": "Annat…",
+    "typeOwn": "Skriv eget",
+    "disclaimer": "Migrano är en dagbok för självobservation, inte en medicinteknisk produkt. Den ställer inga diagnoser och ger inga behandlingsråd. Prata med din läkare om det du loggar."
   },
-  "lang": {
-    "en": "English",
-    "da": "Dansk",
-    "de": "Deutsch",
-    "sv": "Svenska",
-    "nb": "Norsk"
+  "home": {
+    "title": "Migrano",
+    "attackNow": "Anfall nu",
+    "endAttack": "Anfallet är över",
+    "openSince": "Anfall pågår sedan {{time}}",
+    "tapToEdit": "Tryck för detaljer eller för att avsluta",
+    "attackDays": "anfallsdagar denna månad",
+    "medDays": "medicindagar denna månad",
+    "recent": "Senaste anfall",
+    "ongoing": "pågår",
+    "empty": "Inga anfall loggade ännu. När ett börjar, tryck på knappen – detaljerna kan vänta.",
+    "checkinTitle": "Hur var idag?",
+    "checkin": {
+      "none": "Ingen huvudvärk",
+      "mild": "Lindrig",
+      "attack": "Anfall"
+    },
+    "fields": {
+      "sleep": "Sömn i natt",
+      "stress": "Stress idag"
+    },
+    "medWarnTitle": "{{n}} medicindagar denna månad",
+    "medWarnBody": "Du valde att få veta vid {{n}} dagar. Frekvent akutmedicin är värt att ta upp med din läkare."
+  },
+  "episode": {
+    "title": "Anfall",
+    "ongoing": "Anfall pågår",
+    "start": "Start",
+    "end": "Slut",
+    "duration": "{{h}} h",
+    "intensity": "Intensitet",
+    "mildLbl": "lindrig",
+    "severeLbl": "svår",
+    "note": "Anteckning",
+    "notePh": "Annat värt att komma ihåg",
+    "deleteConfirm": "Radera detta anfall?"
+  },
+  "calendar": {
+    "noAttacks": "Inget anfall denna dag."
+  },
+  "meds": {
+    "title": "Medicin",
+    "sub": "Dina egna preparat, vid namn. Migrano föreslår aldrig läkemedel eller doser.",
+    "name": "Namn",
+    "namePh": "t.ex. Sumatriptan 50 mg",
+    "acute": "Akut",
+    "preventive": "Förebyggande",
+    "acuteHint": "Bara akutmedicin räknas som medicindagar.",
+    "addFirst": "Lägg till din medicin",
+    "show": "Visa",
+    "hide": "Dölj"
+  },
+  "insights": {
+    "title": "Insikter",
+    "lockedTitle": "Mönster kräver Pro",
+    "lockedBody": "Anfallsdagar per månad, genomsnittlig längd och intensitet, och vilka triggers och symtom som återkommer – plus PDF-rapporten till läkaren.",
+    "attackDaysPerMonth": "Anfallsdagar per månad, senaste 12 månaderna",
+    "range": {
+      "month": "Denna månad",
+      "3m": "3 månader",
+      "12m": "12 månader"
+    },
+    "attacks": "anfall",
+    "avgHours": "snitt timmar",
+    "avgIntensity": "snitt intensitet",
+    "medDays": "dagar med akutmedicin (din gräns: {{n}})",
+    "shareOfAttacks": "andel av anfallen",
+    "noData": "Inte tillräckligt med data ännu.",
+    "disclaimer": "Andelar är enkla räkningar av det du loggat – inte bevis för orsak.",
+    "attackDays": "anfallsdagar"
+  },
+  "report": {
+    "title": "Huvudvärksdagbok – rapport",
+    "cta": "PDF-rapport",
+    "sub": "En sidas översikt plus en rad per anfall, formaterad för läkarbesöket.",
+    "preset": {
+      "month": "Denna månad",
+      "last": "Förra månaden",
+      "3m": "Senaste 3 månaderna",
+      "custom": "Välj datum"
+    },
+    "from": "Från",
+    "to": "Till",
+    "make": "Skapa PDF",
+    "medDays": "Dagar med akutmedicin",
+    "attacks": "Anfall",
+    "hours": "Timmar",
+    "intensityShort": "Int.",
+    "count": "Antal (andel)",
+    "footer": "Skapad med {{app}} – en dagbok för självobservation, inte en medicinteknisk produkt"
+  },
+  "notif": {
+    "checkinTitle": "Hur var idag?",
+    "checkinBody": "5 sekunders check-in håller dagboken komplett.",
+    "openTitle": "Är anfallet över?",
+    "openBody": "Ett anfall har varit öppet i 24 timmar. Tryck för att ange sluttid."
+  },
+  "lock": {
+    "title": "Ange PIN",
+    "hint": "Din dagbok är låst. Ange din PIN med 4–6 siffror."
   },
   "settings": {
     "language": "Språk",
-    "dailyReminder": "Daglig påminnelse (timme)",
     "privacy": "Integritet",
-    "support": "Support"
+    "privacyPolicy": "Integritetspolicy",
+    "support": "Support",
+    "diary": "Dagbok",
+    "manage": "Hantera",
+    "medThreshold": "Berätta om medicindagar vid",
+    "daysPerMonth": "{{n}} dagar/mån",
+    "medThresholdHint": "Många riktlinjer nämner 10 eller 15 dagar i månaden som något att ta upp med läkaren. Välj det din använder.",
+    "reminders": "Påminnelser",
+    "checkinReminder": "Daglig check-in-påminnelse",
+    "reminderTime": "Tid",
+    "openEpisodeReminder": "Påminn mig om ett anfall står öppet i 24 h",
+    "pin": "PIN-lås",
+    "pinOn": "På – frågar efter 1 minut i bakgrunden",
+    "pinOff": "Av",
+    "pinSetup": "Ange PIN",
+    "pinRemove": "Ta bort",
+    "pinRemoved": "PIN borttagen",
+    "pinSet": "PIN satt",
+    "pinNew": "Ny PIN (4–6 siffror)",
+    "pinRepeat": "Upprepa PIN",
+    "pinMismatch": "PIN-koderna matchar inte",
+    "pinHint": "En glömd PIN kan inte återställas – bara radering av all data låser upp appen.",
+    "data": "Dina data",
+    "dataNote": "Allt stannar på den här telefonen. Säkerhetskopian är krypterad med din lösenfras och delas av dig själv – vi laddar aldrig upp något.",
+    "about": "Om",
+    "feedback": "Skicka feedback",
+    "restored": "Köp återställda",
+    "proThanks": "Tack för att du stöder Migrano.",
+    "freeHint": "Obegränsad loggning. Pro lägger till insikter, PDF-rapport och PIN-lås."
   },
   "backup": {
-    "export": "Exportera backup / dela med hushållet",
-    "passphrase": "Välj ett lösenord för backup-filen",
-    "wrongApp": "Denna backup tillhör en annan app",
+    "export": "Exportera krypterad säkerhetskopia",
+    "import": "Importera säkerhetskopia",
+    "passphrase": "Välj en lösenfras för säkerhetskopian",
+    "passphraseShort": "Lösenfras",
+    "file": "Säkerhetskopia",
+    "importHint": "Nyaste posten vinner om samma anfall finns på båda telefonerna.",
+    "wrongApp": "Den här säkerhetskopian tillhör en annan app",
+    "exported": "Säkerhetskopia exporterad",
+    "imported": "Säkerhetskopia importerad",
+    "importFailed": "Kunde inte importera – fel lösenfras eller fil?",
     "wipe": "Radera all data",
-    "wipeConfirm": "Detta raderar permanent allt som appen har sparat på den här enheten. Exporterade säkerhetskopior påverkas inte. Fortsätt?",
+    "wipeConfirm": "Detta raderar permanent allt som appen sparat på den här enheten. Exporterade säkerhetskopior påverkas inte. Fortsätt?",
     "wiped": "All data raderad"
   },
   "plan": {
     "free": "Gratis",
-    "pro": "Pro",
+    "pro": "Migrano Pro",
     "upgrade": "Uppgradera"
   },
   "paywall": {
-    "title": "Lås upp allt",
+    "title": "Ta med dagboken till läkaren",
     "benefits": [
-      "Obegränsat antal",
-      "Dela med hushållet",
-      "PDF-export",
-      "Widgets på hemskärmen"
+      "Insikter: anfallsdagar, längd, triggers, symtom",
+      "PDF-rapport som din neurolog läser på en minut",
+      "Varning för medicindagar vid din gräns",
+      "PIN-lås, krypterad säkerhetskopia och obegränsad historik"
     ],
     "plan": {
       "annual": "Årligen",
       "lifetime": "Livstid"
     },
     "trial": "7 dagar gratis, sedan årligen",
-    "ctaTrial": "Starta gratis prov",
+    "ctaTrial": "Starta gratis provperiod",
     "ctaBuy": "Köp en gång",
-    "legal": "Avsluta när som helst i ditt butikskonto.",
+    "legal": "Avsluta när som helst i ditt butikskonto. Loggning är gratis för alltid.",
     "restore": "Återställ köp",
     "terms": "Villkor",
     "reasons": {
-      "limit": "Du har nått gratisgränsen.",
+      "insights": "Insikter och rapporten ingår i Pro.",
+      "history": "Gratis visar de senaste 90 dagarna. Pro sparar allt.",
+      "pin": "PIN-låset ingår i Pro.",
+      "backup": "Säkerhetskopia och import ingår i Pro.",
       "onboarding": "",
       "settings": ""
     }
@@ -62,30 +199,28 @@
   "onboarding": {
     "steps": [
       {
-        "title": "Allt på ett ställe",
-        "body": "Håll koll på det viktiga, med påminnelser innan något förfaller."
+        "title": "Ett tryck när det börjar",
+        "body": "\"Anfall nu\" startar klockan. Intensitet, triggers och medicin kan vänta tills du mår bättre."
       },
       {
-        "title": "Din data stannar hos dig",
-        "body": "Inget konto. Allt sparas på din telefon och du kan exportera en backup när som helst."
+        "title": "Privat från grunden",
+        "body": "Inget konto, inget moln, ingen spårning. Din dagbok bor på den här telefonen, och bara du kan exportera den."
       },
       {
-        "title": "Dela med hushållet",
-        "body": "Exportera en gång, importera på en annan telefon. Båda kan redigera."
+        "title": "Gjord för läkarbesöket",
+        "body": "Anfallsdagar, medicindagar, triggers och en PDF-rapport – det en neurolog faktiskt frågar efter."
       }
     ],
     "next": "Nästa",
     "skip": "Hoppa över",
     "start": "Kom igång"
   },
-  "home": {
-    "title": "Migrano",
-    "attackNow": "Anfall nu",
-    "endAttack": "Anfallet är över",
-    "openSince": "Anfall pågår sedan {{time}}",
-    "monthStats": "Denna månad: {{attackDays}} anfallsdagar · {{medDays}} medicindagar",
-    "recent": "Senaste anfall",
-    "ongoing": "pågår"
+  "lang": {
+    "en": "English",
+    "da": "Dansk",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "nb": "Norsk"
   },
   "diary": {
     "groups": {

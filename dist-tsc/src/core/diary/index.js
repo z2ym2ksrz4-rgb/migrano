@@ -92,6 +92,16 @@ export async function addMedication(name, kind = "acute", unit = null) {
     await dbWrite(`INSERT INTO medication(id,name,kind,unit,isHidden,sort,updatedAt) VALUES(?,?,?,?,0,0,?)`, [id, name.trim(), kind, unit, nowIso()]);
     return id;
 }
+export async function listIntakes(episodeId) {
+    return q(`SELECT i.*, m.name, m.kind FROM medicationIntake i JOIN medication m ON m.id=i.medicationId WHERE i.episodeId=? ORDER BY i.takenAt`, [episodeId]);
+}
+export async function deleteIntake(id) { await dbWrite(`DELETE FROM medicationIntake WHERE id=?`, [id]); }
+export async function updateMedication(id, patch) {
+    const keys = Object.keys(patch);
+    if (!keys.length)
+        return;
+    await dbWrite(`UPDATE medication SET ${keys.map((k) => `${k}=?`).join(", ")}, updatedAt=? WHERE id=?`, [...keys.map((k) => patch[k] ?? null), nowIso(), id]);
+}
 export async function logIntake(medicationId, episodeId, takenAt = nowIso(), amount = null) {
     await dbWrite(`INSERT INTO medicationIntake(id,episodeId,medicationId,takenAt,amount,updatedAt) VALUES(?,?,?,?,?,?)`, [newId(), episodeId, medicationId, takenAt, amount, nowIso()]);
 }
@@ -128,6 +138,39 @@ export async function episodeDays(fromIso, toIso) {
             days.add(d.toISOString().slice(0, 10));
     }
     return days.size;
+}
+/** Tag frequency across the episodes in a range: share of episodes carrying each tag, per group. */
+export async function tagFrequency(fromIso, toIso) {
+    const total = (await q(`SELECT COUNT(*) AS n FROM episode WHERE startedAt >= ? AND startedAt < ?`, [fromIso, toIso]))[0]?.n ?? 0;
+    const rows = await q(`SELECT g.key AS groupKey, t.id AS tagId, t.labelKey, t.label, COUNT(*) AS n
+     FROM episodeTag et JOIN episode e ON e.id=et.episodeId JOIN tag t ON t.id=et.tagId JOIN tagGroup g ON g.id=t.groupId
+     WHERE e.startedAt >= ? AND e.startedAt < ? GROUP BY t.id ORDER BY n DESC`, [fromIso, toIso]);
+    return rows.map((r) => ({ ...r, total }));
+}
+/** Per-month episode counts and attack days for the last `months` months, oldest first. */
+export async function monthlySeries(months = 12) {
+    const out = [];
+    const now = new Date();
+    for (let i = months - 1; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const { fromIso, toIso } = monthRange(d);
+        const episodes = (await q(`SELECT COUNT(*) AS n FROM episode WHERE startedAt >= ? AND startedAt < ?`, [fromIso, toIso]))[0]?.n ?? 0;
+        out.push({ month: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`, episodes, attackDays: await episodeDays(fromIso, toIso) });
+    }
+    return out;
+}
+export async function episodeSummary(fromIso, toIso) {
+    const eps = await listEpisodes(fromIso, toIso);
+    const closed = eps.filter((e) => e.endedAt);
+    const hours = closed.map((e) => (new Date(e.endedAt).getTime() - new Date(e.startedAt).getTime()) / 36e5).filter((h) => h >= 0);
+    const ints = eps.map((e) => e.intensity).filter((x) => x != null);
+    return {
+        episodes: eps.length,
+        attackDays: await episodeDays(fromIso, toIso),
+        avgHours: hours.length ? hours.reduce((a, b) => a + b, 0) / hours.length : null,
+        avgIntensity: ints.length ? ints.reduce((a, b) => a + b, 0) / ints.length : null,
+        medDays: await medicationDays(fromIso, toIso),
+    };
 }
 export const monthRange = (d = new Date()) => {
     const from = new Date(d.getFullYear(), d.getMonth(), 1);

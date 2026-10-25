@@ -8,6 +8,10 @@ const defaults = {
     onboardingDone: false,
     reviewPromptedAt: null,
     successEvents: 0,
+    checkinReminder: true,
+    medThreshold: 10,
+    pinHash: null,
+    openEpisodeReminder: true,
 };
 export const useSettings = create((setState, get) => ({
     ...defaults,

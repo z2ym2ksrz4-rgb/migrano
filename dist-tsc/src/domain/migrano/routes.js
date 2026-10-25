@@ -1,29 +1,53 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { useCallback, useEffect, useState } from "react";
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { openEpisode, startEpisode, endEpisode, listEpisodes, listTags, medicationDays, episodeDays, monthRange, } from "@/core/diary";
+import { App as CapApp } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
+import { startEpisode, openEpisode } from "@/core/diary";
+import { ensurePermission } from "@/core/notifications";
+import { useSettings } from "@/core/settings";
+import { Home } from "./screens/Home";
+import { Calendar } from "./screens/Calendar";
+import { Insights } from "./screens/Insights";
+import { EpisodeSheet } from "./screens/EpisodeSheet";
+import { MedicationsSheet } from "./screens/Medications";
+import { replanReminders } from "./reminders";
+import { useUi } from "./store";
+export const domainTabs = [
+    { key: "home", labelKey: "nav.home" }, { key: "calendar", labelKey: "nav.calendar" }, { key: "insights", labelKey: "nav.insights" },
+];
 /**
- * Phase 2 placeholder home: proves engine + seed + i18n end to end (start/stop an attack, see this month's numbers,
- * see seeded tags in the active language). Real screens arrive in phase 3.
+ * Deep links (widget, notification tap):  migrano://episode/new  starts an attack and opens the sheet,
+ * migrano://episode/open  opens the current attack. Handled here so the widget can stay dumb.
  */
-export function MigranoRoutes() {
+async function handleUrl(url) {
+    if (url.includes("episode/new")) {
+        const e = await startEpisode();
+        useUi.getState().bump();
+        useUi.getState().openEpisode(e.id);
+    }
+    else if (url.includes("episode/open")) {
+        const e = await openEpisode();
+        if (e)
+            useUi.getState().openEpisode(e.id);
+    }
+}
+export function MigranoRoutes({ tab }) {
     const { t } = useTranslation();
-    const [open, setOpen] = useState(null);
-    const [recent, setRecent] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [stats, setStats] = useState({ attackDays: 0, medDays: 0 });
-    const load = useCallback(async () => {
-        const { fromIso, toIso } = monthRange();
-        setOpen(await openEpisode());
-        setRecent((await listEpisodes()).slice(0, 10));
-        setTags(await listTags("trigger"));
-        setStats({ attackDays: await episodeDays(fromIso, toIso), medDays: await medicationDays(fromIso, toIso) });
+    const version = useUi((s) => s.version);
+    const hour = useSettings((s) => s.dailyReminderHour);
+    const checkinReminder = useSettings((s) => s.checkinReminder);
+    useEffect(() => {
+        if (Capacitor.getPlatform() === "web") {
+            if (location.hash.startsWith("#migrano://"))
+                void handleUrl(location.hash.slice(1));
+            return;
+        }
+        const sub = CapApp.addListener("appUrlOpen", (e) => void handleUrl(e.url));
+        void CapApp.getLaunchUrl().then((l) => { if (l?.url)
+            void handleUrl(l.url); });
+        return () => { void sub.then((h) => h.remove()); };
     }, []);
-    useEffect(() => { void load(); }, [load]);
-    const onAttackNow = async () => { await startEpisode(); await load(); };
-    const onEnd = async () => { if (open) {
-        await endEpisode(open.id);
-        await load();
-    } };
-    return (_jsxs("section", { className: "screen", children: [_jsx("h1", { children: t("home.title") }), open ? (_jsxs("div", { className: "card", children: [_jsx("p", { children: t("home.openSince", { time: new Date(open.startedAt).toLocaleTimeString() }) }), _jsx("button", { onClick: onEnd, children: t("home.endAttack") })] })) : (_jsx("button", { className: "primary", onClick: onAttackNow, children: t("home.attackNow") })), _jsx("p", { children: t("home.monthStats", { attackDays: stats.attackDays, medDays: stats.medDays }) }), _jsx("h2", { children: t("home.recent") }), _jsx("ul", { className: "list", children: recent.map((e) => (_jsxs("li", { children: [new Date(e.startedAt).toLocaleString(), " ", e.endedAt ? "" : `· ${t("home.ongoing")}`] }, e.id))) }), _jsx("h2", { children: t("diary.groups.trigger") }), _jsx("div", { className: "chips", children: tags.filter((x) => !x.isHidden).map((x) => (_jsx("span", { className: "chip", children: x.labelKey ? t(x.labelKey) : x.label }, x.id))) })] }));
+    useEffect(() => { void ensurePermission().then(() => replanReminders(t)); }, [t, version, hour, checkinReminder]);
+    return (_jsxs(_Fragment, { children: [tab === "home" && _jsx(Home, {}), tab === "calendar" && _jsx(Calendar, {}), tab === "insights" && _jsx(Insights, {}), _jsx(EpisodeSheet, {}), _jsx(MedicationsSheet, {})] }));
 }

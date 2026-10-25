@@ -1,57 +1,56 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  openEpisode, startEpisode, endEpisode, listEpisodes, listTags, medicationDays, episodeDays, monthRange,
-  type Episode, type Tag,
-} from "@/core/diary";
+import { App as CapApp } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
+import { startEpisode, openEpisode } from "@/core/diary";
+import { ensurePermission } from "@/core/notifications";
+import { useSettings } from "@/core/settings";
+import { Home } from "./screens/Home";
+import { Calendar } from "./screens/Calendar";
+import { Insights } from "./screens/Insights";
+import { EpisodeSheet } from "./screens/EpisodeSheet";
+import { MedicationsSheet } from "./screens/Medications";
+import { replanReminders } from "./reminders";
+import { useUi } from "./store";
+
+export type DomainTab = "home" | "calendar" | "insights";
+export const domainTabs: { key: DomainTab; labelKey: string }[] = [
+  { key: "home", labelKey: "nav.home" }, { key: "calendar", labelKey: "nav.calendar" }, { key: "insights", labelKey: "nav.insights" },
+];
 
 /**
- * Phase 2 placeholder home: proves engine + seed + i18n end to end (start/stop an attack, see this month's numbers,
- * see seeded tags in the active language). Real screens arrive in phase 3.
+ * Deep links (widget, notification tap):  migrano://episode/new  starts an attack and opens the sheet,
+ * migrano://episode/open  opens the current attack. Handled here so the widget can stay dumb.
  */
-export function MigranoRoutes() {
+async function handleUrl(url: string) {
+  if (url.includes("episode/new")) { const e = await startEpisode(); useUi.getState().bump(); useUi.getState().openEpisode(e.id); }
+  else if (url.includes("episode/open")) { const e = await openEpisode(); if (e) useUi.getState().openEpisode(e.id); }
+}
+
+export function MigranoRoutes({ tab }: { tab: DomainTab }) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState<Episode | null>(null);
-  const [recent, setRecent] = useState<Episode[]>([]);
-  const [tags, setTags] = useState<Tag[]>([]);
-  const [stats, setStats] = useState({ attackDays: 0, medDays: 0 });
+  const version = useUi((s) => s.version);
+  const hour = useSettings((s) => s.dailyReminderHour);
+  const checkinReminder = useSettings((s) => s.checkinReminder);
 
-  const load = useCallback(async () => {
-    const { fromIso, toIso } = monthRange();
-    setOpen(await openEpisode());
-    setRecent((await listEpisodes()).slice(0, 10));
-    setTags(await listTags("trigger"));
-    setStats({ attackDays: await episodeDays(fromIso, toIso), medDays: await medicationDays(fromIso, toIso) });
+  useEffect(() => {
+    if (Capacitor.getPlatform() === "web") {
+      if (location.hash.startsWith("#migrano://")) void handleUrl(location.hash.slice(1));
+      return;
+    }
+    const sub = CapApp.addListener("appUrlOpen", (e) => void handleUrl(e.url));
+    void CapApp.getLaunchUrl().then((l) => { if (l?.url) void handleUrl(l.url); });
+    return () => { void sub.then((h) => h.remove()); };
   }, []);
-  useEffect(() => { void load(); }, [load]);
-
-  const onAttackNow = async () => { await startEpisode(); await load(); };
-  const onEnd = async () => { if (open) { await endEpisode(open.id); await load(); } };
+  useEffect(() => { void ensurePermission().then(() => replanReminders(t)); }, [t, version, hour, checkinReminder]);
 
   return (
-    <section className="screen">
-      <h1>{t("home.title")}</h1>
-      {open ? (
-        <div className="card">
-          <p>{t("home.openSince", { time: new Date(open.startedAt).toLocaleTimeString() })}</p>
-          <button onClick={onEnd}>{t("home.endAttack")}</button>
-        </div>
-      ) : (
-        <button className="primary" onClick={onAttackNow}>{t("home.attackNow")}</button>
-      )}
-      <p>{t("home.monthStats", { attackDays: stats.attackDays, medDays: stats.medDays })}</p>
-      <h2>{t("home.recent")}</h2>
-      <ul className="list">
-        {recent.map((e) => (
-          <li key={e.id}>{new Date(e.startedAt).toLocaleString()} {e.endedAt ? "" : `· ${t("home.ongoing")}`}</li>
-        ))}
-      </ul>
-      <h2>{t("diary.groups.trigger")}</h2>
-      <div className="chips">
-        {tags.filter((x) => !x.isHidden).map((x) => (
-          <span key={x.id} className="chip">{x.labelKey ? t(x.labelKey) : x.label}</span>
-        ))}
-      </div>
-    </section>
+    <>
+      {tab === "home" && <Home />}
+      {tab === "calendar" && <Calendar />}
+      {tab === "insights" && <Insights />}
+      <EpisodeSheet />
+      <MedicationsSheet />
+    </>
   );
 }

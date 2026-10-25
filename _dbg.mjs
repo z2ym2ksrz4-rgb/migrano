@@ -1,0 +1,17 @@
+import { chromium } from "playwright";
+const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
+const p = await b.newPage({ viewport: { width: 390, height: 844 } });
+p.on("pageerror", (e) => console.log("PAGEERROR", e.message));
+p.on("console", (m) => { if (m.type() === "error" || m.type()==="warning") console.log("CONSOLE", m.type(), m.text()); });
+await p.goto("http://localhost:4173/", { waitUntil: "networkidle" }); await p.waitForSelector("h1");
+for (let i = 0; i < 3; i++) await p.click(".onboarding .cta"); await p.waitForSelector(".sheet h2"); await p.click(".sheet .cta"); await p.waitForTimeout(400);
+await p.evaluate(() => window.__seedDemo("da")); await p.waitForTimeout(2500); await p.waitForSelector(".attack-btn");
+await p.click(".tabbar button:nth-child(3)"); await p.waitForSelector(".bars");
+console.log("buttons:", await p.$$eval("h1 ~ button, .row.between button", els=>els.map(e=>e.className+"|"+e.textContent)));
+await p.click(".row.between button.small"); await p.waitForSelector(".sheet .cta");
+console.log("sheet cta:", await p.textContent(".sheet .cta"));
+const dl = p.waitForEvent("download", { timeout: 10000 }).then(d=>"DL "+d.suggestedFilename()).catch(e=>"NO DL "+e.message);
+await p.click(".sheet .cta");
+console.log(await dl);
+await p.waitForTimeout(500);
+await b.close();

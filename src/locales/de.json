@@ -1,47 +1,181 @@
 {
   "nav": {
     "home": "Start",
+    "calendar": "Kalender",
+    "insights": "Einblicke",
     "settings": "Einstellungen"
   },
   "common": {
     "add": "Hinzufügen",
     "cancel": "Abbrechen",
     "save": "Speichern",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "done": "Fertig",
+    "other": "Andere…",
+    "typeOwn": "Eigenen Eintrag tippen",
+    "disclaimer": "Migrano ist ein Tagebuch zur Selbstbeobachtung, kein Medizinprodukt. Es stellt keine Diagnosen und gibt keine Behandlungsempfehlungen. Besprechen Sie Ihre Einträge mit Ihrer Ärztin oder Ihrem Arzt."
   },
-  "lang": {
-    "en": "English",
-    "da": "Dansk",
-    "de": "Deutsch",
-    "sv": "Svenska",
-    "nb": "Norsk"
+  "home": {
+    "title": "Migrano",
+    "attackNow": "Anfall jetzt",
+    "endAttack": "Anfall ist vorbei",
+    "openSince": "Anfall läuft seit {{time}}",
+    "tapToEdit": "Tippen für Details oder zum Beenden",
+    "attackDays": "Anfallstage diesen Monat",
+    "medDays": "Medikamententage diesen Monat",
+    "recent": "Letzte Anfälle",
+    "ongoing": "läuft",
+    "empty": "Noch kein Anfall erfasst. Wenn einer beginnt, tippen Sie auf den Knopf – Details können warten.",
+    "checkinTitle": "Wie war heute?",
+    "checkin": {
+      "none": "Keine Kopfschmerzen",
+      "mild": "Leicht",
+      "attack": "Anfall"
+    },
+    "fields": {
+      "sleep": "Schlaf letzte Nacht",
+      "stress": "Stress heute"
+    },
+    "medWarnTitle": "{{n}} Medikamententage diesen Monat",
+    "medWarnBody": "Sie wollten ab {{n}} Tagen informiert werden. Häufige Akutmedikation ist ein Thema für das Arztgespräch."
+  },
+  "episode": {
+    "title": "Anfall",
+    "ongoing": "Anfall läuft",
+    "start": "Beginn",
+    "end": "Ende",
+    "duration": "{{h}} Std.",
+    "intensity": "Intensität",
+    "mildLbl": "leicht",
+    "severeLbl": "stark",
+    "note": "Notiz",
+    "notePh": "Was sonst noch wichtig ist",
+    "deleteConfirm": "Diesen Anfall löschen?"
+  },
+  "calendar": {
+    "noAttacks": "Kein Anfall an diesem Tag."
+  },
+  "meds": {
+    "title": "Medikamente",
+    "sub": "Ihre eigenen Präparate, nach Namen. Migrano schlägt nie Medikamente oder Dosierungen vor.",
+    "name": "Name",
+    "namePh": "z. B. Sumatriptan 50 mg",
+    "acute": "Akut",
+    "preventive": "Prophylaxe",
+    "acuteHint": "Nur Akutmedikation zählt zu den Medikamententagen.",
+    "addFirst": "Medikament hinzufügen",
+    "show": "Zeigen",
+    "hide": "Ausblenden"
+  },
+  "insights": {
+    "title": "Einblicke",
+    "lockedTitle": "Muster gibt es mit Pro",
+    "lockedBody": "Anfallstage pro Monat, durchschnittliche Dauer und Intensität, die häufigsten Auslöser und Symptome – plus der PDF-Bericht für den Arzt.",
+    "attackDaysPerMonth": "Anfallstage pro Monat, letzte 12 Monate",
+    "range": {
+      "month": "Dieser Monat",
+      "3m": "3 Monate",
+      "12m": "12 Monate"
+    },
+    "attacks": "Anfälle",
+    "avgHours": "Ø Stunden",
+    "avgIntensity": "Ø Intensität",
+    "medDays": "Tage mit Akutmedikation (Ihre Grenze: {{n}})",
+    "shareOfAttacks": "Anteil der Anfälle",
+    "noData": "Noch nicht genug Daten.",
+    "disclaimer": "Anteile sind einfache Zählungen Ihrer Einträge, kein Beleg für Ursachen.",
+    "attackDays": "Anfallstage"
+  },
+  "report": {
+    "title": "Kopfschmerztagebuch – Bericht",
+    "cta": "PDF-Bericht",
+    "sub": "Eine Seite Überblick plus eine Zeile pro Anfall, formatiert für den Arztbesuch.",
+    "preset": {
+      "month": "Dieser Monat",
+      "last": "Letzter Monat",
+      "3m": "Letzte 3 Monate",
+      "custom": "Zeitraum wählen"
+    },
+    "from": "Von",
+    "to": "Bis",
+    "make": "PDF erstellen",
+    "medDays": "Tage mit Akutmedikation",
+    "attacks": "Anfälle",
+    "hours": "Std.",
+    "intensityShort": "Int.",
+    "count": "Anzahl (Anteil)",
+    "footer": "Erstellt mit {{app}} – ein Tagebuch zur Selbstbeobachtung, kein Medizinprodukt"
+  },
+  "notif": {
+    "checkinTitle": "Wie war heute?",
+    "checkinBody": "5 Sekunden Check-in halten das Tagebuch vollständig.",
+    "openTitle": "Ist der Anfall vorbei?",
+    "openBody": "Ein Anfall ist seit 24 Stunden offen. Tippen, um das Ende einzutragen."
+  },
+  "lock": {
+    "title": "PIN eingeben",
+    "hint": "Ihr Tagebuch ist gesperrt. Geben Sie Ihre 4–6-stellige PIN ein."
   },
   "settings": {
     "language": "Sprache",
-    "dailyReminder": "Tägliche Erinnerung (Stunde)",
     "privacy": "Datenschutz",
-    "support": "Support"
+    "privacyPolicy": "Datenschutzerklärung",
+    "support": "Support",
+    "diary": "Tagebuch",
+    "manage": "Verwalten",
+    "medThreshold": "Über Medikamententage informieren ab",
+    "daysPerMonth": "{{n}} Tage/Monat",
+    "medThresholdHint": "Viele Leitlinien nennen 10 oder 15 Tage im Monat als Anlass für ein Arztgespräch. Wählen Sie den Wert Ihrer Praxis.",
+    "reminders": "Erinnerungen",
+    "checkinReminder": "Tägliche Check-in-Erinnerung",
+    "reminderTime": "Uhrzeit",
+    "openEpisodeReminder": "Erinnern, wenn ein Anfall 24 Std. offen bleibt",
+    "pin": "PIN-Sperre",
+    "pinOn": "An – nach 1 Minute im Hintergrund",
+    "pinOff": "Aus",
+    "pinSetup": "PIN festlegen",
+    "pinRemove": "Entfernen",
+    "pinRemoved": "PIN entfernt",
+    "pinSet": "PIN gesetzt",
+    "pinNew": "Neue PIN (4–6 Ziffern)",
+    "pinRepeat": "PIN wiederholen",
+    "pinMismatch": "PINs stimmen nicht überein",
+    "pinHint": "Eine vergessene PIN lässt sich nicht wiederherstellen – nur das Löschen aller Daten entsperrt die App.",
+    "data": "Ihre Daten",
+    "dataNote": "Alles bleibt auf diesem Telefon. Die Sicherungsdatei ist mit Ihrer Passphrase verschlüsselt und wird nur von Ihnen geteilt – wir laden nichts hoch.",
+    "about": "Über",
+    "feedback": "Feedback senden",
+    "restored": "Käufe wiederhergestellt",
+    "proThanks": "Danke, dass Sie Migrano unterstützen.",
+    "freeHint": "Unbegrenzt erfassen. Pro ergänzt Einblicke, PDF-Bericht und PIN-Sperre."
   },
   "backup": {
-    "export": "Backup exportieren / mit Haushalt teilen",
-    "passphrase": "Passphrase für die Backup-Datei wählen",
-    "wrongApp": "Dieses Backup gehört zu einer anderen App",
+    "export": "Verschlüsselte Sicherung exportieren",
+    "import": "Sicherung importieren",
+    "passphrase": "Passphrase für die Sicherungsdatei wählen",
+    "passphraseShort": "Passphrase",
+    "file": "Sicherungsdatei",
+    "importHint": "Der neueste Eintrag gewinnt, wenn derselbe Anfall auf beiden Telefonen existiert.",
+    "wrongApp": "Diese Sicherung gehört zu einer anderen App",
+    "exported": "Sicherung exportiert",
+    "imported": "Sicherung importiert",
+    "importFailed": "Import fehlgeschlagen – falsche Passphrase oder Datei?",
     "wipe": "Alle Daten löschen",
-    "wipeConfirm": "Dadurch wird alles, was die App auf diesem Gerät gespeichert hat, dauerhaft gelöscht. Exportierte Backup-Dateien sind nicht betroffen. Fortfahren?",
+    "wipeConfirm": "Dies löscht dauerhaft alles, was die App auf diesem Gerät gespeichert hat. Exportierte Sicherungen bleiben erhalten. Fortfahren?",
     "wiped": "Alle Daten gelöscht"
   },
   "plan": {
     "free": "Kostenlos",
-    "pro": "Pro",
+    "pro": "Migrano Pro",
     "upgrade": "Upgrade"
   },
   "paywall": {
-    "title": "Alles freischalten",
+    "title": "Nehmen Sie Ihr Tagebuch mit zum Arzt",
     "benefits": [
-      "Unbegrenzte Einträge",
-      "Mit dem Haushalt teilen",
-      "PDF-Export",
-      "Widgets für den Startbildschirm"
+      "Einblicke: Anfallstage, Dauer, Auslöser, Symptome",
+      "PDF-Bericht, den Ihr Neurologe in einer Minute liest",
+      "Warnung bei Medikamententagen ab Ihrer Grenze",
+      "PIN-Sperre, verschlüsselte Sicherung, unbegrenzter Verlauf"
     ],
     "plan": {
       "annual": "Jährlich",
@@ -50,11 +184,14 @@
     "trial": "7 Tage kostenlos, dann jährlich",
     "ctaTrial": "Kostenlos testen",
     "ctaBuy": "Einmal kaufen",
-    "legal": "Jederzeit im Store-Konto kündbar.",
+    "legal": "Jederzeit im Store-Konto kündbar. Erfassen bleibt für immer kostenlos.",
     "restore": "Käufe wiederherstellen",
-    "terms": "AGB",
+    "terms": "Nutzungsbedingungen",
     "reasons": {
-      "limit": "Du hast das kostenlose Limit erreicht.",
+      "insights": "Einblicke und Bericht gehören zu Pro.",
+      "history": "Kostenlos zeigt die letzten 90 Tage. Pro behält alles.",
+      "pin": "Die PIN-Sperre gehört zu Pro.",
+      "backup": "Sicherung und Import gehören zu Pro.",
       "onboarding": "",
       "settings": ""
     }
@@ -62,30 +199,28 @@
   "onboarding": {
     "steps": [
       {
-        "title": "Alles an einem Ort",
-        "body": "Behalte den Überblick, mit Erinnerungen bevor etwas fällig ist."
+        "title": "Ein Tipp, wenn es losgeht",
+        "body": "„Anfall jetzt“ startet die Uhr. Intensität, Auslöser und Medikamente können warten, bis es Ihnen besser geht."
       },
       {
-        "title": "Deine Daten bleiben bei dir",
-        "body": "Kein Konto. Alles wird auf deinem Handy gespeichert, Backup jederzeit exportierbar."
+        "title": "Privat von Grund auf",
+        "body": "Kein Konto, keine Cloud, kein Tracking. Ihr Tagebuch lebt auf diesem Telefon, und nur Sie können es exportieren."
       },
       {
-        "title": "Mit dem Haushalt teilen",
-        "body": "Einmal exportieren, auf einem anderen Handy importieren. Beide können bearbeiten."
+        "title": "Gemacht für den Arztbesuch",
+        "body": "Anfallstage, Medikamententage, Auslöser und ein PDF-Bericht – das, wonach ein Neurologe wirklich fragt."
       }
     ],
     "next": "Weiter",
     "skip": "Überspringen",
     "start": "Los geht's"
   },
-  "home": {
-    "title": "Migrano",
-    "attackNow": "Anfall jetzt",
-    "endAttack": "Anfall ist vorbei",
-    "openSince": "Anfall läuft seit {{time}}",
-    "monthStats": "Dieser Monat: {{attackDays}} Anfallstage · {{medDays}} Medikamententage",
-    "recent": "Letzte Anfälle",
-    "ongoing": "läuft"
+  "lang": {
+    "en": "English",
+    "da": "Dansk",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "nb": "Norsk"
   },
   "diary": {
     "groups": {

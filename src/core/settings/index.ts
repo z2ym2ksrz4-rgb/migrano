@@ -9,6 +9,10 @@ export type Settings = {
   onboardingDone: boolean;
   reviewPromptedAt: string | null;
   successEvents: number;       // used to trigger the review prompt after the 2nd success
+  checkinReminder: boolean;    // daily "how was today?" notification
+  medThreshold: number;        // medication days per month that triggers the warning (Pro)
+  pinHash: string | null;      // sha-256 of the PIN; null = no lock (Pro)
+  openEpisodeReminder: boolean;// nudge when an episode has been open > 24h
 };
 
 const defaults: Settings = {
@@ -18,6 +22,10 @@ const defaults: Settings = {
   onboardingDone: false,
   reviewPromptedAt: null,
   successEvents: 0,
+  checkinReminder: true,
+  medThreshold: 10,
+  pinHash: null,
+  openEpisodeReminder: true,
 };
 
 type Store = Settings & {

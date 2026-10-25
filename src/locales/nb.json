@@ -1,60 +1,197 @@
 {
   "nav": {
     "home": "Hjem",
+    "calendar": "Kalender",
+    "insights": "Innsikt",
     "settings": "Innstillinger"
   },
   "common": {
     "add": "Legg til",
     "cancel": "Avbryt",
     "save": "Lagre",
-    "delete": "Slett"
+    "delete": "Slett",
+    "done": "Ferdig",
+    "other": "Annet…",
+    "typeOwn": "Skriv din egen",
+    "disclaimer": "Migrano er en dagbok for selvobservasjon, ikke medisinsk utstyr. Den stiller ikke diagnoser og gir ikke behandlingsråd. Snakk med legen din om det du logger."
   },
-  "lang": {
-    "en": "English",
-    "da": "Dansk",
-    "de": "Deutsch",
-    "sv": "Svenska",
-    "nb": "Norsk"
+  "home": {
+    "title": "Migrano",
+    "attackNow": "Anfall nå",
+    "endAttack": "Anfallet er over",
+    "openSince": "Anfall pågår siden {{time}}",
+    "tapToEdit": "Trykk for detaljer eller for å avslutte",
+    "attackDays": "anfallsdager denne måneden",
+    "medDays": "medisindager denne måneden",
+    "recent": "Siste anfall",
+    "ongoing": "pågår",
+    "empty": "Ingen anfall logget ennå. Når ett starter, trykk på knappen – detaljene kan vente.",
+    "checkinTitle": "Hvordan var i dag?",
+    "checkin": {
+      "none": "Ingen hodepine",
+      "mild": "Mild",
+      "attack": "Anfall"
+    },
+    "fields": {
+      "sleep": "Søvn i natt",
+      "stress": "Stress i dag"
+    },
+    "medWarnTitle": "{{n}} medisindager denne måneden",
+    "medWarnBody": "Du valgte å få beskjed ved {{n}} dager. Hyppig akuttmedisin er verdt å ta opp med legen."
+  },
+  "episode": {
+    "title": "Anfall",
+    "ongoing": "Anfall pågår",
+    "start": "Start",
+    "end": "Slutt",
+    "duration": "{{h}} t",
+    "intensity": "Intensitet",
+    "mildLbl": "mild",
+    "severeLbl": "kraftig",
+    "note": "Notat",
+    "notePh": "Annet som er verdt å huske",
+    "deleteConfirm": "Slette dette anfallet?"
+  },
+  "calendar": {
+    "noAttacks": "Ingen anfall denne dagen."
+  },
+  "meds": {
+    "title": "Medisin",
+    "sub": "Dine egne preparater, ved navn. Migrano foreslår aldri medisiner eller doser.",
+    "name": "Navn",
+    "namePh": "f.eks. Sumatriptan 50 mg",
+    "acute": "Akutt",
+    "preventive": "Forebyggende",
+    "acuteHint": "Bare akuttmedisin teller som medisindager.",
+    "addFirst": "Legg til medisinen din",
+    "show": "Vis",
+    "hide": "Skjul"
+  },
+  "insights": {
+    "title": "Innsikt",
+    "lockedTitle": "Mønstre krever Pro",
+    "lockedBody": "Anfallsdager per måned, gjennomsnittlig varighet og intensitet, og hvilke triggere og symptomer som går igjen – pluss PDF-rapporten til legen.",
+    "attackDaysPerMonth": "Anfallsdager per måned, siste 12 måneder",
+    "range": {
+      "month": "Denne måneden",
+      "3m": "3 måneder",
+      "12m": "12 måneder"
+    },
+    "attacks": "anfall",
+    "avgHours": "snitt timer",
+    "avgIntensity": "snitt intensitet",
+    "medDays": "dager med akuttmedisin (din grense: {{n}})",
+    "shareOfAttacks": "andel av anfallene",
+    "noData": "Ikke nok data ennå.",
+    "disclaimer": "Andeler er enkle opptellinger av det du har logget – ikke bevis for årsak.",
+    "attackDays": "anfallsdager"
+  },
+  "report": {
+    "title": "Hodepinedagbok – rapport",
+    "cta": "PDF-rapport",
+    "sub": "Én sides oversikt pluss én linje per anfall, formatert for legebesøket.",
+    "preset": {
+      "month": "Denne måneden",
+      "last": "Forrige måned",
+      "3m": "Siste 3 måneder",
+      "custom": "Velg datoer"
+    },
+    "from": "Fra",
+    "to": "Til",
+    "make": "Lag PDF",
+    "medDays": "Dager med akuttmedisin",
+    "attacks": "Anfall",
+    "hours": "Timer",
+    "intensityShort": "Int.",
+    "count": "Antall (andel)",
+    "footer": "Laget med {{app}} – en dagbok for selvobservasjon, ikke medisinsk utstyr"
+  },
+  "notif": {
+    "checkinTitle": "Hvordan var i dag?",
+    "checkinBody": "5 sekunders innsjekk holder dagboken komplett.",
+    "openTitle": "Er anfallet over?",
+    "openBody": "Et anfall har vært åpent i 24 timer. Trykk for å sette sluttid."
+  },
+  "lock": {
+    "title": "Skriv inn PIN",
+    "hint": "Dagboken din er låst. Skriv inn PIN-koden på 4–6 sifre."
   },
   "settings": {
     "language": "Språk",
-    "dailyReminder": "Daglig påminnelse (time)",
     "privacy": "Personvern",
-    "support": "Support"
+    "privacyPolicy": "Personvernerklæring",
+    "support": "Support",
+    "diary": "Dagbok",
+    "manage": "Administrer",
+    "medThreshold": "Si fra om medisindager ved",
+    "daysPerMonth": "{{n}} dager/mnd",
+    "medThresholdHint": "Mange retningslinjer nevner 10 eller 15 dager i måneden som noe å ta opp med legen. Velg det din bruker.",
+    "reminders": "Påminnelser",
+    "checkinReminder": "Daglig innsjekk-påminnelse",
+    "reminderTime": "Tidspunkt",
+    "openEpisodeReminder": "Minn meg på det hvis et anfall står åpent i 24 t",
+    "pin": "PIN-lås",
+    "pinOn": "På – spør etter 1 minutt i bakgrunnen",
+    "pinOff": "Av",
+    "pinSetup": "Sett PIN",
+    "pinRemove": "Fjern",
+    "pinRemoved": "PIN fjernet",
+    "pinSet": "PIN satt",
+    "pinNew": "Ny PIN (4–6 sifre)",
+    "pinRepeat": "Gjenta PIN",
+    "pinMismatch": "PIN-kodene er ikke like",
+    "pinHint": "En glemt PIN kan ikke gjenopprettes – bare sletting av alle data låser opp appen.",
+    "data": "Dine data",
+    "dataNote": "Alt blir på denne telefonen. Sikkerhetskopien er kryptert med passordfrasen din og deles av deg selv – vi laster aldri opp noe.",
+    "about": "Om",
+    "feedback": "Send tilbakemelding",
+    "restored": "Kjøp gjenopprettet",
+    "proThanks": "Takk for at du støtter Migrano.",
+    "freeHint": "Ubegrenset logging. Pro gir innsikt, PDF-rapport og PIN-lås."
   },
   "backup": {
-    "export": "Eksporter backup / del med husstanden",
-    "passphrase": "Velg et passord for backup-filen",
-    "wrongApp": "Denne backupen tilhører en annen app",
+    "export": "Eksporter kryptert sikkerhetskopi",
+    "import": "Importer sikkerhetskopi",
+    "passphrase": "Velg en passordfrase for sikkerhetskopien",
+    "passphraseShort": "Passordfrase",
+    "file": "Sikkerhetskopi",
+    "importHint": "Nyeste oppføring vinner hvis samme anfall finnes på begge telefonene.",
+    "wrongApp": "Denne sikkerhetskopien tilhører en annen app",
+    "exported": "Sikkerhetskopi eksportert",
+    "imported": "Sikkerhetskopi importert",
+    "importFailed": "Kunne ikke importere – feil passordfrase eller fil?",
     "wipe": "Slett alle data",
     "wipeConfirm": "Dette sletter permanent alt appen har lagret på denne enheten. Eksporterte sikkerhetskopier påvirkes ikke. Fortsette?",
-    "wiped": "Alle data er slettet"
+    "wiped": "Alle data slettet"
   },
   "plan": {
     "free": "Gratis",
-    "pro": "Pro",
+    "pro": "Migrano Pro",
     "upgrade": "Oppgrader"
   },
   "paywall": {
-    "title": "Lås opp alt",
+    "title": "Ta med dagboken til legen",
     "benefits": [
-      "Ubegrenset antall",
-      "Del med husstanden",
-      "PDF-eksport",
-      "Widgets på hjemskjermen"
+      "Innsikt: anfallsdager, varighet, triggere, symptomer",
+      "PDF-rapport nevrologen din leser på ett minutt",
+      "Varsel om medisindager ved din valgte grense",
+      "PIN-lås, kryptert sikkerhetskopi og ubegrenset historikk"
     ],
     "plan": {
       "annual": "Årlig",
       "lifetime": "Livstid"
     },
     "trial": "7 dager gratis, deretter årlig",
-    "ctaTrial": "Start gratis prøve",
+    "ctaTrial": "Start gratis prøveperiode",
     "ctaBuy": "Kjøp én gang",
-    "legal": "Avslutt når som helst i butikkontoen din.",
+    "legal": "Avslutt når som helst i butikkontoen din. Logging er gratis for alltid.",
     "restore": "Gjenopprett kjøp",
     "terms": "Vilkår",
     "reasons": {
-      "limit": "Du har nådd gratisgrensen.",
+      "insights": "Innsikt og rapporten er en del av Pro.",
+      "history": "Gratis viser de siste 90 dagene. Pro beholder alt.",
+      "pin": "PIN-låsen er en del av Pro.",
+      "backup": "Sikkerhetskopi og import er en del av Pro.",
       "onboarding": "",
       "settings": ""
     }
@@ -62,30 +199,28 @@
   "onboarding": {
     "steps": [
       {
-        "title": "Alt på ett sted",
-        "body": "Hold oversikt over det viktige, med påminnelser før noe forfaller."
+        "title": "Ett trykk når det starter",
+        "body": "\"Anfall nå\" starter klokken. Intensitet, triggere og medisin kan vente til du har det bedre."
       },
       {
-        "title": "Dataene dine blir hos deg",
-        "body": "Ingen konto. Alt lagres på telefonen din, og du kan eksportere en backup når som helst."
+        "title": "Privat fra bunnen av",
+        "body": "Ingen konto, ingen sky, ingen sporing. Dagboken din bor på denne telefonen, og bare du kan eksportere den."
       },
       {
-        "title": "Del med husstanden",
-        "body": "Eksporter én gang, importer på en annen telefon. Begge kan redigere."
+        "title": "Laget for legebesøket",
+        "body": "Anfallsdager, medisindager, triggere og en PDF-rapport – det en nevrolog faktisk spør om."
       }
     ],
     "next": "Neste",
     "skip": "Hopp over",
     "start": "Kom i gang"
   },
-  "home": {
-    "title": "Migrano",
-    "attackNow": "Anfall nå",
-    "endAttack": "Anfallet er over",
-    "openSince": "Anfall pågår siden {{time}}",
-    "monthStats": "Denne måneden: {{attackDays}} anfallsdager · {{medDays}} medisindager",
-    "recent": "Siste anfall",
-    "ongoing": "pågår"
+  "lang": {
+    "en": "English",
+    "da": "Dansk",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "nb": "Norsk"
   },
   "diary": {
     "groups": {

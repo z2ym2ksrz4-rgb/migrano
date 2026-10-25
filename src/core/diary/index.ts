@@ -102,6 +102,17 @@ export async function addMedication(name: string, kind: Medication["kind"] = "ac
   return id;
 }
 
+export type Intake = { id: string; episodeId: string | null; medicationId: string; takenAt: string; amount: number | null; name: string; kind: string };
+export async function listIntakes(episodeId: string): Promise<Intake[]> {
+  return q<Intake>(`SELECT i.*, m.name, m.kind FROM medicationIntake i JOIN medication m ON m.id=i.medicationId WHERE i.episodeId=? ORDER BY i.takenAt`, [episodeId]);
+}
+export async function deleteIntake(id: string) { await dbWrite(`DELETE FROM medicationIntake WHERE id=?`, [id]); }
+export async function updateMedication(id: string, patch: Partial<Pick<Medication, "name" | "kind" | "unit" | "isHidden">>) {
+  const keys = Object.keys(patch) as (keyof typeof patch)[];
+  if (!keys.length) return;
+  await dbWrite(`UPDATE medication SET ${keys.map((k) => `${k}=?`).join(", ")}, updatedAt=? WHERE id=?`, [...keys.map((k) => patch[k] ?? null), nowIso(), id]);
+}
+
 export async function logIntake(medicationId: string, episodeId: string | null, takenAt = nowIso(), amount: number | null = null) {
   await dbWrite(`INSERT INTO medicationIntake(id,episodeId,medicationId,takenAt,amount,updatedAt) VALUES(?,?,?,?,?,?)`, [newId(), episodeId, medicationId, takenAt, amount, nowIso()]);
 }
@@ -146,6 +157,43 @@ export async function episodeDays(fromIso: string, toIso: string): Promise<numbe
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) days.add(d.toISOString().slice(0, 10));
   }
   return days.size;
+}
+
+/** Tag frequency across the episodes in a range: share of episodes carrying each tag, per group. */
+export async function tagFrequency(fromIso: string, toIso: string): Promise<{ groupKey: string; tagId: string; labelKey: string | null; label: string | null; n: number; total: number }[]> {
+  const total = (await q<{ n: number }>(`SELECT COUNT(*) AS n FROM episode WHERE startedAt >= ? AND startedAt < ?`, [fromIso, toIso]))[0]?.n ?? 0;
+  const rows = await q<{ groupKey: string; tagId: string; labelKey: string | null; label: string | null; n: number }>(
+    `SELECT g.key AS groupKey, t.id AS tagId, t.labelKey, t.label, COUNT(*) AS n
+     FROM episodeTag et JOIN episode e ON e.id=et.episodeId JOIN tag t ON t.id=et.tagId JOIN tagGroup g ON g.id=t.groupId
+     WHERE e.startedAt >= ? AND e.startedAt < ? GROUP BY t.id ORDER BY n DESC`, [fromIso, toIso]);
+  return rows.map((r) => ({ ...r, total }));
+}
+
+/** Per-month episode counts and attack days for the last `months` months, oldest first. */
+export async function monthlySeries(months = 12): Promise<{ month: string; episodes: number; attackDays: number }[]> {
+  const out: { month: string; episodes: number; attackDays: number }[] = [];
+  const now = new Date();
+  for (let i = months - 1; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const { fromIso, toIso } = monthRange(d);
+    const episodes = (await q<{ n: number }>(`SELECT COUNT(*) AS n FROM episode WHERE startedAt >= ? AND startedAt < ?`, [fromIso, toIso]))[0]?.n ?? 0;
+    out.push({ month: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`, episodes, attackDays: await episodeDays(fromIso, toIso) });
+  }
+  return out;
+}
+
+export async function episodeSummary(fromIso: string, toIso: string) {
+  const eps = await listEpisodes(fromIso, toIso);
+  const closed = eps.filter((e) => e.endedAt);
+  const hours = closed.map((e) => (new Date(e.endedAt!).getTime() - new Date(e.startedAt).getTime()) / 36e5).filter((h) => h >= 0);
+  const ints = eps.map((e) => e.intensity).filter((x): x is number => x != null);
+  return {
+    episodes: eps.length,
+    attackDays: await episodeDays(fromIso, toIso),
+    avgHours: hours.length ? hours.reduce((a, b) => a + b, 0) / hours.length : null,
+    avgIntensity: ints.length ? ints.reduce((a, b) => a + b, 0) / ints.length : null,
+    medDays: await medicationDays(fromIso, toIso),
+  };
 }
 
 export const monthRange = (d = new Date()) => {

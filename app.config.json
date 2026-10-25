@@ -11,5 +11,5 @@
     "android": "REPLACE_WITH_RC_ANDROID_PUBLIC_KEY",
     "entitlement": "pro"
   },
-  "dailyReminderHour": 9
+  "dailyReminderHour": 20
 }

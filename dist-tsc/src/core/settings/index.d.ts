@@ -5,6 +5,10 @@ export type Settings = {
     onboardingDone: boolean;
     reviewPromptedAt: string | null;
     successEvents: number;
+    checkinReminder: boolean;
+    medThreshold: number;
+    pinHash: string | null;
+    openEpisodeReminder: boolean;
 };
 type Store = Settings & {
     load: () => Promise<void>;

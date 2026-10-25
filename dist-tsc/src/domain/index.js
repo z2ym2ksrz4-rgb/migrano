@@ -5,7 +5,8 @@
 import { diaryMigrations, configureDiary } from "@/core/diary";
 import { migranoMigrations } from "./migrano/migrations";
 import { migranoConfig } from "./migrano/config";
-import { MigranoRoutes } from "./migrano/routes";
+import { MigranoRoutes, domainTabs } from "./migrano/routes";
 configureDiary(migranoConfig);
 export const domainMigrations = [...diaryMigrations, ...migranoMigrations];
 export const DomainRoutes = MigranoRoutes;
+export { domainTabs };

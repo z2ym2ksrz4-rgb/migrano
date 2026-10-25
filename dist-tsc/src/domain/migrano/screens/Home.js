@@ -1,0 +1,40 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { openEpisode, startEpisode, listEpisodes, episodeDays, medicationDays, monthRange, getCheckin, setCheckin, diaryConfig, } from "@/core/diary";
+import { haptics, fmtDateTime, fmtTime, localDay, hours } from "@/core/ui";
+import { useSettings } from "@/core/settings";
+import { usePurchases } from "@/core/purchases";
+import { useUi } from "../store";
+export function Home() {
+    const { t, i18n } = useTranslation();
+    const lang = i18n.language;
+    const version = useUi((s) => s.version);
+    const openSheet = useUi((s) => s.openEpisode);
+    const bump = useUi((s) => s.bump);
+    const isPro = usePurchases((s) => s.isPro);
+    const threshold = useSettings((s) => s.medThreshold);
+    const [open, setOpen] = useState(null);
+    const [recent, setRecent] = useState([]);
+    const [stats, setStats] = useState({ attackDays: 0, medDays: 0, episodes: 0 });
+    const [today, setToday] = useState(null);
+    const [extra, setExtra] = useState({});
+    const day = localDay();
+    const load = useCallback(async () => {
+        const { fromIso, toIso } = monthRange();
+        setOpen(await openEpisode());
+        setRecent((await listEpisodes()).slice(0, 5));
+        const eps = await listEpisodes(fromIso, toIso);
+        setStats({ attackDays: await episodeDays(fromIso, toIso), medDays: await medicationDays(fromIso, toIso), episodes: eps.length });
+        const c = await getCheckin(day);
+        setToday(c);
+        setExtra(c?.extra ? JSON.parse(c.extra) : {});
+    }, [day]);
+    useEffect(() => { void load(); }, [load, version]);
+    const onAttackNow = async () => { const e = await startEpisode(); haptics.thud(); bump(); openSheet(e.id); };
+    const onStatus = async (s) => { await setCheckin(day, s, extra, today?.note ?? null); haptics.tap(); bump(); };
+    const onExtra = async (k, v) => { const n = { ...extra, [k]: v }; setExtra(n); await setCheckin(day, today?.status ?? "none", n, today?.note ?? null); bump(); };
+    const status = today?.status ?? (open ? "attack" : null);
+    const warn = isPro && stats.medDays >= threshold;
+    return (_jsxs("section", { className: "screen", children: [_jsxs("div", { className: "hero", children: [_jsx("p", { className: "eyebrow", children: new Date().toLocaleDateString(lang, { weekday: "long", day: "numeric", month: "long" }) }), _jsx("h1", { children: t("home.title") })] }), open ? (_jsxs("button", { className: "attack-btn live", onClick: () => openSheet(open.id), children: [t("home.openSince", { time: fmtTime(open.startedAt, lang) }), _jsx("br", {}), _jsx("span", { className: "small", style: { fontFamily: "var(--body)", fontWeight: 500 }, children: t("home.tapToEdit") })] })) : (_jsx("button", { className: "attack-btn", onClick: onAttackNow, children: t("home.attackNow") })), warn && (_jsxs("div", { className: "card warn col", style: { marginTop: 12 }, children: [_jsx("strong", { children: t("home.medWarnTitle", { n: stats.medDays }) }), _jsx("span", { className: "small", children: t("home.medWarnBody", { n: threshold }) })] })), _jsxs("div", { className: "stats", children: [_jsxs("div", { className: "stat", children: [_jsx("div", { className: "n", children: stats.attackDays }), _jsx("div", { className: "l", children: t("home.attackDays") })] }), _jsxs("div", { className: `stat ${warn ? "warn" : ""}`, children: [_jsx("div", { className: "n", children: stats.medDays }), _jsx("div", { className: "l", children: t("home.medDays") })] })] }), _jsx("h2", { children: t("home.checkinTitle") }), _jsx("div", { className: "checkin", children: ["none", "mild", "attack"].map((s) => (_jsx("button", { className: status === s ? `on ${s}` : "", onClick: () => onStatus(s), children: t(`home.checkin.${s}`) }, s))) }), diaryConfig().checkinFields.map((f) => (_jsxs("div", { className: "field", children: [_jsx("span", { children: t(`home.fields.${f.key}`) }), _jsx("div", { className: "scale", children: Array.from({ length: f.max }, (_, i) => i + 1).map((v) => (_jsx("button", { className: extra[f.key] === v ? "on" : "", onClick: () => onExtra(f.key, v), children: v }, v))) })] }, f.key))), _jsx("h2", { children: t("home.recent") }), recent.length === 0 ? _jsx("p", { className: "empty", children: t("home.empty") }) : (_jsx("ul", { className: "list", children: recent.map((e) => (_jsxs("li", { className: "tap", onClick: () => openSheet(e.id), children: [_jsxs("div", { children: [_jsx("strong", { children: fmtDateTime(e.startedAt, lang) }), _jsxs("small", { children: [e.endedAt ? t("episode.duration", { h: hours(e.startedAt, e.endedAt).toFixed(1) }) : t("home.ongoing"), e.intensity ? ` · ${e.intensity}/10` : ""] })] }), _jsx("span", { className: "muted", children: "\u203A" })] }, e.id))) })), _jsx("p", { className: "disclaimer", children: t("common.disclaimer") })] }));
+}

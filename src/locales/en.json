@@ -1,47 +1,181 @@
 {
   "nav": {
     "home": "Home",
+    "calendar": "Calendar",
+    "insights": "Insights",
     "settings": "Settings"
   },
   "common": {
     "add": "Add",
     "cancel": "Cancel",
     "save": "Save",
-    "delete": "Delete"
+    "delete": "Delete",
+    "done": "Done",
+    "other": "Other…",
+    "typeOwn": "Type your own",
+    "disclaimer": "Migrano is a self-observation diary, not a medical device. It does not diagnose or give treatment advice. Talk to your doctor about what you log."
   },
-  "lang": {
-    "en": "English",
-    "da": "Dansk",
-    "de": "Deutsch",
-    "sv": "Svenska",
-    "nb": "Norsk"
+  "home": {
+    "title": "Migrano",
+    "attackNow": "Attack now",
+    "endAttack": "Attack is over",
+    "openSince": "Attack ongoing since {{time}}",
+    "tapToEdit": "Tap to add details or end it",
+    "attackDays": "attack days this month",
+    "medDays": "medication days this month",
+    "recent": "Recent attacks",
+    "ongoing": "ongoing",
+    "empty": "No attacks logged yet. When one starts, tap the button — details can wait.",
+    "checkinTitle": "How was today?",
+    "checkin": {
+      "none": "No headache",
+      "mild": "Mild",
+      "attack": "Attack"
+    },
+    "fields": {
+      "sleep": "Sleep last night",
+      "stress": "Stress today"
+    },
+    "medWarnTitle": "{{n}} medication days this month",
+    "medWarnBody": "You chose to be told at {{n}} days. Frequent acute medication is worth discussing with your doctor."
+  },
+  "episode": {
+    "title": "Attack",
+    "ongoing": "Attack in progress",
+    "start": "Start",
+    "end": "End",
+    "duration": "{{h}} h",
+    "intensity": "Intensity",
+    "mildLbl": "mild",
+    "severeLbl": "severe",
+    "note": "Note",
+    "notePh": "Anything else worth remembering",
+    "deleteConfirm": "Delete this attack?"
+  },
+  "calendar": {
+    "noAttacks": "No attack this day."
+  },
+  "meds": {
+    "title": "Medication",
+    "sub": "Your own preparations, by name. Migrano never suggests medicines or doses.",
+    "name": "Name",
+    "namePh": "e.g. Sumatriptan 50 mg",
+    "acute": "Acute",
+    "preventive": "Preventive",
+    "acuteHint": "Only acute medication counts towards medication days.",
+    "addFirst": "Add your medication",
+    "show": "Show",
+    "hide": "Hide"
+  },
+  "insights": {
+    "title": "Insights",
+    "lockedTitle": "Patterns need Pro",
+    "lockedBody": "Attack days per month, average duration and intensity, and which triggers and symptoms come up most — plus the PDF report for your doctor.",
+    "attackDaysPerMonth": "Attack days per month, last 12 months",
+    "range": {
+      "month": "This month",
+      "3m": "3 months",
+      "12m": "12 months"
+    },
+    "attacks": "attacks",
+    "avgHours": "avg. hours",
+    "avgIntensity": "avg. intensity",
+    "medDays": "acute medication days (your limit: {{n}})",
+    "shareOfAttacks": "share of attacks",
+    "noData": "Not enough data yet.",
+    "disclaimer": "Shares are simple counts of what you logged, not evidence of cause.",
+    "attackDays": "attack days"
+  },
+  "report": {
+    "title": "Headache diary report",
+    "cta": "PDF report",
+    "sub": "A one-page summary plus one row per attack, formatted for a doctor's visit.",
+    "preset": {
+      "month": "This month",
+      "last": "Last month",
+      "3m": "Last 3 months",
+      "custom": "Choose dates"
+    },
+    "from": "From",
+    "to": "To",
+    "make": "Create PDF",
+    "medDays": "Days with acute medication",
+    "attacks": "Attacks",
+    "hours": "Hours",
+    "intensityShort": "Int.",
+    "count": "Count (share)",
+    "footer": "Created with {{app}} — a self-observation diary, not a medical device"
+  },
+  "notif": {
+    "checkinTitle": "How was today?",
+    "checkinBody": "A 5-second check-in keeps your diary complete.",
+    "openTitle": "Is the attack over?",
+    "openBody": "An attack has been open for 24 hours. Tap to set the end time."
+  },
+  "lock": {
+    "title": "Enter PIN",
+    "hint": "Your diary is locked. Enter your 4–6 digit PIN."
   },
   "settings": {
     "language": "Language",
-    "dailyReminder": "Daily reminder (hour)",
     "privacy": "Privacy",
-    "support": "Support"
+    "privacyPolicy": "Privacy policy",
+    "support": "Support",
+    "diary": "Diary",
+    "manage": "Manage",
+    "medThreshold": "Tell me about medication days at",
+    "daysPerMonth": "{{n}} days/month",
+    "medThresholdHint": "Many guidelines mention 10 or 15 days per month as a point to raise with a doctor. Pick what yours uses.",
+    "reminders": "Reminders",
+    "checkinReminder": "Daily check-in reminder",
+    "reminderTime": "Time",
+    "openEpisodeReminder": "Remind me if an attack stays open for 24 h",
+    "pin": "PIN lock",
+    "pinOn": "On — asked after 1 minute in the background",
+    "pinOff": "Off",
+    "pinSetup": "Set PIN",
+    "pinRemove": "Remove",
+    "pinRemoved": "PIN removed",
+    "pinSet": "PIN set",
+    "pinNew": "New PIN (4–6 digits)",
+    "pinRepeat": "Repeat PIN",
+    "pinMismatch": "PINs do not match",
+    "pinHint": "There is no way to recover a forgotten PIN — only deleting all data unlocks the app.",
+    "data": "Your data",
+    "dataNote": "Everything stays on this phone. The backup file is encrypted with your passphrase and shared by you — never uploaded by us.",
+    "about": "About",
+    "feedback": "Send feedback",
+    "restored": "Purchases restored",
+    "proThanks": "Thank you for supporting Migrano.",
+    "freeHint": "Unlimited logging. Pro adds insights, the PDF report and the PIN lock."
   },
   "backup": {
-    "export": "Export backup / share with household",
+    "export": "Export encrypted backup",
+    "import": "Import backup",
     "passphrase": "Choose a passphrase for the backup file",
+    "passphraseShort": "Passphrase",
+    "file": "Backup file",
+    "importHint": "Newest entry wins when the same attack exists on both phones.",
     "wrongApp": "This backup belongs to another app",
+    "exported": "Backup exported",
+    "imported": "Backup imported",
+    "importFailed": "Could not import — wrong passphrase or file?",
     "wipe": "Delete all data",
     "wipeConfirm": "This permanently deletes everything stored in the app on this device. Exported backup files are not affected. Continue?",
     "wiped": "All data deleted"
   },
   "plan": {
-    "free": "Free plan",
-    "pro": "Pro",
+    "free": "Free",
+    "pro": "Migrano Pro",
     "upgrade": "Upgrade"
   },
   "paywall": {
-    "title": "Unlock everything",
+    "title": "Take your diary to the doctor",
     "benefits": [
-      "Unlimited entries",
-      "Share with your household",
-      "PDF export",
-      "Home screen widgets"
+      "Insights: attack days, duration, triggers, symptoms",
+      "PDF report your neurologist can read in a minute",
+      "Medication-day warning at your chosen limit",
+      "PIN lock, encrypted backup and unlimited history"
     ],
     "plan": {
       "annual": "Yearly",
@@ -50,11 +184,14 @@
     "trial": "7 days free, then yearly",
     "ctaTrial": "Start free trial",
     "ctaBuy": "Buy once",
-    "legal": "Cancel anytime in your store account.",
+    "legal": "Cancel anytime in your store account. Logging stays free forever.",
     "restore": "Restore purchases",
     "terms": "Terms",
     "reasons": {
-      "limit": "You've reached the free limit.",
+      "insights": "Insights and the report are part of Pro.",
+      "history": "Free shows the last 90 days. Pro keeps everything.",
+      "pin": "The PIN lock is part of Pro.",
+      "backup": "Backup and import are part of Pro.",
       "onboarding": "",
       "settings": ""
     }
@@ -62,30 +199,28 @@
   "onboarding": {
     "steps": [
       {
-        "title": "Everything in one place",
-        "body": "Keep track of what matters, with reminders before anything is due."
+        "title": "One tap when it starts",
+        "body": "\"Attack now\" starts the clock. Intensity, triggers and medication can wait until you feel better."
       },
       {
-        "title": "Your data stays with you",
-        "body": "No account. Everything is stored on your phone, and you can export a backup any time."
+        "title": "Private by design",
+        "body": "No account, no cloud, no tracking. Your diary lives on this phone, and only you can export it."
       },
       {
-        "title": "Share with your household",
-        "body": "Export once, import on another phone. Both of you can edit."
+        "title": "Made for the doctor's visit",
+        "body": "Attack days, medication days, triggers and a PDF report — the things a neurologist actually asks for."
       }
     ],
     "next": "Next",
     "skip": "Skip",
     "start": "Get started"
   },
-  "home": {
-    "title": "Migrano",
-    "attackNow": "Attack now",
-    "endAttack": "Attack is over",
-    "openSince": "Attack ongoing since {{time}}",
-    "monthStats": "This month: {{attackDays}} attack days · {{medDays}} medication days",
-    "recent": "Recent attacks",
-    "ongoing": "ongoing"
+  "lang": {
+    "en": "English",
+    "da": "Dansk",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "nb": "Norsk"
   },
   "diary": {
     "groups": {
