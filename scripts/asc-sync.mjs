@@ -9,7 +9,7 @@ import { createHash, createPrivateKey, sign } from "node:crypto";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
-const APP_ID = process.env.ASC_APP_ID ?? "REPLACE_WITH_MIGRANO_ASC_ID";
+const APP_ID = process.env.ASC_APP_ID ?? "6826778850";
 const ISSUER = process.env.APP_STORE_CONNECT_ISSUER_ID; const KID = process.env.APP_STORE_CONNECT_KEY_IDENTIFIER;
 let KEY = process.env.APP_STORE_CONNECT_PRIVATE_KEY ?? (process.env.APP_STORE_CONNECT_PRIVATE_KEY_PATH && readFileSync(process.env.APP_STORE_CONNECT_PRIVATE_KEY_PATH, "utf8"));
 if (!ISSUER || !KID || !KEY) { console.error("Missing APP_STORE_CONNECT_* env"); process.exit(1); }

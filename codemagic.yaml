@@ -12,7 +12,7 @@ workflows:
       app_store_connect: Codemagic Flytteklar
     environment:
       ios_signing:
-        provisioning_profiles: [template_app_store]       # <- change per app (Code signing identities reference)
+        provisioning_profiles: [migrano_app_store]   # <- change per app (Code signing identities reference)
         certificates: [flytteklar_distribution]           # team distribution cert, shared by all apps
       vars:
         RELEASE: "1"
@@ -52,7 +52,7 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
-        submit_to_testflight: true
+        submit_to_testflight: false   # upload only; internal group gets builds automatically
 
   android-release:
     name: Android release (Play internal)
