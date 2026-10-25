@@ -2,6 +2,8 @@ import type { DiaryConfig, Episode, Tag, Medication, DailyCheckin, CheckinStatus
 export * from "./types";
 export { diaryMigrations } from "./migrations";
 export { seedMigration } from "./seed";
+export * from "./weather";
+import { type PressurePattern } from "./weather";
 /** Called once by the domain before any screen renders. */
 export declare function configureDiary(c: DiaryConfig): void;
 export declare function diaryConfig(): DiaryConfig;
@@ -110,9 +112,15 @@ export type Patterns = {
         share: number;
         n: number;
     } | null;
+    /** attacks on a falling-pressure day vs. all tracked days (needs weather tracking on) */
+    pressure: PressurePattern;
 };
 /**
  * Descriptive patterns only: where do attacks cluster (weekday, time of day) and how did the night before look.
  * No causality claims — the UI phrases everything as "your attacks have often…".
  */
 export declare function patterns(days?: number): Promise<Patterns>;
+/** Closed episodes whose health sample is missing or older than the last edit. */
+export declare function episodesNeedingHealthSync(): Promise<Episode[]>;
+export declare function markHealthSynced(id: string, uuid: string | null): Promise<void>;
+export declare function clearHealthSync(): Promise<void>;

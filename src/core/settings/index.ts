@@ -17,6 +17,12 @@ export type Settings = {
   cycleTracking: boolean;      // Pro: show "period today" on the check-in and the share in insights
   baselineAttacks: string | null; // onboarding answer "attacks per month" bucket (context only)
   widgetGuideSeen: boolean;
+  weatherEnabled: boolean;     // Pro: fetch daily air pressure for the chosen place (Open-Meteo, no device location)
+  weatherPlace: string | null; // display name of the chosen place
+  weatherLat: number | null;
+  weatherLon: number | null;
+  weatherFetchedAt: string | null;
+  healthExport: boolean;       // Pro, iOS: mirror closed attacks to Apple Health as headache samples
 };
 
 const defaults: Settings = {
@@ -34,6 +40,12 @@ const defaults: Settings = {
   cycleTracking: false,
   baselineAttacks: null,
   widgetGuideSeen: false,
+  weatherEnabled: false,
+  weatherPlace: null,
+  weatherLat: null,
+  weatherLon: null,
+  weatherFetchedAt: null,
+  healthExport: false,
 };
 
 type Store = Settings & {

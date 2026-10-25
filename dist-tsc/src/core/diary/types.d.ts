@@ -34,7 +34,18 @@ export type Episode = {
     intensity: number | null;
     note: string | null;
     extra: string | null;
+    healthUuid: string | null;
+    healthSyncedAt: string | null;
     createdAt: string;
+    updatedAt: string;
+};
+export type WeatherDay = {
+    id: string;
+    date: string;
+    pressureMean: number | null;
+    pressureMin: number | null;
+    pressureMax: number | null;
+    tempMax: number | null;
     updatedAt: string;
 };
 export type Tag = {

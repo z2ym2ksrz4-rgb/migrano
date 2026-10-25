@@ -13,6 +13,12 @@ export type Settings = {
     cycleTracking: boolean;
     baselineAttacks: string | null;
     widgetGuideSeen: boolean;
+    weatherEnabled: boolean;
+    weatherPlace: string | null;
+    weatherLat: number | null;
+    weatherLon: number | null;
+    weatherFetchedAt: string | null;
+    healthExport: boolean;
 };
 type Store = Settings & {
     load: () => Promise<void>;

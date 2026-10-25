@@ -14,7 +14,10 @@
     "other": "Other…",
     "typeOwn": "Type your own",
     "disclaimer": "Migrano is a self-observation diary, not a medical device. It does not diagnose or give treatment advice. Talk to your doctor about what you log.",
-    "edit": "Edit"
+    "edit": "Edit",
+    "off": "Turn off",
+    "on": "Turn on",
+    "search": "Search"
   },
   "home": {
     "title": "Migrano",
@@ -138,7 +141,8 @@
     "mohBody": "This pattern is worth discussing with your doctor – it can itself cause headache.",
     "mohShareBtn": "Share text for your doctor",
     "mohShare": "Medication days ({{app}}): {{months}}. Limit chosen: {{n}} days/month.",
-    "mohHint": "Stays calm as long as you are under {{n}} days a month."
+    "mohHint": "Stays calm as long as you are under {{n}} days a month.",
+    "patPressure": "{{pct}}% of your attacks started on a day with falling air pressure (≥{{hpa}} hPa) – against {{all}}% of all days."
   },
   "report": {
     "title": "Headache diary report",
@@ -220,7 +224,8 @@
     "switchLifetime": "Switch to lifetime",
     "switchLifetimeHint": "Buy lifetime once, then cancel the yearly plan under Manage subscription – the store does not switch automatically.",
     "manageSub": "Manage subscription",
-    "planStore": "Purchased via {{store}}"
+    "planStore": "Purchased via {{store}}",
+    "triggers": "Triggers and health"
   },
   "backup": {
     "export": "Export encrypted backup",
@@ -266,7 +271,9 @@
       "pin": "The PIN lock is part of Pro.",
       "backup": "Backup and import are part of Pro.",
       "onboarding": "",
-      "settings": ""
+      "settings": "",
+      "weather": "Air pressure as a trigger is part of Pro.",
+      "health": "Apple Health export is part of Pro."
     }
   },
   "onboarding": {
@@ -411,5 +418,31 @@
       "Drag the widget onto your home screen."
     ],
     "lockscreen": "Lock Screen: touch and hold the Lock Screen → Customize → tap the widget area → Migrano."
+  },
+  "weather": {
+    "title": "Air pressure",
+    "hint": "Track daily air pressure for your place – no location access needed.",
+    "choose": "Choose place",
+    "changePlace": "Change place",
+    "on": "On · {{place}}",
+    "off": "Air pressure tracking turned off",
+    "pickTitle": "Your place",
+    "pickHint": "Type a city or town. Only its coordinates are sent to the weather service (Open-Meteo) – never your device location.",
+    "placePh": "City, e.g. Viborg",
+    "searchFailed": "Search failed – check your connection",
+    "privacy": "Open-Meteo is a free, open weather service without accounts or tracking. The pressure history is stored on your device only.",
+    "pressureNow": "Air pressure {{p}} hPa",
+    "noData": "Fetching air pressure…",
+    "falling": "Falling {{d}} hPa since yesterday",
+    "rising": "Rising {{d}} hPa since yesterday",
+    "stable": "Steady since yesterday"
+  },
+  "health": {
+    "title": "Apple Health",
+    "hint": "Write finished attacks to Apple Health as headache entries.",
+    "on": "On · attacks are written as headache entries",
+    "offToast": "Apple Health export turned off (existing entries stay in Health)",
+    "denied": "Apple Health access was not granted. You can change it in the Health app under Sharing.",
+    "synced": "{{n}} attacks written to Apple Health"
   }
 }

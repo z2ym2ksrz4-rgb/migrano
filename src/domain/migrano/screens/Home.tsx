@@ -10,6 +10,9 @@ import { usePurchases } from "@/core/purchases";
 import { useUi } from "../store";
 import { PainStar } from "../components/PainStar";
 import { publishWidget } from "../widget";
+import { maybeRefreshWeather } from "../weather";
+import { syncHealth } from "../health";
+import { pressureToday } from "@/core/diary";
 
 export function Home() {
   const { t, i18n } = useTranslation();
@@ -22,6 +25,9 @@ export function Home() {
   const threshold = useSettings((s) => s.medThreshold);
   const userName = useSettings((s) => s.userName);
   const cycleTracking = useSettings((s) => s.cycleTracking);
+  const weatherEnabled = useSettings((s) => s.weatherEnabled);
+  const weatherPlace = useSettings((s) => s.weatherPlace);
+  const [pressure, setPressure] = useState<{ pressure: number; delta: number | null } | null>(null);
   const [open, setOpen] = useState<Episode | null>(null);
   const [recent, setRecent] = useState<Episode[]>([]);
   const [stats, setStats] = useState({ attackDays: 0, medDays: 0, episodes: 0 });
@@ -45,7 +51,9 @@ export function Home() {
     if (c) { setStatus(c.status); setExtra(c.extra ? (JSON.parse(c.extra) as Record<string, number | boolean>) : {}); }
     else { setStatus(o ? "attack" : null); setExtra({}); }
     void publishWidget({ open: !!o, daysSince: ds, attackDays: st.attackDays, medDays: st.medDays, t });
-  }, [day, t]);
+    void syncHealth();
+    if (weatherEnabled) { await maybeRefreshWeather(); setPressure(await pressureToday()); } else setPressure(null);
+  }, [day, t, weatherEnabled]);
   useEffect(() => { void load(); }, [load, version]);
 
   const onAttackNow = async () => { const e = await startEpisode(); haptics.thud(); bump(); openSheet(e.id, "quick"); };
@@ -104,6 +112,14 @@ export function Home() {
           </div>
         )}
       </div>
+
+      {weatherEnabled && (
+        <div className="card pressure">
+          <div><strong>{pressure ? t("weather.pressureNow", { p: pressure.pressure }) : t("weather.noData")}</strong>
+            <div className="muted small">{pressure?.delta != null ? t(pressure.delta <= -5 ? "weather.falling" : pressure.delta >= 5 ? "weather.rising" : "weather.stable", { d: Math.abs(pressure.delta) }) : weatherPlace ?? ""}</div></div>
+          <span className={`pill ${pressure?.delta != null && pressure.delta <= -5 ? "warnpill" : ""}`}>{pressure?.delta != null ? `${pressure.delta > 0 ? "↑" : pressure.delta < 0 ? "↓" : "→"} ${Math.abs(pressure.delta)} hPa` : "–"}</span>
+        </div>
+      )}
 
       <h2>{t("home.checkinTitle")}</h2>
       {saved ? (

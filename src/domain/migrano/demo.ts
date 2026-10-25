@@ -8,7 +8,7 @@ import { localDay } from "@/core/ui";
  */
 export async function seedDemo() {
   const db = getDb();
-  await db.execute(`DELETE FROM episodeTag; DELETE FROM medicationIntake; DELETE FROM episode; DELETE FROM medication; DELETE FROM dailyCheckin; DELETE FROM report;`);
+  await db.execute(`DELETE FROM episodeTag; DELETE FROM medicationIntake; DELETE FROM episode; DELETE FROM medication; DELETE FROM dailyCheckin; DELETE FROM report; DELETE FROM weatherDay;`);
   const tags = await listTags();
   const byKey = (g: string, k: string) => tags.find((t) => t.groupKey === g && t.key === k)!.id;
   const trip = await addMedication("Sumatriptan 50 mg", "acute");
@@ -35,6 +35,15 @@ export async function seedDemo() {
     const hit = attacks.some((a) => a.daysAgo === d);
     if (!hit && d % 9 === 4) await setCheckin(date, "mild", { sleep: 3, stress: 4 });
     else if (!hit && d % 2 === 0) await setCheckin(date, "none", { sleep: 4, stress: 2 });
+  }
+  // 100 days of air pressure: a slow wave plus a drop the day of most attacks, so the pressure pattern has something to show
+  for (let d = 0; d <= 100; d++) {
+    const date = localDay(new Date(now.getFullYear(), now.getMonth(), now.getDate() - d));
+    const attackDay = attacks.some((a) => a.daysAgo === d);
+    const base = 1013 + 9 * Math.sin(d / 5) + (d % 7 === 3 ? -4 : 0) + (attackDay && d % 3 !== 0 ? -7 : 0);
+    const prevDrop = attacks.some((a) => a.daysAgo === d - 1) && (d - 1) % 3 !== 0 ? 4 : 0; // day before an attack sits higher → the attack day is a drop
+    const mean = Math.round((base + prevDrop) * 10) / 10;
+    await db.run(`INSERT INTO weatherDay(id,date,pressureMean,pressureMin,pressureMax,tempMax,updatedAt) VALUES(?,?,?,?,?,?,?)`, [newId(), date, mean, mean - 3, mean + 3, 12, now.toISOString()], false);
   }
   await persist();
 }

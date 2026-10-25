@@ -16,6 +16,12 @@ const defaults = {
     cycleTracking: false,
     baselineAttacks: null,
     widgetGuideSeen: false,
+    weatherEnabled: false,
+    weatherPlace: null,
+    weatherLat: null,
+    weatherLon: null,
+    weatherFetchedAt: null,
+    healthExport: false,
 };
 export const useSettings = create((setState, get) => ({
     ...defaults,

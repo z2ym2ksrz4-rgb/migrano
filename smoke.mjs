@@ -76,6 +76,7 @@ out.bars = (await p.$$(".bars .bar")).length;                      // 12
 out.freqRows = (await p.$$(".freq .f")).length;                    // > 0
 out.patternCards = (await p.$$(".card.col strong")).length;
 out.moh = (await p.$$(".moh .stat")).length;                       // 3
+out.patPressure = (await p.textContent(".screen")).toLowerCase().includes("lufttryk"); // weather pattern card (seeded weatherDay)
 await shot("insights-da");
 const dl = p.waitForEvent("download", { timeout: 20000 });
 await p.click(".report-btn"); await p.waitForSelector(".sheet .cta");
@@ -93,9 +94,15 @@ for (const w of widgetBtn) { if ((await w.textContent())?.trim() === "Tilføj") 
 await p.waitForSelector(".sheet .steps li", { timeout: 3000 }).catch(() => null);
 out.widgetGuideSteps = (await p.$$(".sheet .steps li")).length;     // 3
 await p.click(".sheet-close"); await p.waitForTimeout(200);
+// weather: place picker opens (Pro), search needs network so only the sheet is checked
+const chooseBtn = await p.$$("button.ghost");
+for (const w of chooseBtn) { if ((await w.textContent())?.trim() === "Vælg sted") { await w.click(); break; } }
+await p.waitForSelector(".sheet input[placeholder]", { timeout: 3000 }).catch(() => null);
+out.placeSheet = (await p.$(".sheet input[placeholder]")) !== null;
+await p.click(".sheet-close"); await p.waitForTimeout(200);
 await shot("settings-da");
 out.errors = errors;
 console.log(JSON.stringify(out, null, 1));
 await b.close();
-const ok = errors.length === 0 && out.quickClosed && out.chipsOn === 3 && out.journeyClosed && out.recentCount === 1 && out.bars === 12 && out.freqRows > 0 && out.heatCells > 0 && out.moh === 3 && out.widgetGuideSteps === 3 && /\.pdf$/.test(out.pdfName ?? "");
+const ok = errors.length === 0 && out.quickClosed && out.chipsOn === 3 && out.journeyClosed && out.recentCount === 1 && out.bars === 12 && out.freqRows > 0 && out.heatCells > 0 && out.moh === 3 && out.widgetGuideSteps === 3 && out.patPressure && out.placeSheet && /\.pdf$/.test(out.pdfName ?? "");
 process.exit(ok ? 0 : 1);

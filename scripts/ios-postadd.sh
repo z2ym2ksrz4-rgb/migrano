@@ -4,6 +4,10 @@
 set -euo pipefail
 PLIST=ios/App/App/Info.plist
 PB=/usr/libexec/PlistBuddy
+set_key() { $PB -c "Set :$1 '$2'" "$PLIST" 2>/dev/null || $PB -c "Add :$1 string '$2'" "$PLIST"; }
+# HealthKit (write-only headache samples; optional, toggled in Settings)
+set_key NSHealthUpdateUsageDescription "Migrano can write your logged attacks to Apple Health as headache entries, if you turn it on in Settings."
+set_key NSHealthShareUsageDescription "Migrano does not read any Health data. This is only needed to show the Apple Health permission screen."
 $PB -c "Add :ITSAppUsesNonExemptEncryption bool false" "$PLIST" 2>/dev/null || $PB -c "Set :ITSAppUsesNonExemptEncryption false" "$PLIST"
 # Deployment target -> 15.5 (Xcode project + Podfile)
 sed -i '' -E 's/IPHONEOS_DEPLOYMENT_TARGET = [0-9.]+;/IPHONEOS_DEPLOYMENT_TARGET = 15.5;/g' ios/App/App.xcodeproj/project.pbxproj

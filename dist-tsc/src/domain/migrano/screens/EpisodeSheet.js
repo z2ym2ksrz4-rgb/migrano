@@ -8,6 +8,7 @@ import { usePurchases, useProGate } from "@/core/purchases";
 import { maybeAskForReview } from "@/core/review";
 import { TagPicker } from "../components/TagPicker";
 import { useUi } from "../store";
+import { removeHealthSample } from "../health";
 /**
  * The attack sheet in three tempos:
  *  - quick   : right after "Attack now" — one question (how bad?), everything else can wait.
@@ -73,7 +74,7 @@ export function EpisodeSheet() {
         setMode("journey");
     };
     const onIntake = async (m) => { await logIntake(m.id, ep.id); haptics.tap(); setIntakes(await listIntakes(ep.id)); bump(); };
-    const onDelete = async () => { await deleteEpisode(ep.id); bump(); close(); };
+    const onDelete = async () => { await removeHealthSample(ep); await deleteEpisode(ep.id); bump(); close(); };
     const dur = ep.endedAt ? hours(ep.startedAt, ep.endedAt) : null;
     const title = ep.endedAt ? t("episode.title") : t("episode.ongoing");
     // ---- quick: one question --------------------------------------------------------------------------------

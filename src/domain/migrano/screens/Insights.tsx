@@ -98,7 +98,7 @@ export function Insights() {
       )}
 
       <h2>{t("insights.patterns")}</h2>
-      {pat && (pat.weekday || pat.timeOfDay || pat.fields.length || pat.period) ? (
+      {pat && (pat.weekday || pat.timeOfDay || pat.fields.length || pat.period || pat.pressure) ? (
         <div className="stack">
           {pat.weekday && <div className="card col"><strong>{t("insights.patWeekday", { day: new Date(2024, 0, 7 + pat.weekday.day).toLocaleDateString(lang, { weekday: "long" }), pct: Math.round(pat.weekday.share * 100) })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.attacks })}</span></div>}
           {pat.timeOfDay && <div className="card col"><strong>{t("insights.patTime", { part: t(`insights.part.${pat.timeOfDay.part}`), pct: Math.round(pat.timeOfDay.share * 100) })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.attacks })}</span></div>}
@@ -108,6 +108,7 @@ export function Insights() {
               <span className="muted small">{t("insights.patFieldBasis", { n: f.n })}</span>
             </div>
           ))}
+          {pat.pressure && <div className="card col"><strong>{t("insights.patPressure", { pct: Math.round((pat.pressure.attacksOnDrop / pat.pressure.attacks) * 100), all: Math.round(pat.pressure.dropShareAll * 100), hpa: pat.pressure.threshold })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.pressure.attacks })}</span></div>}
           {pat.period && <div className="card col"><strong>{t("insights.patPeriod", { pct: Math.round(pat.period.share * 100) })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.attacks })}</span></div>}
           <p className="muted small">{t("insights.patNote")}</p>
         </div>

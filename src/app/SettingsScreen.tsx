@@ -12,6 +12,9 @@ import { usePurchases, usePaywall, useProGate } from "@/core/purchases";
 import { useUi } from "@/domain/migrano/store";
 import { diaryConfig } from "@/core/diary";
 import { InfoSheets } from "@/domain/migrano/screens/InfoSheets";
+import { searchPlaces, type Place } from "@/core/diary";
+import { maybeRefreshWeather } from "@/domain/migrano/weather";
+import { healthAvailable, requestHealthAccess, syncHealth, resetHealthSync } from "@/domain/migrano/health";
 
 export function SettingsScreen() {
   const { t, i18n: i } = useTranslation();
@@ -30,6 +33,11 @@ export function SettingsScreen() {
   const [planOpen, setPlanOpen] = useState(false);
   const [importText, setImportText] = useState(""); const [importPass, setImportPass] = useState("");
   const [name, setName] = useState(s.userName ?? "");
+  const [placeOpen, setPlaceOpen] = useState(false);
+  const [placeQ, setPlaceQ] = useState("");
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [placeBusy, setPlaceBusy] = useState(false);
+  const [healthBusy, setHealthBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const toast = (m: string) => { setMsg(m); setTimeout(() => setMsg(null), 2500); };
 
@@ -69,6 +77,32 @@ export function SettingsScreen() {
       </label>
       <label className="check"><input type="checkbox" checked={s.cycleTracking} onChange={(e) => { if (e.target.checked && !gate.allow("cycle")) return; void s.set("cycleTracking", e.target.checked); }} /> {t("settings.cycleTracking")} {!isPro && <span className="pill pro">PRO</span>}</label>
       <small className="muted" style={{ display: "block", marginTop: -4 }}>{t("settings.cycleHint")}</small>
+
+      <h2>{t("settings.triggers")}</h2>
+      <div className="card">
+        <div><strong>{t("weather.title")} {!isPro && <span className="pill pro">PRO</span>}</strong><div className="muted small">{s.weatherEnabled && s.weatherPlace ? t("weather.on", { place: s.weatherPlace }) : t("weather.hint")}</div></div>
+        {s.weatherEnabled
+          ? <button className="ghost" onClick={() => { void s.set("weatherEnabled", false); toast(t("weather.off")); }}>{t("common.off")}</button>
+          : <button className="ghost" onClick={() => { if (gate.allow("weather")) { setPlaceQ(s.weatherPlace ?? ""); setPlaces([]); setPlaceOpen(true); } }}>{t("weather.choose")}</button>}
+      </div>
+      {s.weatherEnabled && <button className="linklike small" onClick={() => { setPlaceQ(s.weatherPlace ?? ""); setPlaces([]); setPlaceOpen(true); }}>{t("weather.changePlace")}</button>}
+      {healthAvailable() && (
+        <div className="card" style={{ marginTop: 10 }}>
+          <div><strong>{t("health.title")} {!isPro && <span className="pill pro">PRO</span>}</strong><div className="muted small">{s.healthExport ? t("health.on") : t("health.hint")}</div></div>
+          {s.healthExport
+            ? <button className="ghost" onClick={async () => { await s.set("healthExport", false); await resetHealthSync(); toast(t("health.offToast")); }}>{t("common.off")}</button>
+            : <button className="ghost" disabled={healthBusy} onClick={async () => {
+                if (!gate.allow("health")) return;
+                setHealthBusy(true);
+                try {
+                  const ok = await requestHealthAccess();
+                  if (!ok) { toast(t("health.denied")); return; }
+                  await s.set("healthExport", true);
+                  const n = await syncHealth(); toast(t("health.synced", { n }));
+                } finally { setHealthBusy(false); }
+              }}>{t("common.on")}</button>}
+        </div>
+      )}
 
       <h2>{t("settings.widget")}</h2>
       <div className="card">
@@ -130,6 +164,29 @@ export function SettingsScreen() {
           </>
         )}
         <p className="muted small" style={{ marginTop: 12 }}>{t("settings.planStore", { store: sub.store === "APP_STORE" || sub.store === "app_store" ? "App Store" : sub.store === "PLAY_STORE" || sub.store === "play_store" ? "Google Play" : sub.store ?? "–" })}</p>
+      </Sheet>
+      <Sheet open={placeOpen} onClose={() => setPlaceOpen(false)} title={t("weather.pickTitle")}>
+        <p className="muted small">{t("weather.pickHint")}</p>
+        <form className="row tight" onSubmit={async (e) => { e.preventDefault(); if (placeQ.trim().length < 2) return; setPlaceBusy(true); try { setPlaces(await searchPlaces(placeQ, i.language)); } catch { toast(t("weather.searchFailed")); } finally { setPlaceBusy(false); } }}>
+          <input style={{ flex: 1 }} value={placeQ} onChange={(e) => setPlaceQ(e.target.value)} placeholder={t("weather.placePh")} autoFocus />
+          <button type="submit" className="ghost" disabled={placeBusy}>{t("common.search")}</button>
+        </form>
+        {places.length > 0 && (
+          <ul className="list" style={{ marginTop: 10 }}>
+            {places.map((p, idx) => (
+              <li key={idx} className="tap" onClick={async () => {
+                const label = [p.name, p.admin, p.country].filter(Boolean).join(", ");
+                await s.set("weatherPlace", label); await s.set("weatherLat", p.lat); await s.set("weatherLon", p.lon);
+                await s.set("weatherFetchedAt", null); await s.set("weatherEnabled", true);
+                setPlaceOpen(false); toast(t("weather.on", { place: label }));
+                void maybeRefreshWeather(true).then(() => useUi.getState().bump());
+              }}>
+                <div><strong>{p.name}</strong><small>{[p.admin, p.country].filter(Boolean).join(", ")}</small></div><span className="muted">›</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="muted small" style={{ marginTop: 12 }}>{t("weather.privacy")}</p>
       </Sheet>
       <Sheet open={pinOpen} onClose={() => setPinOpen(false)} title={t("settings.pinSetup")}>
         <p className="muted small">{t("settings.pinHint")}</p>

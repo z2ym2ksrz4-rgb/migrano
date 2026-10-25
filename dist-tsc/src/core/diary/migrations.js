@@ -103,4 +103,24 @@ export const diaryMigrations = [
        );`,
         ],
     },
+    {
+        version: 14,
+        name: "diary_weather_and_health",
+        sql: [
+            // One row per calendar day with the local air pressure (hPa, mean sea level) and temperature. Filled from
+            // Open-Meteo for the place the user picked; no device location is ever read.
+            `CREATE TABLE IF NOT EXISTS weatherDay (
+         id TEXT PRIMARY KEY,
+         date TEXT NOT NULL UNIQUE,
+         pressureMean REAL,
+         pressureMin REAL,
+         pressureMax REAL,
+         tempMax REAL,
+         updatedAt TEXT NOT NULL
+       );`,
+            // Apple Health / Health Connect mirror: the sample id we wrote for this episode and when, so edits re-sync.
+            `ALTER TABLE episode ADD COLUMN healthUuid TEXT;`,
+            `ALTER TABLE episode ADD COLUMN healthSyncedAt TEXT;`,
+        ],
+    },
 ];

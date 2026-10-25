@@ -14,7 +14,10 @@
         "other": "Annet…",
         "typeOwn": "Skriv din egen",
         "disclaimer": "Migrano er en dagbok for selvobservasjon, ikke medisinsk utstyr. Den stiller ikke diagnoser og gir ikke behandlingsråd. Snakk med legen din om det du logger.",
-        "edit": "Endre"
+        "edit": "Endre",
+        "off": "Slå av",
+        "on": "Slå på",
+        "search": "Søk"
     },
     "home": {
         "title": "Migrano",
@@ -138,7 +141,8 @@
         "mohBody": "Det mønsteret er verdt å snakke med legen om – det kan i seg selv gi hodepine.",
         "mohShareBtn": "Del tekst til legen",
         "mohShare": "Medisindager ({{app}}): {{months}}. Valgt grense: {{n}} dager/mnd.",
-        "mohHint": "Forblir rolig så lenge du er under {{n}} dager i måneden."
+        "mohHint": "Forblir rolig så lenge du er under {{n}} dager i måneden.",
+        "patPressure": "{{pct}}% av anfallene dine begynte på en dag med fallende lufttrykk (≥{{hpa}} hPa) – mot {{all}}% av alle dager."
     },
     "report": {
         "title": "Hodepinedagbok – rapport",
@@ -220,7 +224,8 @@
         "switchLifetime": "Bytt til livstid",
         "switchLifetimeHint": "Kjøp livstid én gang, og si deretter opp årsplanen under Administrer abonnement – butikken bytter ikke automatisk.",
         "manageSub": "Administrer abonnement",
-        "planStore": "Kjøpt via {{store}}"
+        "planStore": "Kjøpt via {{store}}",
+        "triggers": "Triggere og helse"
     },
     "backup": {
         "export": "Eksporter kryptert sikkerhetskopi",
@@ -266,7 +271,9 @@
             "pin": "PIN-låsen er en del av Pro.",
             "backup": "Sikkerhetskopi og import er en del av Pro.",
             "onboarding": "",
-            "settings": ""
+            "settings": "",
+            "weather": "Lufttrykk som trigger er en del av Pro.",
+            "health": "Eksport til Apple Helse er en del av Pro."
         }
     },
     "onboarding": {
@@ -411,5 +418,31 @@
             "Dra widgeten inn på startskjermen."
         ],
         "lockscreen": "Låseskjerm: hold fingeren på låseskjermen → Tilpass → trykk på widget-området → Migrano."
+    },
+    "weather": {
+        "title": "Lufttrykk",
+        "hint": "Følg dagens lufttrykk for stedet ditt – ingen posisjonstilgang nødvendig.",
+        "choose": "Velg sted",
+        "changePlace": "Bytt sted",
+        "on": "På · {{place}}",
+        "off": "Lufttrykk-sporing slått av",
+        "pickTitle": "Ditt sted",
+        "pickHint": "Skriv en by. Bare byens koordinater sendes til værtjenesten (Open-Meteo) – aldri enhetens posisjon.",
+        "placePh": "By, f.eks. Bergen",
+        "searchFailed": "Søket mislyktes – sjekk tilkoblingen",
+        "privacy": "Open-Meteo er en gratis, åpen værtjeneste uten konto eller sporing. Trykkhistorikken lagres bare på enheten din.",
+        "pressureNow": "Lufttrykk {{p}} hPa",
+        "noData": "Henter lufttrykk…",
+        "falling": "Falt {{d}} hPa siden i går",
+        "rising": "Steget {{d}} hPa siden i går",
+        "stable": "Stabilt siden i går"
+    },
+    "health": {
+        "title": "Apple Helse",
+        "hint": "Skriv avsluttede anfall til Apple Helse som hodepine-oppføringer.",
+        "on": "På · anfall skrives som hodepine-oppføringer",
+        "offToast": "Eksport til Apple Helse slått av (eksisterende oppføringer blir i Helse)",
+        "denied": "Tilgang til Apple Helse ble ikke gitt. Du kan endre det i Helse-appen under Deling.",
+        "synced": "{{n}} anfall skrevet til Apple Helse"
     }
 }

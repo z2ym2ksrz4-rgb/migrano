@@ -14,7 +14,10 @@
     "other": "Annat…",
     "typeOwn": "Skriv eget",
     "disclaimer": "Migrano är en dagbok för självobservation, inte en medicinteknisk produkt. Den ställer inga diagnoser och ger inga behandlingsråd. Prata med din läkare om det du loggar.",
-    "edit": "Ändra"
+    "edit": "Ändra",
+    "off": "Stäng av",
+    "on": "Slå på",
+    "search": "Sök"
   },
   "home": {
     "title": "Migrano",
@@ -138,7 +141,8 @@
     "mohBody": "Det mönstret är värt att ta upp med läkaren – det kan i sig ge huvudvärk.",
     "mohShareBtn": "Dela text till läkaren",
     "mohShare": "Medicindagar ({{app}}): {{months}}. Vald gräns: {{n}} dagar/mån.",
-    "mohHint": "Förblir lugn så länge du ligger under {{n}} dagar i månaden."
+    "mohHint": "Förblir lugn så länge du ligger under {{n}} dagar i månaden.",
+    "patPressure": "{{pct}}% av dina anfall började en dag med fallande lufttryck (≥{{hpa}} hPa) – mot {{all}}% av alla dagar."
   },
   "report": {
     "title": "Huvudvärksdagbok – rapport",
@@ -220,7 +224,8 @@
     "switchLifetime": "Byt till livstid",
     "switchLifetimeHint": "Köp livstid en gång och säg sedan upp årsplanen under Hantera prenumeration – butiken byter inte automatiskt.",
     "manageSub": "Hantera prenumeration",
-    "planStore": "Köpt via {{store}}"
+    "planStore": "Köpt via {{store}}",
+    "triggers": "Triggers och hälsa"
   },
   "backup": {
     "export": "Exportera krypterad säkerhetskopia",
@@ -266,7 +271,9 @@
       "pin": "PIN-låset ingår i Pro.",
       "backup": "Säkerhetskopia och import ingår i Pro.",
       "onboarding": "",
-      "settings": ""
+      "settings": "",
+      "weather": "Lufttryck som trigger ingår i Pro.",
+      "health": "Export till Apple Hälsa ingår i Pro."
     }
   },
   "onboarding": {
@@ -411,5 +418,31 @@
       "Dra widgeten till hemskärmen."
     ],
     "lockscreen": "Låsskärm: håll fingret på låsskärmen → Anpassa → tryck på widgetområdet → Migrano."
+  },
+  "weather": {
+    "title": "Lufttryck",
+    "hint": "Följ dagens lufttryck för din ort – ingen platsåtkomst behövs.",
+    "choose": "Välj ort",
+    "changePlace": "Byt ort",
+    "on": "På · {{place}}",
+    "off": "Lufttrycksspårning avstängd",
+    "pickTitle": "Din ort",
+    "pickHint": "Skriv en stad. Bara dess koordinater skickas till vädertjänsten (Open-Meteo) – aldrig din enhets plats.",
+    "placePh": "Stad, t.ex. Malmö",
+    "searchFailed": "Sökningen misslyckades – kontrollera anslutningen",
+    "privacy": "Open-Meteo är en gratis, öppen vädertjänst utan konto eller spårning. Tryckhistoriken sparas bara på din enhet.",
+    "pressureNow": "Lufttryck {{p}} hPa",
+    "noData": "Hämtar lufttryck…",
+    "falling": "Fallit {{d}} hPa sedan igår",
+    "rising": "Stigit {{d}} hPa sedan igår",
+    "stable": "Stabilt sedan igår"
+  },
+  "health": {
+    "title": "Apple Hälsa",
+    "hint": "Skriv avslutade anfall till Apple Hälsa som huvudvärksposter.",
+    "on": "På · anfall skrivs som huvudvärksposter",
+    "offToast": "Export till Apple Hälsa avstängd (befintliga poster finns kvar i Hälsa)",
+    "denied": "Åtkomst till Apple Hälsa gavs inte. Du kan ändra det i appen Hälsa under Delning.",
+    "synced": "{{n}} anfall skrivna till Apple Hälsa"
   }
 }

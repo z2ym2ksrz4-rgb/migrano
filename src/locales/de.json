@@ -14,7 +14,10 @@
     "other": "Andere…",
     "typeOwn": "Eigenen Eintrag tippen",
     "disclaimer": "Migrano ist ein Tagebuch zur Selbstbeobachtung, kein Medizinprodukt. Es stellt keine Diagnosen und gibt keine Behandlungsempfehlungen. Besprechen Sie Ihre Einträge mit Ihrer Ärztin oder Ihrem Arzt.",
-    "edit": "Ändern"
+    "edit": "Ändern",
+    "off": "Ausschalten",
+    "on": "Einschalten",
+    "search": "Suchen"
   },
   "home": {
     "title": "Migrano",
@@ -138,7 +141,8 @@
     "mohBody": "Dieses Muster sollten Sie ärztlich besprechen – es kann selbst Kopfschmerzen auslösen.",
     "mohShareBtn": "Text für die Ärztin teilen",
     "mohShare": "Medikamententage ({{app}}): {{months}}. Gewählte Grenze: {{n}} Tage/Monat.",
-    "mohHint": "Bleibt ruhig, solange Sie unter {{n}} Tagen im Monat liegen."
+    "mohHint": "Bleibt ruhig, solange Sie unter {{n}} Tagen im Monat liegen.",
+    "patPressure": "{{pct}}% deiner Attacken begannen an einem Tag mit fallendem Luftdruck (≥{{hpa}} hPa) – gegenüber {{all}}% aller Tage."
   },
   "report": {
     "title": "Kopfschmerztagebuch – Bericht",
@@ -220,7 +224,8 @@
     "switchLifetime": "Zu lebenslang wechseln",
     "switchLifetimeHint": "Lebenslang einmal kaufen und dann das Jahresabo unter Abo verwalten kündigen – der Store wechselt nicht automatisch.",
     "manageSub": "Abo verwalten",
-    "planStore": "Gekauft über {{store}}"
+    "planStore": "Gekauft über {{store}}",
+    "triggers": "Auslöser und Gesundheit"
   },
   "backup": {
     "export": "Verschlüsselte Sicherung exportieren",
@@ -266,7 +271,9 @@
       "pin": "Die PIN-Sperre gehört zu Pro.",
       "backup": "Sicherung und Import gehören zu Pro.",
       "onboarding": "",
-      "settings": ""
+      "settings": "",
+      "weather": "Luftdruck als Auslöser ist Teil von Pro.",
+      "health": "Der Export zu Apple Health ist Teil von Pro."
     }
   },
   "onboarding": {
@@ -411,5 +418,31 @@
       "Ziehen Sie das Widget auf den Startbildschirm."
     ],
     "lockscreen": "Sperrbildschirm: Sperrbildschirm gedrückt halten → Anpassen → Widget-Bereich antippen → Migrano."
+  },
+  "weather": {
+    "title": "Luftdruck",
+    "hint": "Täglichen Luftdruck für deinen Ort verfolgen – ohne Standortzugriff.",
+    "choose": "Ort wählen",
+    "changePlace": "Ort ändern",
+    "on": "An · {{place}}",
+    "off": "Luftdruck-Tracking ausgeschaltet",
+    "pickTitle": "Dein Ort",
+    "pickHint": "Gib eine Stadt ein. Nur ihre Koordinaten gehen an den Wetterdienst (Open-Meteo) – nie dein Gerätestandort.",
+    "placePh": "Stadt, z. B. Hamburg",
+    "searchFailed": "Suche fehlgeschlagen – Verbindung prüfen",
+    "privacy": "Open-Meteo ist ein kostenloser, offener Wetterdienst ohne Konto oder Tracking. Der Druckverlauf bleibt nur auf deinem Gerät.",
+    "pressureNow": "Luftdruck {{p}} hPa",
+    "noData": "Luftdruck wird geladen…",
+    "falling": "{{d}} hPa gefallen seit gestern",
+    "rising": "{{d}} hPa gestiegen seit gestern",
+    "stable": "Stabil seit gestern"
+  },
+  "health": {
+    "title": "Apple Health",
+    "hint": "Beendete Attacken als Kopfschmerz-Einträge in Apple Health schreiben.",
+    "on": "An · Attacken werden als Kopfschmerz-Einträge geschrieben",
+    "offToast": "Export zu Apple Health ausgeschaltet (vorhandene Einträge bleiben in Health)",
+    "denied": "Zugriff auf Apple Health wurde nicht erteilt. Du kannst es in der Health-App unter Teilen ändern.",
+    "synced": "{{n}} Attacken in Apple Health geschrieben"
   }
 }

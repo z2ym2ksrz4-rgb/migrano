@@ -2,6 +2,8 @@ import { getDb, dbWrite, newId, nowIso } from "@/core/db";
 export * from "./types";
 export { diaryMigrations } from "./migrations";
 export { seedMigration } from "./seed";
+export * from "./weather";
+import { pressurePattern } from "./weather";
 let config = null;
 /** Called once by the domain before any screen renders. */
 export function configureDiary(c) { config = c; }
@@ -237,7 +239,7 @@ export async function patterns(days = 180) {
     const from = new Date(Date.now() - days * 864e5).toISOString();
     const eps = await listEpisodes(from);
     const checkins = await listCheckins(from.slice(0, 10), new Date().toISOString().slice(0, 10));
-    const res = { attacks: eps.length, checkins: checkins.length, weekday: null, timeOfDay: null, fields: [], period: null };
+    const res = { attacks: eps.length, checkins: checkins.length, weekday: null, timeOfDay: null, fields: [], period: null, pressure: null };
     if (eps.length >= 5) {
         const wd = [0, 0, 0, 0, 0, 0, 0];
         const tod = { night: 0, morning: 0, afternoon: 0, evening: 0 };
@@ -287,5 +289,18 @@ export async function patterns(days = 180) {
             res.period = { share: n / eps.length, n };
         }
     }
+    res.pressure = await pressurePattern(eps.map((e) => e.startedAt));
     return res;
+}
+// ---- Apple Health / Health Connect mirror ---------------------------------------------------------------------
+/** Closed episodes whose health sample is missing or older than the last edit. */
+export async function episodesNeedingHealthSync() {
+    return q(`SELECT * FROM episode WHERE endedAt IS NOT NULL AND (healthSyncedAt IS NULL OR healthSyncedAt < updatedAt) ORDER BY startedAt`);
+}
+export async function markHealthSynced(id, uuid) {
+    // does not bump updatedAt on purpose: that would re-trigger the sync and change backup precedence
+    await dbWrite(`UPDATE episode SET healthUuid=?, healthSyncedAt=? WHERE id=?`, [uuid, nowIso(), id]);
+}
+export async function clearHealthSync() {
+    await dbWrite(`UPDATE episode SET healthUuid=NULL, healthSyncedAt=NULL`);
 }
