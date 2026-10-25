@@ -4,8 +4,8 @@ import { addUserTag, type Tag } from "@/core/diary";
 import { haptics } from "@/core/ui";
 
 /** One tag group as chips. "Other…" turns into an input; the typed text becomes a user tag in this group. */
-export function TagPicker({ groupKey, tags, selected, onChange, onTagAdded }: {
-  groupKey: string; tags: Tag[]; selected: Set<string>; onChange: (next: Set<string>) => void; onTagAdded: () => void;
+export function TagPicker({ groupKey, tags, selected, onChange, onTagAdded, compact }: {
+  groupKey: string; tags: Tag[]; selected: Set<string>; onChange: (next: Set<string>) => void; onTagAdded: () => void; compact?: boolean;
 }) {
   const { t } = useTranslation();
   const [adding, setAdding] = useState(false);
@@ -19,8 +19,8 @@ export function TagPicker({ groupKey, tags, selected, onChange, onTagAdded }: {
     const n = new Set(selected); n.add(tag.id); onChange(n); onTagAdded();
   };
   return (
-    <div className="field">
-      <span>{t(`diary.groups.${groupKey}`)}</span>
+    <div className={compact ? "chips" : "field"}>
+      {!compact && <span>{t(`diary.groups.${groupKey}`)}</span>}
       <div className="chips">
         {tags.filter((x) => !x.isHidden || selected.has(x.id)).map((x) => (
           <button type="button" key={x.id} className={`chip ${selected.has(x.id) ? "on" : ""}`} onClick={() => toggle(x.id)}>

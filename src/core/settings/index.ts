@@ -13,6 +13,10 @@ export type Settings = {
   medThreshold: number;        // medication days per month that triggers the warning (Pro)
   pinHash: string | null;      // sha-256 of the PIN; null = no lock (Pro)
   openEpisodeReminder: boolean;// nudge when an episode has been open > 24h
+  userName: string | null;     // first name from onboarding, used for greeting + report
+  cycleTracking: boolean;      // Pro: show "period today" on the check-in and the share in insights
+  baselineAttacks: string | null; // onboarding answer "attacks per month" bucket (context only)
+  widgetGuideSeen: boolean;
 };
 
 const defaults: Settings = {
@@ -26,6 +30,10 @@ const defaults: Settings = {
   medThreshold: 10,
   pinHash: null,
   openEpisodeReminder: true,
+  userName: null,
+  cycleTracking: false,
+  baselineAttacks: null,
+  widgetGuideSeen: false,
 };
 
 type Store = Settings & {

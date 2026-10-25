@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Sheet, localDay } from "@/core/ui";
-import { monthRange } from "@/core/diary";
+import { monthRange, monthlySeries, medDaysByMonth } from "@/core/diary";
 import { useSettings } from "@/core/settings";
 import { maybeAskForReview } from "@/core/review";
 
@@ -12,6 +12,7 @@ export function ReportSheet({ open, onClose }: { open: boolean; onClose: () => v
   const [from, setFrom] = useState(() => localDay(new Date(new Date().getFullYear(), new Date().getMonth() - 2, 1)));
   const [to, setTo] = useState(() => localDay());
   const [busy, setBusy] = useState(false);
+  const [notes, setNotes] = useState("");
 
   const range = () => {
     const now = new Date();
@@ -25,7 +26,10 @@ export function ReportSheet({ open, onClose }: { open: boolean; onClose: () => v
     try {
       const { buildReport, sharePdf } = await import("../report");
       const { fromIso, toIso } = range();
-      const doc = await buildReport(fromIso, toIso, t, i18n.language);
+      const months = Math.max(2, Math.min(12, Math.round((new Date(toIso).getTime() - new Date(fromIso).getTime()) / (30 * 864e5))));
+      const series = await monthlySeries(months); const med = await medDaysByMonth(months);
+      const monthly = series.map((m, i) => ({ month: m.month, attackDays: m.attackDays, medDays: med[i]?.medDays ?? 0 }));
+      const doc = await buildReport(fromIso, toIso, t, i18n.language, { name: settings.userName, notes, monthly });
       await sharePdf(doc, `migrano-${fromIso.slice(0, 10)}-${toIso.slice(0, 10)}.pdf`, t("report.title"));
       await settings.set("successEvents", settings.successEvents + 1); void maybeAskForReview();
       onClose();
@@ -45,6 +49,9 @@ export function ReportSheet({ open, onClose }: { open: boolean; onClose: () => v
           <label className="field"><span>{t("report.to")}</span><input type="date" value={to} onChange={(e) => setTo(e.target.value)} /></label>
         </div>
       )}
+      <label className="field"><span>{t("report.notesTitle")}</span>
+        <textarea rows={3} value={notes} onChange={(e) => setNotes(e.target.value)} placeholder={t("report.notesPh")} />
+      </label>
       <button className="cta" onClick={make} disabled={busy}>{busy ? "…" : t("report.make")}</button>
       <p className="disclaimer">{t("report.footer", { app: "Migrano" })}</p>
     </Sheet>

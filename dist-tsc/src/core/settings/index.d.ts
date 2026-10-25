@@ -9,6 +9,10 @@ export type Settings = {
     medThreshold: number;
     pinHash: string | null;
     openEpisodeReminder: boolean;
+    userName: string | null;
+    cycleTracking: boolean;
+    baselineAttacks: string | null;
+    widgetGuideSeen: boolean;
 };
 type Store = Settings & {
     load: () => Promise<void>;

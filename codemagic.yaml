@@ -12,7 +12,7 @@ workflows:
       app_store_connect: Codemagic Flytteklar
     environment:
       ios_signing:
-        provisioning_profiles: [migrano_app_store]   # <- change per app (Code signing identities reference)
+        provisioning_profiles: [migrano_app_store, migrano_widget_app_store]   # <- change per app: app + widget extension (Code signing identities)
         certificates: [flytteklar_distribution]           # team distribution cert, shared by all apps
       vars:
         RELEASE: "1"
@@ -36,6 +36,7 @@ workflows:
           bash scripts/ios-postadd.sh
           npx @capacitor/assets generate --ios --iconBackgroundColor '#E8573F' --iconBackgroundColorDark '#D63E3E' --splashBackgroundColor '#FFF4EC' --splashBackgroundColorDark '#2B1B3A'
           npx cap sync ios
+          ruby scripts/ios-widget.rb
       - name: Set version & build number
         script: |
           # Apple marketing version: "1.0.0" -> "1.0" (App Store version strings use two components)

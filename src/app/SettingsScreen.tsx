@@ -5,30 +5,36 @@ import { SUPPORTED, type Lang } from "@/core/i18n";
 import i18n from "@/core/i18n";
 import { exportBackup, importBackup } from "@/core/backup";
 import { wipeAllData } from "@/core/db";
-import { Sheet, sha256 } from "@/core/ui";
+import { Sheet, sha256, fmtDate } from "@/core/ui";
 import { appVersion } from "@/core/release";
 import appConfig from "../../app.config.json";
 import { usePurchases, usePaywall, useProGate } from "@/core/purchases";
 import { useUi } from "@/domain/migrano/store";
 import { diaryConfig } from "@/core/diary";
+import { InfoSheets } from "@/domain/migrano/screens/InfoSheets";
 
 export function SettingsScreen() {
-  const { t } = useTranslation();
+  const { t, i18n: i } = useTranslation();
   const s = useSettings();
   const isPro = usePurchases((p) => p.isPro);
+  const sub = usePurchases((p) => p.sub);
   const restore = usePurchases((p) => p.restore);
+  const manage = usePurchases((p) => p.manage);
   const showPaywall = usePaywall((p) => p.show);
   const gate = useProGate();
   const setMedsOpen = useUi((u) => u.setMedsOpen);
+  const openInfo = useUi((u) => u.openInfo);
   const [pinOpen, setPinOpen] = useState(false);
   const [pin1, setPin1] = useState(""); const [pin2, setPin2] = useState("");
   const [importOpen, setImportOpen] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
   const [importText, setImportText] = useState(""); const [importPass, setImportPass] = useState("");
+  const [name, setName] = useState(s.userName ?? "");
   const [msg, setMsg] = useState<string | null>(null);
   const toast = (m: string) => { setMsg(m); setTimeout(() => setMsg(null), 2500); };
 
   const savePin = async () => {
-    if (pin1.length < 4 || pin1 !== pin2) { toast(t("settings.pinMismatch")); return; }
+    if (pin1.length !== 6 || pin1 !== pin2) { toast(t("settings.pinMismatch")); return; }
     await s.set("pinHash", await sha256(pin1)); setPinOpen(false); setPin1(""); setPin2(""); toast(t("settings.pinSet"));
   };
   const facts = `${appConfig.appName} ${appVersion} · ${navigator.platform} · ${i18n.language}`;
@@ -37,19 +43,38 @@ export function SettingsScreen() {
     <section className="screen">
       <h1>{t("nav.settings")}</h1>
 
-      <div className="card">
-        <div><strong>{isPro ? t("plan.pro") : t("plan.free")}</strong><div className="muted small">{isPro ? t("settings.proThanks") : t("settings.freeHint")}</div></div>
-        {!isPro ? <button onClick={() => showPaywall("settings")}>{t("plan.upgrade")}</button> : <span className="pill pro">PRO</span>}
-      </div>
+      <button type="button" className="card tap" style={{ width: "100%", textAlign: "left" }} onClick={() => (isPro ? setPlanOpen(true) : showPaywall("settings"))}>
+        <div><strong>{isPro ? t("plan.pro") : t("plan.free")}</strong>
+          <div className="muted small">{isPro ? (sub.plan === "lifetime" ? t("settings.planLifetime") : sub.expiresAt ? t("settings.planYearly", { date: fmtDate(sub.expiresAt, i.language) }) : t("settings.proThanks")) : t("settings.freeHint")}</div></div>
+        {!isPro ? <span className="pill">{t("plan.upgrade")}</span> : <span className="pill pro">PRO ›</span>}
+      </button>
+
+      <h2>{t("settings.profile")}</h2>
+      <label className="field"><span>{t("onboarding.name")}</span>
+        <input value={name} onChange={(e) => setName(e.target.value)} onBlur={() => void s.set("userName", name.trim() || null)} placeholder={t("onboarding.namePh")} maxLength={40} />
+      </label>
+      <label className="field"><span>{t("settings.language")}</span>
+        <select value={s.language} onChange={async (e) => { const l = e.target.value as Lang; await s.set("language", l); await i18n.changeLanguage(l); }}>
+          {SUPPORTED.map((l) => <option key={l} value={l}>{t(`lang.${l}`)}</option>)}
+        </select>
+      </label>
 
       <h2>{t("settings.diary")}</h2>
       <div className="card"><span>{t("meds.title")}</span><button className="ghost" onClick={() => setMedsOpen(true)}>{t("settings.manage")}</button></div>
-      <label className="field"><span>{t("settings.medThreshold")}</span>
+      <label className="field"><span>{t("settings.medThreshold")} <button type="button" className="linklike small" onClick={() => openInfo("medDays")}>{t("settings.whatIsThis")}</button></span>
         <div className="segment">
           {diaryConfig().medicationDayThresholds.map((n) => <button key={n} className={s.medThreshold === n ? "active" : ""} onClick={() => s.set("medThreshold", n)}>{t("settings.daysPerMonth", { n })}</button>)}
         </div>
         <small className="muted">{t("settings.medThresholdHint")}</small>
       </label>
+      <label className="check"><input type="checkbox" checked={s.cycleTracking} onChange={(e) => { if (e.target.checked && !gate.allow("cycle")) return; void s.set("cycleTracking", e.target.checked); }} /> {t("settings.cycleTracking")} {!isPro && <span className="pill pro">PRO</span>}</label>
+      <small className="muted" style={{ display: "block", marginTop: -4 }}>{t("settings.cycleHint")}</small>
+
+      <h2>{t("settings.widget")}</h2>
+      <div className="card">
+        <div><strong>{t("widget.title")}</strong><div className="muted small">{t("widget.settingsHint")}</div></div>
+        <button className="ghost" onClick={() => openInfo("widget")}>{t("widget.guideBtn")}</button>
+      </div>
 
       <h2>{t("settings.reminders")}</h2>
       <label className="check"><input type="checkbox" checked={s.checkinReminder} onChange={(e) => s.set("checkinReminder", e.target.checked)} /> {t("settings.checkinReminder")}</label>
@@ -67,11 +92,6 @@ export function SettingsScreen() {
           ? <button className="ghost" onClick={() => { void s.set("pinHash", null); toast(t("settings.pinRemoved")); }}>{t("settings.pinRemove")}</button>
           : <button className="ghost" onClick={() => { if (gate.allow("pin")) setPinOpen(true); }}>{t("settings.pinSetup")}</button>}
       </div>
-      <label className="field"><span>{t("settings.language")}</span>
-        <select value={s.language} onChange={async (e) => { const l = e.target.value as Lang; await s.set("language", l); await i18n.changeLanguage(l); }}>
-          {SUPPORTED.map((l) => <option key={l} value={l}>{t(`lang.${l}`)}</option>)}
-        </select>
-      </label>
 
       <h2>{t("settings.data")}</h2>
       <div className="stack">
@@ -92,11 +112,30 @@ export function SettingsScreen() {
       <p className="disclaimer">{t("common.disclaimer")}</p>
       {appVersion && <p className="muted small">{appConfig.appName} {appVersion}</p>}
 
+      <Sheet open={planOpen} onClose={() => setPlanOpen(false)} title={t("plan.pro")}>
+        <div className="card col">
+          <strong>{sub.plan === "lifetime" ? t("paywall.plan.lifetime") : t("paywall.plan.annual")}</strong>
+          <span className="muted small">
+            {sub.plan === "lifetime" ? t("settings.planLifetime")
+              : sub.inTrial ? t("settings.planTrial", { date: sub.expiresAt ? fmtDate(sub.expiresAt, i.language) : "–" })
+              : sub.willRenew ? t("settings.planRenews", { date: sub.expiresAt ? fmtDate(sub.expiresAt, i.language) : "–" })
+              : t("settings.planEnds", { date: sub.expiresAt ? fmtDate(sub.expiresAt, i.language) : "–" })}
+          </span>
+        </div>
+        {sub.plan !== "lifetime" && (
+          <>
+            <button className="cta" onClick={() => { setPlanOpen(false); showPaywall("switchLifetime"); }}>{t("settings.switchLifetime")}</button>
+            <p className="muted small">{t("settings.switchLifetimeHint")}</p>
+            <button className="ghost" style={{ width: "100%" }} onClick={() => void manage()}>{t("settings.manageSub")}</button>
+          </>
+        )}
+        <p className="muted small" style={{ marginTop: 12 }}>{t("settings.planStore", { store: sub.store === "APP_STORE" || sub.store === "app_store" ? "App Store" : sub.store === "PLAY_STORE" || sub.store === "play_store" ? "Google Play" : sub.store ?? "–" })}</p>
+      </Sheet>
       <Sheet open={pinOpen} onClose={() => setPinOpen(false)} title={t("settings.pinSetup")}>
         <p className="muted small">{t("settings.pinHint")}</p>
         <label className="field"><span>{t("settings.pinNew")}</span><input type="password" inputMode="numeric" pattern="[0-9]*" maxLength={6} value={pin1} onChange={(e) => setPin1(e.target.value.replace(/\D/g, ""))} /></label>
         <label className="field"><span>{t("settings.pinRepeat")}</span><input type="password" inputMode="numeric" pattern="[0-9]*" maxLength={6} value={pin2} onChange={(e) => setPin2(e.target.value.replace(/\D/g, ""))} /></label>
-        <button className="cta" onClick={savePin} disabled={pin1.length < 4}>{t("common.save")}</button>
+        <button className="cta" onClick={savePin} disabled={pin1.length !== 6 || pin2.length !== 6}>{t("common.save")}</button>
       </Sheet>
       <Sheet open={importOpen} onClose={() => setImportOpen(false)} title={t("backup.import")}>
         <p className="muted small">{t("backup.importHint")}</p>
@@ -104,6 +143,7 @@ export function SettingsScreen() {
         <label className="field"><span>{t("backup.passphraseShort")}</span><input type="password" value={importPass} onChange={(e) => setImportPass(e.target.value)} /></label>
         <button className="cta" disabled={!importText || !importPass} onClick={async () => { try { await importBackup(importText, importPass); setImportOpen(false); toast(t("backup.imported")); useUi.getState().bump(); } catch { toast(t("backup.importFailed")); } }}>{t("backup.import")}</button>
       </Sheet>
+      <InfoSheets />
       {msg && <div className="toast">{msg}</div>}
     </section>
   );

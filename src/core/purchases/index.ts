@@ -52,8 +52,8 @@ export const usePurchases = create<Store>((set, get) => ({
       try { plan = (localStorage.getItem("mock_plan") as Subscription["plan"]) || (pro ? "annual" : null); } catch { /* ignore */ }
       set({ ready: true, isPro: pro, packages: [
         { id: "annual", priceString: "149 kr./år", introPriceString: "7 dage gratis" },
-        { id: "lifetime", priceString: "249 kr." },
-      ], sub: pro ? { plan, productId: plan === "lifetime" ? "furkeep_pro_lifetime" : "furkeep_pro_yearly", expiresAt: plan === "lifetime" ? null : new Date(Date.now() + 300 * 86400000).toISOString().slice(0, 10), willRenew: plan === "annual", inTrial: false, managementUrl: null, store: "web" } : freeSub });
+        { id: "lifetime", priceString: "349 kr." },
+      ], sub: pro ? { plan, productId: plan === "lifetime" ? "pro_lifetime" : "pro_yearly", expiresAt: plan === "lifetime" ? null : new Date(Date.now() + 300 * 86400000).toISOString().slice(0, 10), willRenew: plan === "annual", inTrial: false, managementUrl: null, store: "web" } : freeSub });
       return;
     }
     const { Purchases, LOG_LEVEL } = await import("@revenuecat/purchases-capacitor");

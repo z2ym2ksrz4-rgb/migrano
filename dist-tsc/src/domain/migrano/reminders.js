@@ -32,7 +32,7 @@ export async function replanReminders(t) {
         if (open) {
             const at = new Date(new Date(open.startedAt).getTime() + 24 * 36e5);
             if (at > now)
-                notifs.push({ id: 200001, title: t("notif.openTitle"), body: t("notif.openBody"), schedule: { at }, smallIcon: "ic_stat_notify", extra: { url: "migrano://episode/open" } });
+                notifs.push({ id: 200001, title: t("notif.openTitle"), body: t("notif.openBody"), schedule: { at }, smallIcon: "ic_stat_notify", actionTypeId: "OPEN_EPISODE", extra: { url: "migrano://episode/open" } });
         }
     }
     if (notifs.length)

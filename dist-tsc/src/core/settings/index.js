@@ -12,6 +12,10 @@ const defaults = {
     medThreshold: 10,
     pinHash: null,
     openEpisodeReminder: true,
+    userName: null,
+    cycleTracking: false,
+    baselineAttacks: null,
+    widgetGuideSeen: false,
 };
 export const useSettings = create((setState, get) => ({
     ...defaults,

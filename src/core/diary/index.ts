@@ -201,3 +201,116 @@ export const monthRange = (d = new Date()) => {
   const to = new Date(d.getFullYear(), d.getMonth() + 1, 1);
   return { fromIso: from.toISOString(), toIso: to.toISOString() };
 };
+
+// ---- added for v1.0 feedback round: journey, streak, patterns, comparison ------------------------
+
+/** All-time usage count per tag (for "your most frequent" in the attack journey). */
+export async function tagUsage(): Promise<Record<string, number>> {
+  const rows = await q<{ tagId: string; n: number }>(`SELECT tagId, COUNT(*) AS n FROM episodeTag GROUP BY tagId`);
+  return Object.fromEntries(rows.map((r) => [r.tagId, r.n]));
+}
+
+/** Most recent closed episode end (ISO) or null. */
+export async function lastEpisodeEnd(): Promise<string | null> {
+  const rows = await q<{ endedAt: string }>(`SELECT endedAt FROM episode WHERE endedAt IS NOT NULL ORDER BY endedAt DESC LIMIT 1`);
+  return rows[0]?.endedAt ?? null;
+}
+
+/** Whole days since the last episode ended (0 if an episode is open or ended today); null if no episodes at all. */
+export async function daysSinceLastEpisode(): Promise<number | null> {
+  if (await openEpisode()) return 0;
+  const end = await lastEpisodeEnd();
+  if (!end) return null;
+  const a = new Date(end); a.setHours(0, 0, 0, 0);
+  const b = new Date(); b.setHours(0, 0, 0, 0);
+  return Math.max(0, Math.round((b.getTime() - a.getTime()) / 864e5));
+}
+
+/** Medication days for each of the last `months` months, oldest first. */
+export async function medDaysByMonth(months = 3): Promise<{ month: string; medDays: number }[]> {
+  const out: { month: string; medDays: number }[] = [];
+  const now = new Date();
+  for (let i = months - 1; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const { fromIso, toIso } = monthRange(d);
+    out.push({ month: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`, medDays: await medicationDays(fromIso, toIso) });
+  }
+  return out;
+}
+
+/** This episode vs. the average of all other closed episodes (duration, intensity). */
+export async function episodeComparison(id: string) {
+  const eps = await listEpisodes();
+  const me = eps.find((e) => e.id === id);
+  if (!me) return null;
+  const others = eps.filter((e) => e.id !== id && e.endedAt);
+  const dur = (e: Episode) => (new Date(e.endedAt!).getTime() - new Date(e.startedAt).getTime()) / 36e5;
+  const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null);
+  return {
+    hours: me.endedAt ? dur(me) : null,
+    intensity: me.intensity,
+    avgHours: avg(others.map(dur).filter((h) => h >= 0)),
+    avgIntensity: avg(others.map((e) => e.intensity).filter((x): x is number => x != null)),
+    n: others.length,
+  };
+}
+
+export type Patterns = {
+  attacks: number;
+  checkins: number;
+  /** weekday 0-6 (Sunday=0) with the most attack starts and its share, when it stands out */
+  weekday: { day: number; share: number } | null;
+  /** part of day with most starts: "night" | "morning" | "afternoon" | "evening" */
+  timeOfDay: { part: "night" | "morning" | "afternoon" | "evening"; share: number } | null;
+  /** per check-in field: avg the day before an attack day vs. before a calm day */
+  fields: { key: string; beforeAttack: number; beforeCalm: number; n: number }[];
+  /** share of attacks starting on a period day (±1) when period tracking has data */
+  period: { share: number; n: number } | null;
+};
+
+/**
+ * Descriptive patterns only: where do attacks cluster (weekday, time of day) and how did the night before look.
+ * No causality claims — the UI phrases everything as "your attacks have often…".
+ */
+export async function patterns(days = 180): Promise<Patterns> {
+  const from = new Date(Date.now() - days * 864e5).toISOString();
+  const eps = await listEpisodes(from);
+  const checkins = await listCheckins(from.slice(0, 10), new Date().toISOString().slice(0, 10));
+  const res: Patterns = { attacks: eps.length, checkins: checkins.length, weekday: null, timeOfDay: null, fields: [], period: null };
+  if (eps.length >= 5) {
+    const wd = [0, 0, 0, 0, 0, 0, 0]; const tod = { night: 0, morning: 0, afternoon: 0, evening: 0 };
+    for (const e of eps) {
+      const d = new Date(e.startedAt); wd[d.getDay()]++;
+      const h = d.getHours(); tod[h < 6 ? "night" : h < 12 ? "morning" : h < 18 ? "afternoon" : "evening"]++;
+    }
+    const bestWd = wd.indexOf(Math.max(...wd));
+    if (wd[bestWd] / eps.length >= 0.3) res.weekday = { day: bestWd, share: wd[bestWd] / eps.length };
+    const parts = Object.entries(tod) as [keyof typeof tod, number][];
+    const bestTod = parts.sort((a, b) => b[1] - a[1])[0];
+    if (bestTod[1] / eps.length >= 0.4) res.timeOfDay = { part: bestTod[0], share: bestTod[1] / eps.length };
+  }
+  if (checkins.length >= 14 && eps.length >= 3) {
+    const attackDays = new Set(eps.map((e) => e.startedAt.slice(0, 10)));
+    const byDate = new Map(checkins.map((c) => [c.date, c]));
+    const keys = diaryConfig().checkinFields.map((f) => f.key);
+    for (const k of keys) {
+      const before: number[] = [], calm: number[] = [];
+      for (const c of checkins) {
+        const extra = c.extra ? (JSON.parse(c.extra) as Record<string, number>) : {};
+        const v = extra[k]; if (typeof v !== "number") continue;
+        const next = new Date(c.date + "T12:00:00"); next.setDate(next.getDate() + 1);
+        const nd = next.toISOString().slice(0, 10);
+        (attackDays.has(nd) ? before : calm).push(v);
+        void byDate;
+      }
+      if (before.length >= 3 && calm.length >= 5) res.fields.push({ key: k, beforeAttack: before.reduce((a, b) => a + b, 0) / before.length, beforeCalm: calm.reduce((a, b) => a + b, 0) / calm.length, n: before.length });
+    }
+    const periodDays = new Set(checkins.filter((c) => c.extra && (JSON.parse(c.extra) as Record<string, unknown>).period).map((c) => c.date));
+    if (periodDays.size >= 3) {
+      const near = (iso: string) => { const d = new Date(iso.slice(0, 10) + "T12:00:00"); for (const off of [-1, 0, 1]) { const x = new Date(d); x.setDate(x.getDate() + off); if (periodDays.has(x.toISOString().slice(0, 10))) return true; } return false; };
+      const n = eps.filter((e) => near(e.startedAt)).length;
+      res.period = { share: n / eps.length, n };
+    }
+  }
+  return res;
+}

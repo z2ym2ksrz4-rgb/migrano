@@ -66,3 +66,53 @@ export declare const monthRange: (d?: Date) => {
     fromIso: string;
     toIso: string;
 };
+/** All-time usage count per tag (for "your most frequent" in the attack journey). */
+export declare function tagUsage(): Promise<Record<string, number>>;
+/** Most recent closed episode end (ISO) or null. */
+export declare function lastEpisodeEnd(): Promise<string | null>;
+/** Whole days since the last episode ended (0 if an episode is open or ended today); null if no episodes at all. */
+export declare function daysSinceLastEpisode(): Promise<number | null>;
+/** Medication days for each of the last `months` months, oldest first. */
+export declare function medDaysByMonth(months?: number): Promise<{
+    month: string;
+    medDays: number;
+}[]>;
+/** This episode vs. the average of all other closed episodes (duration, intensity). */
+export declare function episodeComparison(id: string): Promise<{
+    hours: number | null;
+    intensity: number | null;
+    avgHours: number | null;
+    avgIntensity: number | null;
+    n: number;
+} | null>;
+export type Patterns = {
+    attacks: number;
+    checkins: number;
+    /** weekday 0-6 (Sunday=0) with the most attack starts and its share, when it stands out */
+    weekday: {
+        day: number;
+        share: number;
+    } | null;
+    /** part of day with most starts: "night" | "morning" | "afternoon" | "evening" */
+    timeOfDay: {
+        part: "night" | "morning" | "afternoon" | "evening";
+        share: number;
+    } | null;
+    /** per check-in field: avg the day before an attack day vs. before a calm day */
+    fields: {
+        key: string;
+        beforeAttack: number;
+        beforeCalm: number;
+        n: number;
+    }[];
+    /** share of attacks starting on a period day (±1) when period tracking has data */
+    period: {
+        share: number;
+        n: number;
+    } | null;
+};
+/**
+ * Descriptive patterns only: where do attacks cluster (weekday, time of day) and how did the night before look.
+ * No causality claims — the UI phrases everything as "your attacks have often…".
+ */
+export declare function patterns(days?: number): Promise<Patterns>;

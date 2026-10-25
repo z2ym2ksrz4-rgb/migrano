@@ -42,7 +42,8 @@
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.0",
     "sql.js": "1.12.0",
-    "zustand": "^5.0.0"
+    "zustand": "^5.0.0",
+    "widget-bridge": "file:plugins/widget-bridge"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.4.0",

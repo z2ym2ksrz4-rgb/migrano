@@ -33,14 +33,14 @@ export function LockScreen() {
         return () => document.removeEventListener("visibilitychange", onVis);
     }, [pinHash]);
     useEffect(() => {
-        if (!locked || entry.length < 4 || !pinHash)
+        if (!locked || entry.length < 6 || !pinHash)
             return;
         void (async () => {
             if ((await sha256(entry)) === pinHash) {
                 setLocked(false);
                 setEntry("");
             }
-            else if (entry.length >= 6) {
+            else {
                 setShake(true);
                 setTimeout(() => { setShake(false); setEntry(""); }, 400);
             }

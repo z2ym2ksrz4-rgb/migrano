@@ -1,6 +1,6 @@
 /**
- * Three short screens, then the notification permission, then the paywall (hard paywall after onboarding,
- * which converts ~5x better than freemium per RevenueCat 2026 while keeping retention equal).
- * The user can always close the paywall and use the free tier.
+ * Onboarding: (0) language + first name, (1-3) three short intro screens, (4) two setup questions
+ * (attacks per month, acute medication) so the diary is configured before the first attack. Then notification
+ * permission and the paywall (user can always close it and use the free tier).
  */
 export declare function Onboarding(): import("react").JSX.Element;

@@ -13,7 +13,8 @@
     "done": "Fertig",
     "other": "Andere…",
     "typeOwn": "Eigenen Eintrag tippen",
-    "disclaimer": "Migrano ist ein Tagebuch zur Selbstbeobachtung, kein Medizinprodukt. Es stellt keine Diagnosen und gibt keine Behandlungsempfehlungen. Besprechen Sie Ihre Einträge mit Ihrer Ärztin oder Ihrem Arzt."
+    "disclaimer": "Migrano ist ein Tagebuch zur Selbstbeobachtung, kein Medizinprodukt. Es stellt keine Diagnosen und gibt keine Behandlungsempfehlungen. Besprechen Sie Ihre Einträge mit Ihrer Ärztin oder Ihrem Arzt.",
+    "edit": "Ändern"
   },
   "home": {
     "title": "Migrano",
@@ -37,7 +38,15 @@
       "stress": "Stress heute"
     },
     "medWarnTitle": "{{n}} Medikamententage diesen Monat",
-    "medWarnBody": "Sie wollten ab {{n}} Tagen informiert werden. Häufige Akutmedikation ist ein Thema für das Arztgespräch."
+    "medWarnBody": "Sie wollten ab {{n}} Tagen informiert werden. Häufige Akutmedikation ist ein Thema für das Arztgespräch.",
+    "greeting": "Hallo {{name}}",
+    "attackHint": "Ein Tipp startet die Uhr",
+    "streak_one": "Tag ohne Anfall",
+    "streak_other": "Tage ohne Anfall",
+    "saveDay": "Tag speichern",
+    "savedDay": "Heute ist gespeichert",
+    "periodToday": "Periode heute",
+    "periodShort": "Periode"
   },
   "episode": {
     "title": "Anfall",
@@ -50,7 +59,31 @@
     "severeLbl": "stark",
     "note": "Notiz",
     "notePh": "Was sonst noch wichtig ist",
-    "deleteConfirm": "Diesen Anfall löschen?"
+    "deleteConfirm": "Diesen Anfall löschen?",
+    "quickIntro": "Die Uhr läuft. Alles andere kann warten, bis es Ihnen besser geht.",
+    "howBad": "Wie stark ist es gerade?",
+    "level": {
+      "mild": "Leicht",
+      "moderate": "Mittel",
+      "severe": "Stark"
+    },
+    "laterLink": "Später ausfüllen",
+    "journey": {
+      "trigger": "Was hat es Ihrer Meinung nach ausgelöst?",
+      "symptom": "Was haben Sie bemerkt?",
+      "meds": "Haben Sie etwas genommen?",
+      "note": "Etwas zum Merken?"
+    },
+    "more": "{{n}} weitere…",
+    "skip": "Überspringen",
+    "editAll": "Alle Details bearbeiten",
+    "doneTitle": "Erfasst",
+    "tagsCount": "Markierungen",
+    "cmpTitle": "Dieser Anfall vs. Ihr Durchschnitt",
+    "cmpThis": "Dieser Anfall",
+    "cmpAvg": "Durchschnitt aus {{n}} Anfällen",
+    "cmpNeedMore": "Erfassen Sie noch ein paar Anfälle – dann sehen Sie hier den Vergleich mit Ihrem Durchschnitt.",
+    "cmpLocked": "Pro zeigt, wie dieser Anfall im Vergleich zu Ihrem Durchschnitt liegt."
   },
   "calendar": {
     "noAttacks": "Kein Anfall an diesem Tag."
@@ -84,7 +117,28 @@
     "shareOfAttacks": "Anteil der Anfälle",
     "noData": "Noch nicht genug Daten.",
     "disclaimer": "Anteile sind einfache Zählungen Ihrer Einträge, kein Beleg für Ursachen.",
-    "attackDays": "Anfallstage"
+    "attackDays": "Anfallstage",
+    "patterns": "Ihre Muster",
+    "patWeekday": "{{pct}} % Ihrer Anfälle begannen an einem {{day}}",
+    "patTime": "{{pct}} % Ihrer Anfälle begannen am {{part}}",
+    "part": {
+      "night": "Nacht",
+      "morning": "Morgen",
+      "afternoon": "Nachmittag",
+      "evening": "Abend"
+    },
+    "patField": "{{field}} am Tag vor einem Anfall lag im Schnitt bei {{before}} – vs. {{calm}} vor ruhigen Tagen",
+    "patFieldBasis": "Basierend auf {{n}} Check-ins vor Anfällen",
+    "patPeriod": "{{pct}} % Ihrer Anfälle begannen innerhalb eines Tages um die Periode",
+    "patBasis": "Basierend auf {{n}} Anfällen in den letzten 6 Monaten",
+    "patNote": "Muster beschreiben Ihr Tagebuch – sie beweisen keine Ursache. Nehmen Sie sie mit zur Ärztin.",
+    "patNeed": "Muster erscheinen nach 5 Anfällen und 14 Check-ins (noch {{a}} Anfälle und {{c}} Check-ins).",
+    "mohTitle": "Medikamententage, letzte 3 Monate",
+    "mohAlert": "{{n}}+ Medikamententage drei Monate in Folge",
+    "mohBody": "Dieses Muster sollten Sie ärztlich besprechen – es kann selbst Kopfschmerzen auslösen.",
+    "mohShareBtn": "Text für die Ärztin teilen",
+    "mohShare": "Medikamententage ({{app}}): {{months}}. Gewählte Grenze: {{n}} Tage/Monat.",
+    "mohHint": "Bleibt ruhig, solange Sie unter {{n}} Tagen im Monat liegen."
   },
   "report": {
     "title": "Kopfschmerztagebuch – Bericht",
@@ -104,13 +158,18 @@
     "hours": "Std.",
     "intensityShort": "Int.",
     "count": "Anzahl (Anteil)",
-    "footer": "Erstellt mit {{app}} – ein Tagebuch zur Selbstbeobachtung, kein Medizinprodukt"
+    "footer": "Erstellt mit {{app}} – ein Tagebuch zur Selbstbeobachtung, kein Medizinprodukt",
+    "chartTitle": "Pro Monat",
+    "notesTitle": "Notizen für die Ärztin",
+    "notesPh": "Fragen, Änderungen der Medikation, Sonstiges…"
   },
   "notif": {
     "checkinTitle": "Wie war heute?",
     "checkinBody": "5 Sekunden Check-in halten das Tagebuch vollständig.",
     "openTitle": "Ist der Anfall vorbei?",
-    "openBody": "Ein Anfall ist seit 24 Stunden offen. Tippen, um das Ende einzutragen."
+    "openBody": "Ein Anfall ist seit 24 Stunden offen. Tippen, um das Ende einzutragen.",
+    "actionEnd": "Jetzt vorbei",
+    "actionContinue": "Dauert an"
   },
   "lock": {
     "title": "PIN eingeben",
@@ -147,7 +206,21 @@
     "feedback": "Feedback senden",
     "restored": "Käufe wiederhergestellt",
     "proThanks": "Danke, dass Sie Migrano unterstützen.",
-    "freeHint": "Unbegrenzt erfassen. Pro ergänzt Einblicke, PDF-Bericht und PIN-Sperre."
+    "freeHint": "Unbegrenzt erfassen. Pro ergänzt Einblicke, PDF-Bericht und PIN-Sperre.",
+    "profile": "Profil",
+    "whatIsThis": "Was ist das?",
+    "cycleTracking": "Zyklus erfassen",
+    "cycleHint": "Fügt dem Check-in \"Periode heute\" hinzu und zeigt den Anteil der Anfälle rund um die Periode.",
+    "widget": "Widget",
+    "planLifetime": "Lebenslang – keine Verlängerung",
+    "planYearly": "Jährlich · verlängert sich am {{date}}",
+    "planTrial": "Kostenlos testen bis {{date}}",
+    "planRenews": "Verlängert sich am {{date}}",
+    "planEnds": "Endet am {{date}}",
+    "switchLifetime": "Zu lebenslang wechseln",
+    "switchLifetimeHint": "Lebenslang einmal kaufen und dann das Jahresabo unter Abo verwalten kündigen – der Store wechselt nicht automatisch.",
+    "manageSub": "Abo verwalten",
+    "planStore": "Gekauft über {{store}}"
   },
   "backup": {
     "export": "Verschlüsselte Sicherung exportieren",
@@ -213,7 +286,28 @@
     ],
     "next": "Weiter",
     "skip": "Überspringen",
-    "start": "Los geht's"
+    "start": "Los geht's",
+    "welcome": "Willkommen bei Migrano",
+    "welcomeBody": "Wählen Sie Ihre Sprache und sagen Sie uns, wie wir Sie nennen sollen.",
+    "name": "Vorname",
+    "namePh": "Ihr Vorname (optional)",
+    "setupTitle": "Tagebuch einrichten {{name}}",
+    "attacksQ": "Wie viele Anfälle haben Sie pro Monat?",
+    "attacks": {
+      "0-3": "0–3",
+      "4-7": "4–7",
+      "8-14": "8–14",
+      "15+": "15 oder mehr"
+    },
+    "medsQ": "Welche Akutmedikation nutzen Sie?",
+    "meds": {
+      "triptan": "Triptan",
+      "ibuprofen": "Ibuprofen",
+      "paracetamol": "Paracetamol",
+      "aspirin": "ASS"
+    },
+    "medsOther": "Anderes Medikament…",
+    "medsHint": "Jederzeit unter Medikamente änderbar. Migrano gibt nie Dosierungsempfehlungen."
   },
   "lang": {
     "en": "English",
@@ -286,5 +380,36 @@
         "top": "Scheitel"
       }
     }
+  },
+  "medDays": {
+    "title": "Medikamententage",
+    "what": "Ein Medikamententag ist ein Tag, an dem Sie Akutmedikation genommen haben – Triptane, Schmerzmittel oder Kombinationen. Migrano zählt Tage, nicht Tabletten.",
+    "why": "Akutmedikation an 10 oder mehr Tagen im Monat (15 bei einfachen Schmerzmitteln) über drei Monate kann selbst Kopfschmerzen verursachen – Ärzte nennen das Medikamentenübergebrauchs-Kopfschmerz. Die Zahl hilft, es früh zu bemerken und rechtzeitig mit der Ärztin zu sprechen.",
+    "yourLimit": "Ihre Grenze: {{n}} Tage im Monat",
+    "limitHint": "Änderbar in den Einstellungen. Migrano zählt nur und sagt Bescheid, wenn Sie sie erreichen.",
+    "disclaimer": "Das ist keine Diagnose. Medikamente nie ohne ärztliche Rücksprache absetzen oder ändern."
+  },
+  "widget": {
+    "title": "Anfall-jetzt-Widget",
+    "attackNow": "Anfall jetzt",
+    "openAttack": "Anfall läuft",
+    "ongoing": "Anfall läuft",
+    "noData": "Noch keine Anfälle erfasst",
+    "settingsHint": "Anfall vom Home- oder Sperrbildschirm starten",
+    "guideBtn": "Hinzufügen",
+    "previewLine1": "12 Tage ohne Anfall",
+    "previewLine2": "2 Anfallstage · 1 Medikamententag",
+    "intro": "Ein Tipp auf das Widget startet die Uhr – ohne erst die App zu suchen.",
+    "stepsIos": [
+      "Halten Sie eine leere Stelle des Home-Bildschirms gedrückt, bis die Apps wackeln.",
+      "Tippen Sie auf + (oben links) und suchen Sie Migrano.",
+      "Wählen Sie das kleine oder mittlere Widget und tippen Sie auf Widget hinzufügen."
+    ],
+    "stepsAndroid": [
+      "Halten Sie eine leere Stelle des Startbildschirms gedrückt.",
+      "Tippen Sie auf Widgets und suchen Sie Migrano.",
+      "Ziehen Sie das Widget auf den Startbildschirm."
+    ],
+    "lockscreen": "Sperrbildschirm: Sperrbildschirm gedrückt halten → Anpassen → Widget-Bereich antippen → Migrano."
   }
 }

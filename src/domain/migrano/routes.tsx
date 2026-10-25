@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { App as CapApp } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
-import { startEpisode, openEpisode } from "@/core/diary";
+import { LocalNotifications } from "@capacitor/local-notifications";
+import { startEpisode, openEpisode, endEpisode } from "@/core/diary";
 import { ensurePermission } from "@/core/notifications";
 import { useSettings } from "@/core/settings";
 import { Home } from "./screens/Home";
@@ -10,6 +11,7 @@ import { Calendar } from "./screens/Calendar";
 import { Insights } from "./screens/Insights";
 import { EpisodeSheet } from "./screens/EpisodeSheet";
 import { MedicationsSheet } from "./screens/Medications";
+import { InfoSheets } from "./screens/InfoSheets";
 import { replanReminders } from "./reminders";
 import { useUi } from "./store";
 
@@ -23,8 +25,26 @@ export const domainTabs: { key: DomainTab; labelKey: string }[] = [
  * migrano://episode/open  opens the current attack. Handled here so the widget can stay dumb.
  */
 async function handleUrl(url: string) {
-  if (url.includes("episode/new")) { const e = await startEpisode(); useUi.getState().bump(); useUi.getState().openEpisode(e.id); }
-  else if (url.includes("episode/open")) { const e = await openEpisode(); if (e) useUi.getState().openEpisode(e.id); }
+  if (url.includes("episode/new")) { const existed = await openEpisode(); const e = await startEpisode(); useUi.getState().bump(); useUi.getState().openEpisode(e.id, existed ? "full" : "quick"); }
+  else if (url.includes("episode/open")) { const e = await openEpisode(); if (e) useUi.getState().openEpisode(e.id, "full"); }
+}
+
+/** Notification action buttons: "Over now" ends the open attack without opening the app; "Still going" just dismisses. */
+async function setupNotificationActions(t: (k: string) => string) {
+  if (Capacitor.getPlatform() === "web") return;
+  try {
+    await LocalNotifications.registerActionTypes({ types: [{ id: "OPEN_EPISODE", actions: [
+      { id: "end", title: t("notif.actionEnd") },
+      { id: "continue", title: t("notif.actionContinue") },
+    ] }] });
+    await LocalNotifications.removeAllListeners();
+    await LocalNotifications.addListener("localNotificationActionPerformed", async (a) => {
+      const url = (a.notification.extra as { url?: string } | undefined)?.url;
+      if (a.actionId === "end") { const e = await openEpisode(); if (e) { await endEpisode(e.id); useUi.getState().bump(); } return; }
+      if (a.actionId === "continue") return;
+      if (url) void handleUrl(url);
+    });
+  } catch (e) { console.warn("[notif] actions", e); }
 }
 
 export function MigranoRoutes({ tab }: { tab: DomainTab }) {
@@ -42,6 +62,7 @@ export function MigranoRoutes({ tab }: { tab: DomainTab }) {
     void CapApp.getLaunchUrl().then((l) => { if (l?.url) void handleUrl(l.url); });
     return () => { void sub.then((h) => h.remove()); };
   }, []);
+  useEffect(() => { void setupNotificationActions(t); }, [t]);
   useEffect(() => { void ensurePermission().then(() => replanReminders(t)); }, [t, version, hour, checkinReminder]);
 
   return (
@@ -51,6 +72,7 @@ export function MigranoRoutes({ tab }: { tab: DomainTab }) {
       {tab === "insights" && <Insights />}
       <EpisodeSheet />
       <MedicationsSheet />
+      <InfoSheets />
     </>
   );
 }

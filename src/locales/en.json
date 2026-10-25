@@ -13,7 +13,8 @@
     "done": "Done",
     "other": "Other…",
     "typeOwn": "Type your own",
-    "disclaimer": "Migrano is a self-observation diary, not a medical device. It does not diagnose or give treatment advice. Talk to your doctor about what you log."
+    "disclaimer": "Migrano is a self-observation diary, not a medical device. It does not diagnose or give treatment advice. Talk to your doctor about what you log.",
+    "edit": "Edit"
   },
   "home": {
     "title": "Migrano",
@@ -37,7 +38,15 @@
       "stress": "Stress today"
     },
     "medWarnTitle": "{{n}} medication days this month",
-    "medWarnBody": "You chose to be told at {{n}} days. Frequent acute medication is worth discussing with your doctor."
+    "medWarnBody": "You chose to be told at {{n}} days. Frequent acute medication is worth discussing with your doctor.",
+    "greeting": "Hi {{name}}",
+    "attackHint": "One tap starts the clock",
+    "streak_one": "day without an attack",
+    "streak_other": "days without an attack",
+    "saveDay": "Save the day",
+    "savedDay": "Today is saved",
+    "periodToday": "Period today",
+    "periodShort": "period"
   },
   "episode": {
     "title": "Attack",
@@ -50,7 +59,31 @@
     "severeLbl": "severe",
     "note": "Note",
     "notePh": "Anything else worth remembering",
-    "deleteConfirm": "Delete this attack?"
+    "deleteConfirm": "Delete this attack?",
+    "quickIntro": "The clock is running. Everything else can wait until you feel better.",
+    "howBad": "How bad is it right now?",
+    "level": {
+      "mild": "Mild",
+      "moderate": "Moderate",
+      "severe": "Severe"
+    },
+    "laterLink": "Fill in later",
+    "journey": {
+      "trigger": "What do you think triggered it?",
+      "symptom": "What did you notice?",
+      "meds": "Did you take anything?",
+      "note": "Anything to remember?"
+    },
+    "more": "{{n}} more…",
+    "skip": "Skip",
+    "editAll": "Edit all details",
+    "doneTitle": "Logged",
+    "tagsCount": "tags",
+    "cmpTitle": "This attack vs. your average",
+    "cmpThis": "This attack",
+    "cmpAvg": "Average of {{n}} attacks",
+    "cmpNeedMore": "Log a couple more attacks and this will show how this one compares to your average.",
+    "cmpLocked": "Pro shows how this attack compares to your average."
   },
   "calendar": {
     "noAttacks": "No attack this day."
@@ -84,7 +117,28 @@
     "shareOfAttacks": "share of attacks",
     "noData": "Not enough data yet.",
     "disclaimer": "Shares are simple counts of what you logged, not evidence of cause.",
-    "attackDays": "attack days"
+    "attackDays": "attack days",
+    "patterns": "Your patterns",
+    "patWeekday": "{{pct}}% of your attacks started on a {{day}}",
+    "patTime": "{{pct}}% of your attacks started in the {{part}}",
+    "part": {
+      "night": "night",
+      "morning": "morning",
+      "afternoon": "afternoon",
+      "evening": "evening"
+    },
+    "patField": "{{field}} the day before an attack averaged {{before}} – vs. {{calm}} before calm days",
+    "patFieldBasis": "Based on {{n}} check-ins before attacks",
+    "patPeriod": "{{pct}}% of your attacks started within a day of your period",
+    "patBasis": "Based on {{n}} attacks in the last 6 months",
+    "patNote": "Patterns describe your log – they do not prove a cause. Bring them to your doctor.",
+    "patNeed": "Patterns appear after 5 attacks and 14 check-ins ({{a}} attacks and {{c}} check-ins to go).",
+    "mohTitle": "Medication days, last 3 months",
+    "mohAlert": "{{n}}+ medication days three months in a row",
+    "mohBody": "This pattern is worth discussing with your doctor – it can itself cause headache.",
+    "mohShareBtn": "Share text for your doctor",
+    "mohShare": "Medication days ({{app}}): {{months}}. Limit chosen: {{n}} days/month.",
+    "mohHint": "Stays calm as long as you are under {{n}} days a month."
   },
   "report": {
     "title": "Headache diary report",
@@ -104,13 +158,18 @@
     "hours": "Hours",
     "intensityShort": "Int.",
     "count": "Count (share)",
-    "footer": "Created with {{app}} — a self-observation diary, not a medical device"
+    "footer": "Created with {{app}} — a self-observation diary, not a medical device",
+    "chartTitle": "Per month",
+    "notesTitle": "Notes for the doctor",
+    "notesPh": "Questions, changes in medication, anything else…"
   },
   "notif": {
     "checkinTitle": "How was today?",
     "checkinBody": "A 5-second check-in keeps your diary complete.",
     "openTitle": "Is the attack over?",
-    "openBody": "An attack has been open for 24 hours. Tap to set the end time."
+    "openBody": "An attack has been open for 24 hours. Tap to set the end time.",
+    "actionEnd": "Over now",
+    "actionContinue": "Still going"
   },
   "lock": {
     "title": "Enter PIN",
@@ -147,7 +206,21 @@
     "feedback": "Send feedback",
     "restored": "Purchases restored",
     "proThanks": "Thank you for supporting Migrano.",
-    "freeHint": "Unlimited logging. Pro adds insights, the PDF report and the PIN lock."
+    "freeHint": "Unlimited logging. Pro adds insights, the PDF report and the PIN lock.",
+    "profile": "Profile",
+    "whatIsThis": "What is this?",
+    "cycleTracking": "Track menstrual cycle",
+    "cycleHint": "Adds a \"period today\" chip to the check-in and shows the share of attacks around your period.",
+    "widget": "Widget",
+    "planLifetime": "Lifetime – no renewal",
+    "planYearly": "Yearly · renews {{date}}",
+    "planTrial": "Free trial until {{date}}",
+    "planRenews": "Renews on {{date}}",
+    "planEnds": "Ends on {{date}}",
+    "switchLifetime": "Switch to lifetime",
+    "switchLifetimeHint": "Buy lifetime once, then cancel the yearly plan under Manage subscription – the store does not switch automatically.",
+    "manageSub": "Manage subscription",
+    "planStore": "Purchased via {{store}}"
   },
   "backup": {
     "export": "Export encrypted backup",
@@ -213,7 +286,28 @@
     ],
     "next": "Next",
     "skip": "Skip",
-    "start": "Get started"
+    "start": "Get started",
+    "welcome": "Welcome to Migrano",
+    "welcomeBody": "Choose your language and tell us what to call you.",
+    "name": "First name",
+    "namePh": "Your first name (optional)",
+    "setupTitle": "Set up your diary {{name}}",
+    "attacksQ": "How many attacks do you have per month?",
+    "attacks": {
+      "0-3": "0–3",
+      "4-7": "4–7",
+      "8-14": "8–14",
+      "15+": "15 or more"
+    },
+    "medsQ": "Which acute medication do you use?",
+    "meds": {
+      "triptan": "Triptan",
+      "ibuprofen": "Ibuprofen",
+      "paracetamol": "Paracetamol",
+      "aspirin": "Aspirin"
+    },
+    "medsOther": "Other medication…",
+    "medsHint": "You can change this any time under Medication. Migrano never gives dosing advice."
   },
   "lang": {
     "en": "English",
@@ -286,5 +380,36 @@
         "top": "Top of head"
       }
     }
+  },
+  "medDays": {
+    "title": "Medication days",
+    "what": "A medication day is a day you took acute (attack) medication – triptans, painkillers or combinations. Migrano counts days, not pills.",
+    "why": "Taking acute medication on 10 or more days a month (15 for simple painkillers) for three months can itself cause headache – doctors call it medication-overuse headache. The count helps you notice early and talk to your doctor in time.",
+    "yourLimit": "Your limit: {{n}} days a month",
+    "limitHint": "Change it under Settings. Migrano only counts and tells you when you reach it.",
+    "disclaimer": "This is not a diagnosis. Never stop or change medication without talking to your doctor."
+  },
+  "widget": {
+    "title": "Attack now widget",
+    "attackNow": "Attack now",
+    "openAttack": "Attack ongoing",
+    "ongoing": "Attack ongoing",
+    "noData": "No attacks logged yet",
+    "settingsHint": "Start an attack from the Home Screen or Lock Screen",
+    "guideBtn": "Add",
+    "previewLine1": "12 days without an attack",
+    "previewLine2": "2 attack days · 1 medication day",
+    "intro": "One tap on the widget starts the clock – no need to find the app first.",
+    "stepsIos": [
+      "Touch and hold an empty spot on your Home Screen until the apps jiggle.",
+      "Tap + (top left) and search for Migrano.",
+      "Choose the small or medium widget and tap Add Widget."
+    ],
+    "stepsAndroid": [
+      "Touch and hold an empty spot on your home screen.",
+      "Tap Widgets and find Migrano.",
+      "Drag the widget onto your home screen."
+    ],
+    "lockscreen": "Lock Screen: touch and hold the Lock Screen → Customize → tap the widget area → Migrano."
   }
 }

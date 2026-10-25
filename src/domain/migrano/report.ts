@@ -17,7 +17,7 @@ type AT = { lastAutoTable: { finalY: number } };
  * The doctor's report: what a neurologist asks for at a glance (frequency, duration, intensity, medication days),
  * then one row per attack with triggers/symptoms/medication, then trigger and symptom shares. Plain facts only.
  */
-export async function buildReport(fromIso: string, toIso: string, t: TFunction, lang: string): Promise<jsPDF> {
+export async function buildReport(fromIso: string, toIso: string, t: TFunction, lang: string, opts: { name?: string | null; notes?: string | null; monthly?: { month: string; attackDays: number; medDays: number }[] } = {}): Promise<jsPDF> {
   const eps = (await listEpisodes(fromIso, toIso)).reverse();
   const sum = await episodeSummary(fromIso, toIso);
   const freq = await tagFrequency(fromIso, toIso);
@@ -29,7 +29,8 @@ export async function buildReport(fromIso: string, toIso: string, t: TFunction, 
   doc.setFillColor(...BRAND); doc.rect(0, 0, W, 30, "F");
   doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(20); doc.text(t("report.title"), M, 14);
   doc.setFont("helvetica", "normal"); doc.setFontSize(10.5);
-  doc.text(`${fmtDate(fromIso, lang, { day: "numeric", month: "long", year: "numeric" })} – ${fmtDate(new Date(new Date(toIso).getTime() - 1).toISOString(), lang, { day: "numeric", month: "long", year: "numeric" })}`, M, 22);
+  const period = `${fmtDate(fromIso, lang, { day: "numeric", month: "long", year: "numeric" })} – ${fmtDate(new Date(new Date(toIso).getTime() - 1).toISOString(), lang, { day: "numeric", month: "long", year: "numeric" })}`;
+  doc.text(opts.name ? `${opts.name} · ${period}` : period, M, 22);
   let y = 40;
 
   const fmt1 = (n: number | null) => (n == null ? "–" : n.toLocaleString(lang, { maximumFractionDigits: 1 }));
@@ -43,6 +44,34 @@ export async function buildReport(fromIso: string, toIso: string, t: TFunction, 
     styles: { fontSize: 10, cellPadding: 1.8, textColor: INK }, columnStyles: { 0: { textColor: MUTED, cellWidth: 70 }, 1: { fontStyle: "bold" } },
   });
   y = (doc as unknown as AT).lastAutoTable.finalY + 8;
+
+  // ---- monthly bars (attack days + medication days) --------------------------------------------------------
+  const months = opts.monthly ?? [];
+  if (months.length >= 2) {
+    doc.setTextColor(...BRAND); doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text(t("report.chartTitle"), M, y + 4); y += 8;
+    const chartH = 38, chartW = W - 2 * M, base = y + chartH, maxV = Math.max(1, ...months.map((m) => Math.max(m.attackDays, m.medDays)));
+    const slot = chartW / months.length, bw = Math.min(10, slot / 3);
+    doc.setDrawColor(222, 220, 234); doc.line(M, base, M + chartW, base);
+    months.forEach((m, i) => {
+      const x = M + i * slot + slot / 2;
+      const h1 = (m.attackDays / maxV) * chartH, h2 = (m.medDays / maxV) * chartH;
+      doc.setFillColor(...BRAND); doc.rect(x - bw - 1, base - h1, bw, h1, "F");
+      doc.setFillColor(232, 87, 63); doc.rect(x + 1, base - h2, bw, h2, "F");
+      doc.setFontSize(7); doc.setTextColor(...MUTED); doc.text(new Date(m.month + "-01T12:00:00").toLocaleDateString(lang, { month: "short" }), x, base + 4, { align: "center" });
+      doc.setTextColor(...INK); if (m.attackDays) doc.text(String(m.attackDays), x - bw / 2 - 1, base - h1 - 1, { align: "center" }); if (m.medDays) doc.text(String(m.medDays), x + bw / 2 + 1, base - h2 - 1, { align: "center" });
+    });
+    y = base + 9;
+    doc.setFontSize(7.5); doc.setFillColor(...BRAND); doc.rect(M, y - 2.5, 3, 3, "F"); doc.setTextColor(...MUTED); doc.text(t("insights.attackDays"), M + 5, y);
+    doc.setFillColor(232, 87, 63); doc.rect(M + 48, y - 2.5, 3, 3, "F"); doc.text(t("report.medDays"), M + 53, y);
+    y += 9;
+  }
+
+  if (opts.notes?.trim()) {
+    doc.setTextColor(...BRAND); doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text(t("report.notesTitle"), M, y + 4); y += 8;
+    doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(...INK);
+    const lines = doc.splitTextToSize(opts.notes.trim(), W - 2 * M) as string[];
+    doc.text(lines, M, y + 2); y += lines.length * 5 + 8;
+  }
 
   const section = (title: string, head: string[], rows: string[][], empty: string, widths?: Record<number, { cellWidth: number }>) => {
     doc.setTextColor(...BRAND); doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text(title, M, y + 4); y += 7;

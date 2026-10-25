@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { monthlySeries, episodeSummary, tagFrequency, monthRange } from "@/core/diary";
+import { monthlySeries, episodeSummary, tagFrequency, monthRange, patterns as loadPatterns, medDaysByMonth, type Patterns } from "@/core/diary";
+import { Capacitor } from "@capacitor/core";
+import { Share } from "@capacitor/share";
+import appConfig from "../../../../app.config.json";
 import { useProGate } from "@/core/purchases";
 import { useSettings } from "@/core/settings";
 import { useUi } from "../store";
@@ -18,6 +21,8 @@ export function Insights() {
   const [freq, setFreq] = useState<Awaited<ReturnType<typeof tagFrequency>>>([]);
   const [range, setRange] = useState<"month" | "3m" | "12m">("3m");
   const [reportOpen, setReportOpen] = useState(false);
+  const [pat, setPat] = useState<Patterns | null>(null);
+  const [moh, setMoh] = useState<{ month: string; medDays: number }[]>([]);
 
   const load = useCallback(async () => {
     if (!gate.isPro) return;
@@ -28,6 +33,8 @@ export function Insights() {
     setSeries(await monthlySeries(12));
     setSum(await episodeSummary(fromIso, toIso));
     setFreq(await tagFrequency(fromIso, toIso));
+    setPat(await loadPatterns());
+    setMoh(await medDaysByMonth(3));
   }, [gate.isPro, range]);
   useEffect(() => { void load(); }, [load, version]);
 
@@ -89,6 +96,42 @@ export function Insights() {
           </div>
         </div>
       )}
+
+      <h2>{t("insights.patterns")}</h2>
+      {pat && (pat.weekday || pat.timeOfDay || pat.fields.length || pat.period) ? (
+        <div className="stack">
+          {pat.weekday && <div className="card col"><strong>{t("insights.patWeekday", { day: new Date(2024, 0, 7 + pat.weekday.day).toLocaleDateString(lang, { weekday: "long" }), pct: Math.round(pat.weekday.share * 100) })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.attacks })}</span></div>}
+          {pat.timeOfDay && <div className="card col"><strong>{t("insights.patTime", { part: t(`insights.part.${pat.timeOfDay.part}`), pct: Math.round(pat.timeOfDay.share * 100) })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.attacks })}</span></div>}
+          {pat.fields.map((f) => (
+            <div className="card col" key={f.key}>
+              <strong>{t("insights.patField", { field: t(`home.fields.${f.key}`).toLowerCase(), before: f.beforeAttack.toLocaleString(lang, { maximumFractionDigits: 1 }), calm: f.beforeCalm.toLocaleString(lang, { maximumFractionDigits: 1 }) })}</strong>
+              <span className="muted small">{t("insights.patFieldBasis", { n: f.n })}</span>
+            </div>
+          ))}
+          {pat.period && <div className="card col"><strong>{t("insights.patPeriod", { pct: Math.round(pat.period.share * 100) })}</strong><span className="muted small">{t("insights.patBasis", { n: pat.attacks })}</span></div>}
+          <p className="muted small">{t("insights.patNote")}</p>
+        </div>
+      ) : <p className="muted small">{t("insights.patNeed", { a: Math.max(0, 5 - (pat?.attacks ?? 0)), c: Math.max(0, 14 - (pat?.checkins ?? 0)) })}</p>}
+
+      <h2>{t("insights.mohTitle")}</h2>
+      <div className="moh">
+        {moh.map((m) => (
+          <div className={`stat ${m.medDays >= threshold ? "warn" : ""}`} key={m.month}>
+            <div className="n">{m.medDays}</div><div className="l">{new Date(m.month + "-01T12:00:00").toLocaleDateString(lang, { month: "short" })}</div>
+          </div>
+        ))}
+      </div>
+      {moh.length === 3 && moh.every((m) => m.medDays >= threshold) ? (
+        <div className="card bad col">
+          <strong>{t("insights.mohAlert", { n: threshold })}</strong>
+          <span className="small">{t("insights.mohBody")}</span>
+          <button className="small" style={{ alignSelf: "flex-start", background: "var(--bad-fg)", color: "#fff" }} onClick={async () => {
+            const text = t("insights.mohShare", { months: moh.map((m) => `${new Date(m.month + "-01T12:00:00").toLocaleDateString(lang, { month: "long" })}: ${m.medDays}`).join(", "), n: threshold, app: appConfig.appName });
+            if (Capacitor.getPlatform() === "web") { await navigator.clipboard?.writeText(text); return; }
+            await Share.share({ text });
+          }}>{t("insights.mohShareBtn")}</button>
+        </div>
+      ) : <p className="muted small">{t("insights.mohHint", { n: threshold })}</p>}
 
       <h2>{t("diary.groups.trigger")} <span className="muted" style={{ textTransform: "none", letterSpacing: 0 }}>· {t("insights.shareOfAttacks")}</span></h2>
       <Freq group="trigger" />
